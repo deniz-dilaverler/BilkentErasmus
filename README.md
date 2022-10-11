@@ -60,6 +60,6 @@ Following features are divided according to users.
 - Assigns schools to coordinators
 - Responsible for the maintenance of the system.
 
-Additional Features:
+## Additional Features:
 - Mail feauture (with a mail button) for students and coordinators to send email to each other.
 - Mail feature (with a mail button) for students to reach administrative coordinators.
