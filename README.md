@@ -1,9 +1,9 @@
 # BilkentErasmus
-This repository consists of CS-319 term project of [bizim grup] at Bilkent University.
+This repository consists of CS-319 term project of CADDY (our team) at Bilkent University.
+Following features are divided according to users.
 
-
-Student ---------
--User enters account
+## Student
+-User enters an account
 -Can view the schhols, their quotas, the language requirements, applicable semesters
 -Can view the state of their application
 -Whenever state changes or an aplication is accepted, send the student a mail to notfiy them.
