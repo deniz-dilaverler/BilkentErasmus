@@ -46,7 +46,7 @@ Following features are divided according to users.
 
 
 
-## Exchange Coordinator (Yeldo)
+## Exchange Coordinators
 - Approved students' information is sent to the secretary to contact with the host university.
 - Enters the applicaation links of the host universities which will be directed to the corresponding student trough the system. System sends the corresponding student a notification mail.
 
