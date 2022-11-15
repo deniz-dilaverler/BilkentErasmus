@@ -1,8 +1,7 @@
-package com.caddy.erasxchange.models;
+package com.caddy.erasxchange.models.accounts;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Set;
 
 @Entity
 @Table(name = "coordinator_account")

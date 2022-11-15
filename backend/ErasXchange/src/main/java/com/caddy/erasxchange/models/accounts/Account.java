@@ -1,5 +1,6 @@
-package com.caddy.erasxchange.models;
+package com.caddy.erasxchange.models.accounts;
 
+import com.caddy.erasxchange.models.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

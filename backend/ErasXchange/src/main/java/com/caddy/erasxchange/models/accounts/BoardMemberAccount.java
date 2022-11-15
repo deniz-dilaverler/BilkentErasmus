@@ -1,4 +1,4 @@
-package com.caddy.erasxchange.models;
+package com.caddy.erasxchange.models.accounts;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
