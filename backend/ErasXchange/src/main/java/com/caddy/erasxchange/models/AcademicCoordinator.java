@@ -10,7 +10,7 @@ public class AcademicCoordinator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "name")
     @Type(type = "org.hibernate.type.TextType")
@@ -30,7 +30,7 @@ public class AcademicCoordinator {
     public AcademicCoordinator() {
     }
 
-    public AcademicCoordinator(Integer id, String name, String surname, String email, Integer bilkentId) {
+    public AcademicCoordinator(Long id, String name, String surname, String email, Integer bilkentId) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -38,11 +38,11 @@ public class AcademicCoordinator {
         this.bilkentId = bilkentId;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
