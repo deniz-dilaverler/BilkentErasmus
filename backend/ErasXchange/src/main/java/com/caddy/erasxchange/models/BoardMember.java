@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -12,8 +13,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "students")
-public class Student {
+@Table(name = "board_members")
+public class BoardMember {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -23,7 +24,8 @@ public class Student {
     @JoinColumn(name = "bilkent_id", referencedColumnName = "bilkent_id")
     private User bilkentId;
 
-    @Column(name = "exchange_score")
-    private Double exchangeScore;
+    @Column(name = "signature")
+    @Type(type = "org.hibernate.type.TextType")
+    private String signature;
 
 }

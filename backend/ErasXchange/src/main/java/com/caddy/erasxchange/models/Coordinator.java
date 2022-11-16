@@ -12,8 +12,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "students")
-public class Student {
+@Table(name = "coordinators")
+public class Coordinator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -22,8 +22,5 @@ public class Student {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bilkent_id", referencedColumnName = "bilkent_id")
     private User bilkentId;
-
-    @Column(name = "exchange_score")
-    private Double exchangeScore;
 
 }
