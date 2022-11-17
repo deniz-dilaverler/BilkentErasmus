@@ -1,12 +1,15 @@
 package com.caddy.erasxchange.models.accounts;
 
 import com.caddy.erasxchange.models.BaseEntity;
+import com.caddy.erasxchange.models.forms.Form;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,7 +25,8 @@ public abstract class Account extends BaseEntity {
     private String lastName;
     private String email;
     private String password;
-    //private Set<Forms> forms;
+    
+    private Set<Form> forms;
     @Column(name= "bilkent_id")
     private int bilkentId;
     //department Enum mı olsun String mi yoksa ayrı bir class mı, department tableı olabilir belki
