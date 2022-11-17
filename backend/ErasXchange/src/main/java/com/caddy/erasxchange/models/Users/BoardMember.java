@@ -1,5 +1,7 @@
-package com.caddy.erasxchange.models;
+package com.caddy.erasxchange.models.Users;
 
+import com.caddy.erasxchange.models.BaseEntity;
+import com.caddy.erasxchange.models.Users.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,11 +16,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "board_members")
-public class BoardMember {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+public class BoardMember extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bilkent_id", referencedColumnName = "bilkent_id")

@@ -1,5 +1,8 @@
-package com.caddy.erasxchange.models;
+package com.caddy.erasxchange.models.Users;
 
+import com.caddy.erasxchange.models.BaseEntity;
+import com.caddy.erasxchange.models.Department;
+import com.caddy.erasxchange.models.forms.Form;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +10,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,11 +18,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+public class User extends BaseEntity {
 
     @Column(name = "first_name")
     @Type(type = "org.hibernate.type.TextType")
@@ -40,7 +40,17 @@ public class User {
     private Integer bilkentId;
 
     @Column(name = "department")
-    @Type(type = "org.hibernate.type.TextType")
-    private String department;
+    @Enumerated(EnumType.STRING)
+    private Department department;
+
+    //Todo: bu form ile user arası ilişkiyi sağla
+    //@ManyToOne
+    //private List<Form> forms;
+
+    // Todo: Event Classını Ekle ve bağlantıyı sağla
+
+    //private List<Event> events;
+
+    // TODO: add permission property to check what operations they can do
 
 }

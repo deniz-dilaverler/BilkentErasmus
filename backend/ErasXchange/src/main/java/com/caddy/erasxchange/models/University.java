@@ -1,5 +1,6 @@
 package com.caddy.erasxchange.models;
 
+import com.caddy.erasxchange.models.Users.Coordinator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

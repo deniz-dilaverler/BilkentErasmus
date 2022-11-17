@@ -1,4 +1,4 @@
-package com.caddy.erasxchange.models;
+package com.caddy.erasxchange.models.course;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,18 +14,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "bilkent_courses")
-public class BilkentCourse {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
-
-    @Column(name = "name")
-    @Type(type = "org.hibernate.type.TextType")
-    private String name;
-
-    @Column(name = "ects")
-    private Double ects;
+public class BilkentCourse extends Course{
 
     @Column(name = "coordinator_name")
     @Type(type = "org.hibernate.type.TextType")

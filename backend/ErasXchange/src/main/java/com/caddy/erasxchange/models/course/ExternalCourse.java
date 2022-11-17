@@ -1,5 +1,6 @@
-package com.caddy.erasxchange.models;
+package com.caddy.erasxchange.models.course;
 
+import com.caddy.erasxchange.models.University;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,35 +9,26 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
+enum ApprovalStatus {PENDING, ACCEPTED, DENIED}
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "external_courses")
-public class ExternalCourse {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+public class ExternalCourse extends Course {
 
-    @Column(name = "name")
-    @Type(type = "org.hibernate.type.TextType")
-    private String name;
-
-    @Column(name = "ects")
-    private Double ects;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uni_id")
-    private University uniId;
+    private University university;
 
     @Column(name = "is_project")
     private Boolean isProject;
 
     @Column(name = "approval_status")
-    @Type(type = "org.hibernate.type.TextType")
-    private String approvalStatus;
+    @Enumerated(EnumType.STRING)
+    private ApprovalStatus approvalStatus;
 
     @Column(name = "syllabus_link")
     @Type(type = "org.hibernate.type.TextType")
