@@ -19,4 +19,6 @@ public class Course extends BaseEntity {
 
     @Column(name = "normal_credit")
     private Double normalCredit;
+    
+    
 }

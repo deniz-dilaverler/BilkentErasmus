@@ -8,6 +8,8 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 enum ApprovalStatus {PENDING, ACCEPTED, DENIED}
 @AllArgsConstructor
@@ -34,4 +36,11 @@ public class ExternalCourse extends Course {
     @Type(type = "org.hibernate.type.TextType")
     private String syllabusLink;
 
+    @ManyToMany
+    @JoinTable(
+            name = "external_bilkent_course",
+            joinColumns = { @JoinColumn(name = "external_course_id")},
+            inverseJoinColumns = {@JoinColumn(name = "bilkent_course_id")}
+    )
+    private Set<BilkentCourse> equivalentCourses;
 }

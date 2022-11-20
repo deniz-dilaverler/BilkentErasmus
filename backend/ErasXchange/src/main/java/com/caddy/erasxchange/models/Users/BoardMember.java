@@ -16,14 +16,8 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "board_members")
-public class BoardMember extends BaseEntity {
+public class BoardMember extends User {
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bilkent_id", referencedColumnName = "bilkent_id")
-    private User bilkentId;
 
-    @Column(name = "signature")
-    @Type(type = "org.hibernate.type.TextType")
-    private String signature;
 
 }

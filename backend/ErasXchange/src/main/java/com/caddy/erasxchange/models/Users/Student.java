@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "students")
-public class Student extends BaseEntity {
+public class Student extends User {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bilkent_id", referencedColumnName = "bilkent_id")
@@ -29,14 +29,13 @@ public class Student extends BaseEntity {
     @Column(name = "gpa")
     private Double gpa;
 
-
-    @OneToOne
-    @JoinColumn(name = "erasmus_application_id")
+    @OneToOne(mappedBy = "student")
     private ErasmusApplication erasmusApplication;
 
-    @OneToOne
-    @JoinColumn(name = "bilateral_application_id")
+    @OneToOne(mappedBy = "student")
     private BilateralApplication bilateralApplication;
+
+
 
 
 

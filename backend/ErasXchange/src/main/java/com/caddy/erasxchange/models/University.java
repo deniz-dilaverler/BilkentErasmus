@@ -26,8 +26,8 @@ public class University {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "coordinator_bilkent_id", referencedColumnName = "bilkent_id")
-    private Coordinator coordinatorBilkentId;
+    @JoinColumn(name = "coordinator_id", referencedColumnName = "id")
+    private Coordinator coordinator;
 
     @Column(name = "is_bilateral")
     private Boolean isBilateral;

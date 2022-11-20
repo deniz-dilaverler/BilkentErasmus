@@ -14,11 +14,6 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "iso")
-public class Iso extends BaseEntity {
-
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bilkent_id", referencedColumnName = "bilkent_id")
-    private User bilkentId;
+public class Iso extends User {
 
 }

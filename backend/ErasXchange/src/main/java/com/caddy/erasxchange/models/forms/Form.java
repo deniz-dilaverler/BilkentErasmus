@@ -35,7 +35,7 @@ public abstract class Form extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "receiver_id")
-    private User reciever;
+    private User receiver;
 
 /*
     TODO [JPA Buddy] create field to map the 'external_courses' column

@@ -8,7 +8,7 @@ import lombok.*;
 import javax.persistence.*;
 
 
-enum Semester {FALL, SPRING};
+enum Semester {FALL, SPRING, BOTH};
 enum AppStatus {PENDING, PLACED, WAITING_BIN}
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,7 +16,6 @@ enum AppStatus {PENDING, PLACED, WAITING_BIN}
 @Setter
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@Table(name = "applications")
 public abstract class Application extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -31,24 +30,28 @@ public abstract class Application extends BaseEntity {
     @Enumerated(EnumType.ORDINAL)
     private Semester semester;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "choice1")
     private University choice1;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "choice2")
     private University choice2;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "choice3")
     private University choice3;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "choice4")
     private University choice4;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "choice5")
     private University choice5;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "placed_school")
+    private University placedSchool;
 
 }
