@@ -14,11 +14,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "programs")
-public class Program {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+public class Program  extends BaseEntity{
 
     @Column(name = "quota")
     private Integer quota;
@@ -31,11 +27,11 @@ public class Program {
     private String name;
 
     @Column(name = "department")
-    @Type(type = "org.hibernate.type.TextType")
-    private String department;
+    @Enumerated(EnumType.STRING)
+    private Department department;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uni_id")
-    private University uniId;
+    private University university;
 
 }

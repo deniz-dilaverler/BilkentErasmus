@@ -1,9 +1,10 @@
 package com.caddy.erasxchange.models.forms;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import com.caddy.erasxchange.models.Users.Student;
 
-@Entity
-@Table(name = "course_transfer_form")
-public class CourseTransferForm extends Form {
+import javax.persistence.OneToOne;
+
+public class CourseTransferForm extends Form{
+    @OneToOne
+    Student student;
 }
