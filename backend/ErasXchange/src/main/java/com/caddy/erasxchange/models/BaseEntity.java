@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
-public class BaseEntity
+public abstract class BaseEntity
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

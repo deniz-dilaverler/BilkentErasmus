@@ -1,6 +1,7 @@
 package com.caddy.erasxchange.models.application;
 
 import com.caddy.erasxchange.models.BaseEntity;
+import com.caddy.erasxchange.models.Semester;
 import com.caddy.erasxchange.models.Users.Student;
 import com.caddy.erasxchange.models.University;
 import lombok.*;
@@ -8,7 +9,7 @@ import lombok.*;
 import javax.persistence.*;
 
 
-enum Semester {FALL, SPRING, BOTH};
+
 enum AppStatus {PENDING, PLACED, WAITING_BIN}
 @AllArgsConstructor
 @NoArgsConstructor

@@ -9,17 +9,14 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "universities")
-public class University {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+public class University extends BaseEntity{
 
     @Column(name = "name")
     @Type(type = "org.hibernate.type.TextType")
@@ -34,10 +31,9 @@ public class University {
     @Column(name = "quota")
     private Integer quota;
 
-/*
-    TODO [JPA Buddy] create field to map the 'applicable_semesters' column
-     Available actions: Define target Java type | Uncomment as is | Remove column mapping
-    @Column(name = "applicable_semesters", columnDefinition = "text[]")
-    private Object applicableSemesters;
-*/
+    private Semester semester;
+
+    private String country;
+
+
 }
