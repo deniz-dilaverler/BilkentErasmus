@@ -7,7 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class Course extends BaseEntity {
+public abstract class Course extends BaseEntity {
 
     @Column(name = "name")
     @Type(type = "org.hibernate.type.TextType")
