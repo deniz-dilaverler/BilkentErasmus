@@ -1,7 +1,5 @@
-package com.caddy.erasxchange.models.Users;
+package com.caddy.erasxchange.models.users;
 
-import com.caddy.erasxchange.models.BaseEntity;
-import com.caddy.erasxchange.models.Users.User;
 import com.caddy.erasxchange.models.application.BilateralApplication;
 import com.caddy.erasxchange.models.application.ErasmusApplication;
 import lombok.AllArgsConstructor;
@@ -19,10 +17,6 @@ import javax.persistence.*;
 @Table(name = "students")
 public class Student extends User {
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bilkent_id", referencedColumnName = "bilkent_id")
-    private User bilkentId;
-
     @Column(name = "exchange_score")
     private Double exchangeScore;
 
@@ -34,12 +28,6 @@ public class Student extends User {
 
     @OneToOne(mappedBy = "student")
     private BilateralApplication bilateralApplication;
-
-
-
-
-
-
 
 
 

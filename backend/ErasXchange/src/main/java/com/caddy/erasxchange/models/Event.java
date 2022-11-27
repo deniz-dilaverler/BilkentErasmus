@@ -1,6 +1,6 @@
 package com.caddy.erasxchange.models;
 
-import com.caddy.erasxchange.models.Users.User;
+import com.caddy.erasxchange.models.users.User;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;

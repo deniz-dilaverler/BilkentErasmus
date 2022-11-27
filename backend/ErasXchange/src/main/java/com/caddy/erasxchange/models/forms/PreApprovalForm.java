@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class PreApprovalForm extends Form{
 

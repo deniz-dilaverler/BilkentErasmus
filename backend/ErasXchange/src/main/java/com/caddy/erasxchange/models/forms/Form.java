@@ -1,7 +1,7 @@
 package com.caddy.erasxchange.models.forms;
 
 import com.caddy.erasxchange.models.BaseEntity;
-import com.caddy.erasxchange.models.Users.User;
+import com.caddy.erasxchange.models.users.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,9 +1,6 @@
 package com.caddy.erasxchange.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -19,8 +16,7 @@ public class Program  extends BaseEntity{
     @Column(name = "quota")
     private Integer quota;
 
-    @Column(name = "allowance")
-    private Double allowance;
+
 
     @Column(name = "name")
     @Type(type = "org.hibernate.type.TextType")
