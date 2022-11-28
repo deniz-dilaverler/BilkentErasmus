@@ -3,6 +3,7 @@ package com.caddy.erasxchange.models.users;
 import com.caddy.erasxchange.models.BaseEntity;
 import com.caddy.erasxchange.models.Department;
 import com.caddy.erasxchange.models.Event;
+import com.caddy.erasxchange.models.forms.Form;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -50,11 +52,18 @@ public abstract class User extends BaseEntity {
             joinColumns = { @JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "event_id")}
     )
-    private Set<Event> events;
+    private List<Event> events; //list as the order of events are relevant
 
-    //Todo: bu form ile user arası ilişkiyi sağla
-    //@ManyToOne
-    //private List<Form> forms;
+
+    //forms that the user is sending
+    @OneToMany(mappedBy = "sender")
+    private List<Form> senderForms;
+
+    //forms that the user is reciving
+    @OneToMany(mappedBy = "receiver")
+    private List<Form> recieverForms;
+
+
 
 
     // TODO: add permission property to check what operations they can do

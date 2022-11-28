@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Getter
@@ -16,5 +17,6 @@ import javax.persistence.OneToOne;
 @Entity
 public class CourseTransferForm extends Form{
     @OneToOne
+    @JoinColumn(name = "student_id")
     private Student student;
 }

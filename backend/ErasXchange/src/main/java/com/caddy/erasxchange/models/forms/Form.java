@@ -10,6 +10,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.List;
 
 
 enum FormApprovalStatus  {PENDING, REJECTED, APPROVED}
@@ -17,8 +18,8 @@ enum FormApprovalStatus  {PENDING, REJECTED, APPROVED}
 @NoArgsConstructor
 @Getter
 @Setter
-
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Form extends BaseEntity {
 
 
@@ -37,16 +38,7 @@ public abstract class Form extends BaseEntity {
     @JoinColumn(name = "receiver_id")
     private User receiver;
 
-/*
-    TODO [JPA Buddy] create field to map the 'external_courses' column
-     Available actions: Define target Java type | Uncomment as is | Remove column mapping
-    @Column(name = "external_courses", columnDefinition = "int4[]")
-    private Object externalCourses;
-*/
-/*
-    TODO [JPA Buddy] create field to map the 'bilkent_courses' column
-     Available actions: Define target Java type | Uncomment as is | Remove column mapping
-    @Column(name = "bilkent_courses", columnDefinition = "int4[]")
-    private Object bilkentCourses;
-*/
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "rows")
+    private List<FormItem> rows;
 }
