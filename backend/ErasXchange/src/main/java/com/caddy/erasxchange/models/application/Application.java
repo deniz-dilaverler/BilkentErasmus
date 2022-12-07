@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 
 
-enum AppStatus {PENDING, PLACED, WAITING_BIN}
+public enum AppStatus {PENDING, PLACED, WAITING_BIN}
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

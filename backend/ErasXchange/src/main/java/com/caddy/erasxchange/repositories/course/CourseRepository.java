@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
-public interface CourseRepository<T extends Course> extends CrudRepository<T, Long> {
+public interface CourseRepository<T extends Course> extends JpaRepository<T, Long> {
 }

@@ -1,5 +1,6 @@
 package com.caddy.erasxchange.models;
 
+import com.caddy.erasxchange.models.course.ExternalCourse;
 import com.caddy.erasxchange.models.users.Coordinator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,11 +35,14 @@ public class University extends BaseEntity{
 
     private Semester semester;
 
-    @OneToMany(mappedBy = "uni_id")
+    @OneToMany(mappedBy = "university")
     private Set<Program> programs;
 
     private Integer allowence;
     private String country;
+
+    @OneToMany(mappedBy = "university")
+    private Set<ExternalCourse> courses;
 
 
 
