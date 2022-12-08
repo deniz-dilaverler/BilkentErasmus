@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ExternalCourseServiceImpl extends CourseService<ExternalCourse, ExternalCourseRepository> {
+public class ExternalCourseService extends CourseService<ExternalCourse, ExternalCourseRepository> {
 
     @Autowired
-    public ExternalCourseServiceImpl(ExternalCourseRepository externalCourseRepository) {
+    public ExternalCourseService(ExternalCourseRepository externalCourseRepository) {
         super(externalCourseRepository);
     }
 

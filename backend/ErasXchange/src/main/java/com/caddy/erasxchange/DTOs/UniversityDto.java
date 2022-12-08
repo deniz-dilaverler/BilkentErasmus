@@ -1,9 +1,9 @@
 package com.caddy.erasxchange.DTOs;
 
+import com.caddy.erasxchange.DTOs.ProgramDto;
 import com.caddy.erasxchange.models.Semester;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -11,17 +11,21 @@ import java.util.Set;
 /**
  * A DTO for the {@link com.caddy.erasxchange.models.University} entity
  */
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
+@ToString
+@Accessors(chain = true)
 public class UniversityDto implements Serializable {
-    final private Long id;
-    final private String name;
-    final private Boolean isBilateral;
-    final private Integer quota;
-    final private Semester semester;
-    final private Set<ProgramDto> programs;
-    final private Integer allowence;
-    final private String country;
-    final private Set<Long> coursIds;
+    private Long id;
+    private String name;
+    private Long coordinatorId;
+    private Boolean isBilateral;
+    private Integer quota;
+    private Semester semester;
+    private Set<ProgramDto> programs;
+    private Integer allowence;
+    private String country;
+    private Set<Long> coursIds;
 }

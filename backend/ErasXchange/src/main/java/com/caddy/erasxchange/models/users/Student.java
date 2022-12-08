@@ -31,4 +31,13 @@ public class Student extends User {
 
 
 
+    // Id accessors must be in the child class for mapstruct to be able to access them
+    @Override
+    public void setId(Long id) {
+        super.setId(id);
+    }
+    @Override
+    public Long getId() {
+        return super.getId();
+    }
 }

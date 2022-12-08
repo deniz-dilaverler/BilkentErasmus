@@ -19,4 +19,16 @@ public class Coordinator extends User {
 
     @OneToMany(mappedBy = "coordinator")
     private Set<University> responsibleSchools;
+
+
+    // Id accessors must be in the child class for mapstruct to be able to access them
+    @Override
+    public void setId(Long id) {
+        super.setId(id);
+    }
+
+    @Override
+    public Long getId() {
+        return super.getId();
+    }
 }

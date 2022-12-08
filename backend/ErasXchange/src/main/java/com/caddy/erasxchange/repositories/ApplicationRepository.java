@@ -1,10 +1,11 @@
-package com.caddy.erasxchange.repositories.application;
+package com.caddy.erasxchange.repositories;
 
 import com.caddy.erasxchange.models.application.Application;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.stereotype.Repository;
 
-@NoRepositoryBean
+@Repository
 public interface ApplicationRepository<T extends Application> extends JpaRepository<T, Long> {
 }

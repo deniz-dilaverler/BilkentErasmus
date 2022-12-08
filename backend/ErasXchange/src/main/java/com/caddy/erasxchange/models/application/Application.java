@@ -10,14 +10,14 @@ import javax.persistence.*;
 
 
 
-public enum AppStatus {PENDING, PLACED, WAITING_BIN}
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class Application extends BaseEntity {
+public class Application extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
@@ -28,7 +28,7 @@ public abstract class Application extends BaseEntity {
     private AppStatus status;
 
     @Column(name = "semester")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private Semester semester;
 
     @ManyToOne(fetch = FetchType.LAZY)
