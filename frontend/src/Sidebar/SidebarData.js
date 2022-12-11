@@ -32,9 +32,4 @@ export const SidebarData = [
     icon: <PersonIcon />,
     link: "/profile",
   },
-  {
-    title: "Log out",
-    icon: <LockIcon />,
-    link: "/logout",
-  },
 ];
