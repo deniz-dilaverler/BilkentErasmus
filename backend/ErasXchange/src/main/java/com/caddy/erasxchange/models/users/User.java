@@ -61,7 +61,10 @@ public abstract class User extends BaseEntity {
 
     //forms that the user is reciving
     @OneToMany(mappedBy = "receiver")
-    private List<Form> recieverForms;
+    private List<Form> receiverForms;
+
+    @Column
+    private Role role;
 
 
 

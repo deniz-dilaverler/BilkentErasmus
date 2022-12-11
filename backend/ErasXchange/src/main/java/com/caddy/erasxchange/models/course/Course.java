@@ -13,7 +13,6 @@ public abstract class Course extends BaseEntity {
     @Type(type = "org.hibernate.type.TextType")
     private String name;
 
-
     @Column(name = "ects")
     private Double ects;
 
