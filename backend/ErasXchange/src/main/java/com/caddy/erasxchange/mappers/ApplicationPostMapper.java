@@ -49,20 +49,25 @@ public class ApplicationPostMapper {
 
         application.setStudent(student);
         University university = null;
-        if (applicationPostDto.getChoice1Id() != null)
+        if (applicationPostDto.getChoice1Id() != null) {
             university = universityService.findById(applicationPostDto.getChoice1Id());
-        application.setChoice1(university);
-        if (applicationPostDto.getChoice1Id() != null)
+            application.setChoice1(university);
+        }
+        if (applicationPostDto.getChoice1Id() != null) {
             university = universityService.findById(applicationPostDto.getChoice2Id());
-        application.setChoice2(university);
-        if (applicationPostDto.getChoice1Id() != null)
+            application.setChoice2(university);
+        }
+        if (applicationPostDto.getChoice1Id() != null) {
             university = universityService.findById(applicationPostDto.getChoice3Id());
-        application.setChoice3(university);
-        if (applicationPostDto.getChoice1Id() != null)
+            application.setChoice3(university);
+        }
+        if (applicationPostDto.getChoice1Id() != null) {
             university = universityService.findById(applicationPostDto.getChoice4Id());
-        application.setChoice4(university);
-        if (applicationPostDto.getChoice1Id() != null)
+            application.setChoice4(university);
+        }
+        if (applicationPostDto.getChoice1Id() != null) {
             university = universityService.findById(applicationPostDto.getChoice5Id());
-        application.setChoice5(university);
+            application.setChoice5(university);
+        }
     }
 }

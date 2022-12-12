@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring", uses = {CoordinatorService.class})
 public interface UniversityMapper {
     @Mapping(source = "coordinatorId", target = "coordinator")
-    University universityDtoToUniversity(UniversityDto universityDto);
+    University toEntity(UniversityDto universityDto);
 
     @Mapping(source = "coordinator.id", target = "coordinatorId")
     @Mapping(target = "coursIds", expression = "java(coursesToCoursIds(university.getCourses()))")
-    UniversityDto universityToUniversityDto(University university);
+    UniversityDto toDTO(University university);
 
     @Mapping(source = "coordinatorId", target = "coordinator.id")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

@@ -34,9 +34,9 @@ public abstract class GenericService<T extends BaseEntity, Repository extends Jp
         return repository.findAll();
     }
 
-    public void update(T entity) {
-
-
+    public boolean existsById(Long id) {
+        return repository.existsById(id);
     }
+
 
 }
