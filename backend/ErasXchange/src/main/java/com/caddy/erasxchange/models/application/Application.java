@@ -16,8 +16,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @MappedSuperclass
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Application extends BaseEntity {
+
+public abstract class Application extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")

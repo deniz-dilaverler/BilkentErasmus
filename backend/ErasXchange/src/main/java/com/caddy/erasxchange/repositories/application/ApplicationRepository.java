@@ -1,11 +1,16 @@
-package com.caddy.erasxchange.repositories;
+package com.caddy.erasxchange.repositories.application;
 
+import com.caddy.erasxchange.models.application.AppStatus;
 import com.caddy.erasxchange.models.application.Application;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Repository;
 
-@Repository
+import java.util.List;
+
+@NoRepositoryBean
 public interface ApplicationRepository<T extends Application> extends JpaRepository<T, Long> {
+
+    public List<T> findByStatus(AppStatus appStatus);
 }
