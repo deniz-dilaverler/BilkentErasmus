@@ -22,11 +22,11 @@ public abstract class GenericService<T extends BaseEntity, Repository extends Jp
 
     }
 
-    public void addEtity(T entity) {
+    public void saveEtity(T entity) {
         repository.save(entity);
     }
 
-    public void addEntities(Iterable<T> entities) {
+    public void saveEntities(Iterable<T> entities) {
         repository.saveAll(entities);
     }
 

@@ -1,5 +1,7 @@
-package com.caddy.erasxchange.models;
+package com.caddy.erasxchange.models.university;
 
+import com.caddy.erasxchange.models.BaseEntity;
+import com.caddy.erasxchange.models.Semester;
 import com.caddy.erasxchange.models.course.ExternalCourse;
 import com.caddy.erasxchange.models.users.Coordinator;
 import lombok.AllArgsConstructor;
@@ -18,7 +20,8 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "universities")
-public class University extends BaseEntity{
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class University extends BaseEntity {
 
     @Column(name = "name")
     @Type(type = "org.hibernate.type.TextType")
@@ -28,17 +31,13 @@ public class University extends BaseEntity{
     @JoinColumn(name = "coordinator_id", referencedColumnName = "id")
     private Coordinator coordinator;
 
-    @Column(name = "is_bilateral")
-    private Boolean isBilateral;
-    @Column(name = "quota")
-    private Integer quota;
 
+
+
+    private String languageRequirement;
     private Semester semester;
 
-    @OneToMany(mappedBy = "university")
-    private Set<Program> programs;
 
-    private Integer allowence;
     private String country;
 
     @OneToMany(mappedBy = "university")
