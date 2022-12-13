@@ -1,7 +1,7 @@
 import Schools from "./institutions-components/institutions/Schools";
 import NewSchool from "./institutions-components/new-institution/NewSchool";
 import React, {useState} from "react";
-import './App.css';
+import './InstitutionsMainPage.css';
 
 const initialInstitutions = [
   {
@@ -56,7 +56,7 @@ const initialInstitutions = [
 ];
 
 
-function App() {
+function InstitutionsMainPage() {
   const [institutions, setInstitutions] = useState(initialInstitutions);
   const addSchoolHandler = school => {
     setInstitutions(
@@ -74,4 +74,4 @@ function App() {
   );
 }
 
-export default App;
+export default InstitutionsMainPage;
