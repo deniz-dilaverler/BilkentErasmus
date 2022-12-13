@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController(value = "/university/erasmus")
+@RestController
+@RequestMapping("/university/erasmus")
 public class ErasmusUniversityController {
     final ErasmusUniversityService erasmusUniversityService;
 
@@ -40,9 +41,9 @@ public class ErasmusUniversityController {
     @GetMapping("/all")
     public ResponseEntity<List<ErasmusUniversityDto>> getUniversities() {
 
-
+        System.out.println("Cum");
         List<ErasmusUniversityDto> universities = erasmusUniversityService.getUniversities();
-
+        System.out.println(universities);
         return new ResponseEntity<List<ErasmusUniversityDto>>(universities, HttpStatus.OK);
     }
 

@@ -41,6 +41,8 @@ public class BilateralApplication extends Application {
     @JoinColumn(name = "placed_school")
     private BilateralUniversity placedSchool;
 
+
+    // for mapstruct to be able to see these methods
     @Override
     public Student getStudent() {
         return super.getStudent();
@@ -49,5 +51,10 @@ public class BilateralApplication extends Application {
     @Override
     public void setStudent(Student student) {
         super.setStudent(student);
+    }
+
+    @Override
+    public void setPlacedSchoolToNull() {
+        placedSchool =null;
     }
 }

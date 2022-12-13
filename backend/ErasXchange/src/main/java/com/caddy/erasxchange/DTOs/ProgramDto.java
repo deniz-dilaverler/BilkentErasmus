@@ -19,7 +19,6 @@ import java.io.Serializable;
 public class ProgramDto implements Serializable {
     private Long id;
     private Integer quota;
-    private String name;
     private Department department;
     private Long universityId;
 }

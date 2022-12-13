@@ -15,14 +15,14 @@ import java.util.stream.Collectors;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring",
         uses = {ProgramMapper.class, CoordinatorService.class, ExternalCourseService.class})
 public interface ErasmusUniversityMapper {
-    @Mapping(source="courseIds", target = "courses")
+    @Mapping(source = "courseIds", target = "courses")
     @Mapping(source = "coordinatorId", target = "coordinator")
     ErasmusUniversity toEntity(ErasmusUniversityDto erasmusUniversityDto);
 
     List<ErasmusUniversity> toEntityList(List<ErasmusUniversityDto> erasmusUniversityDtos);
 
-   // @Mapping(target = "courseIds", expression = "java(coursesToCourseIds(erasmusUniversity.getCourses()))")
-    @Mapping(source = "courses", target ="courseIds" )
+    // @Mapping(target = "courseIds", expression = "java(coursesToCourseIds(erasmusUniversity.getCourses()))")
+    @Mapping(source = "courses", target = "courseIds")
     @Mapping(source = "coordinator.id", target = "coordinatorId")
     ErasmusUniversityDto toDto(ErasmusUniversity erasmusUniversity);
 
@@ -37,6 +37,7 @@ public interface ErasmusUniversityMapper {
         erasmusUniversity.getPrograms().forEach(program -> program.setUniversity(erasmusUniversity));
 
     }
+
     default Set<Long> coursesToCourseIds(Set<ExternalCourse> courses) {
         return courses.stream().map(ExternalCourse::getId).collect(Collectors.toSet());
     }

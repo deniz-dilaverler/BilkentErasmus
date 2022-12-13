@@ -1,6 +1,7 @@
 package com.caddy.erasxchange.models.university;
 
 import com.caddy.erasxchange.models.course.ExternalCourse;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "erasmus_university")
 public class ErasmusUniversity extends University {

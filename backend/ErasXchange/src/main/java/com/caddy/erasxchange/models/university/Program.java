@@ -21,10 +21,6 @@ public class Program  extends BaseEntity {
 
 
 
-    @Column(name = "name")
-    @Type(type = "org.hibernate.type.TextType")
-    private String name;
-
     @Column(name = "department")
     @Enumerated(EnumType.STRING)
     private Department department;

@@ -8,7 +8,9 @@ import com.caddy.erasxchange.repositories.university.BilateralUniversityReposito
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.NoResultException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BilateralUniversityService extends  UniversityService<BilateralUniversity, BilateralUniversityRepository> {
@@ -32,7 +34,12 @@ public class BilateralUniversityService extends  UniversityService<BilateralUniv
     }
 
     public BilateralUniversityDto getUniversity(Long id) {
-        return bilateralUniversityMapper.toDto(super.findById(id));
+        return bilateralUniversityMapper.toDto(findById(id));
     }
 
+
+    @Override
+    protected String getClassName() {
+        return BilateralUniversity.class.getName();
+    }
 }

@@ -12,4 +12,9 @@ public class ProgramService extends GenericService<Program, ProgramRepository> {
     public ProgramService(ProgramRepository repository) {
         super(repository);
     }
+
+    @Override
+    protected String getClassName() {
+        return Program.class.getName();
+    }
 }

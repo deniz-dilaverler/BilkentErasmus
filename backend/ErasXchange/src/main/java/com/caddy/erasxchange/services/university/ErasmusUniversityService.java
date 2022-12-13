@@ -10,13 +10,16 @@ import com.caddy.erasxchange.repositories.university.ErasmusUniversityRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.NoResultException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ErasmusUniversityService extends com.caddy.erasxchange.services.GenericService<ErasmusUniversity, ErasmusUniversityRepository> {
     final ProgramService programService;
     final ProgramMapper programMapper;
     final ErasmusUniversityMapper erasmusUniversityMapper;
+
     @Autowired
     public ErasmusUniversityService(ErasmusUniversityRepository repository, ProgramService programService, ProgramMapper programMapper, ErasmusUniversityMapper erasmusUniversityMapper) {
         super(repository);
@@ -34,7 +37,7 @@ public class ErasmusUniversityService extends com.caddy.erasxchange.services.Gen
     }
 
     public void addProgram(ProgramDto programDto) {
-        ErasmusUniversity university = super.findById(programDto.getUniversityId());
+        ErasmusUniversity university = findById(programDto.getUniversityId());
         Program program = programMapper.toEntity(programDto);
         university.getPrograms().add(program);
         program.setUniversity(university);
@@ -42,12 +45,16 @@ public class ErasmusUniversityService extends com.caddy.erasxchange.services.Gen
     }
 
     public List<ErasmusUniversityDto> getUniversities() {
-        return erasmusUniversityMapper.toDtoList( repository.findAll());
+        return erasmusUniversityMapper.toDtoList(repository.findAll());
     }
 
     public ErasmusUniversityDto getUniversity(Long id) {
-        return erasmusUniversityMapper.toDto(super.findById(id));
+        return erasmusUniversityMapper.toDto(findById(id));
     }
 
 
+    @Override
+    protected String getClassName() {
+        return ErasmusUniversity.class.getName();
+    }
 }

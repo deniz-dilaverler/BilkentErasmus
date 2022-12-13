@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Setter
 @MappedSuperclass
 
-public abstract class Application extends BaseEntity {
+public abstract class Application extends BaseEntity implements  Comparable<Application>{
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
@@ -32,4 +32,12 @@ public abstract class Application extends BaseEntity {
     private Semester semester;
 
 
+    @Override
+    public int compareTo(Application app) {
+        if (this.student.getExchangeScore() > app.getStudent().getExchangeScore()) return 1;
+        else if (this.student.getExchangeScore() == app.getStudent().getExchangeScore()) return 0;
+        else  return -1;
+    }
+
+    public abstract void setPlacedSchoolToNull();
 }

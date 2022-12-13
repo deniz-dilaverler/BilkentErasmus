@@ -17,7 +17,7 @@ public interface BilateralUniversityMapper {
     @Mapping(source = "coordinatorId", target = "coordinator.id")
     BilateralUniversity toEntity(BilateralUniversityDto bilateralUniversityDto);
 
-    List<BilateralUniversity> toEntityList(BilateralUniversityDto bilateralUniversityDto);
+    List<BilateralUniversity> toEntityList(List<BilateralUniversityDto> bilateralUniversityDto);
 
     @Mapping(source = "courses", target ="courseIds" )
     @Mapping(source = "coordinator.id", target = "coordinatorId")

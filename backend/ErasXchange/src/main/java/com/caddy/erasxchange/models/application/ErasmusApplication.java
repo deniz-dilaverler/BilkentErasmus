@@ -37,6 +37,8 @@ public class ErasmusApplication extends Application {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "placed_school")
     private ErasmusUniversity placedSchool;
+
+    //for mapstruct to see these methods (mapstruct can't see parent methds)
     @Override
     public Student getStudent() {
         return super.getStudent();
@@ -45,5 +47,10 @@ public class ErasmusApplication extends Application {
     @Override
     public void setStudent(Student student) {
         super.setStudent(student);
+    }
+
+    @Override
+    public void setPlacedSchoolToNull() {
+        setPlacedSchool(null);
     }
 }
