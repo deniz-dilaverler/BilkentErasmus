@@ -25,7 +25,7 @@ public class StudentService extends GenericService<Student, StudentRepository> {
     }
 
     public Student findByBilkentId(int bilkentId) {
-        Optional<Student> studentOptional = repository.findUserByBilkentId(bilkentId);
+        Optional<Student> studentOptional = Optional.ofNullable(repository.findByBilkentId(bilkentId));
         if(studentOptional.isEmpty()) {
             throw new EntityNotFoundException();
         } else {

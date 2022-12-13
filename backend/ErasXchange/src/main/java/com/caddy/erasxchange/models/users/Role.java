@@ -1,9 +1,9 @@
 package com.caddy.erasxchange.models.users;
 
 public enum Role {
-    STUDENT,
-    COORDINATOR,
-    ISO,
-    BOARD,
-    ADMIN
+    ROLE_STUDENT,
+    ROLE_COORDINATOR,
+    ROLE_ISO,
+    ROLE_BOARD,
+    ROLE_ADMIN
 }

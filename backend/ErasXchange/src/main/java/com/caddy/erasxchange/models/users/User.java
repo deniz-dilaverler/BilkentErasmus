@@ -21,7 +21,7 @@ import java.util.Set;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "users")
-public abstract class User extends BaseEntity {
+public class User extends BaseEntity {
 
     @Column(name = "first_name")
     @Type(type = "org.hibernate.type.TextType")
@@ -64,6 +64,7 @@ public abstract class User extends BaseEntity {
     private List<Form> receiverForms;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private Role role;
 
 
