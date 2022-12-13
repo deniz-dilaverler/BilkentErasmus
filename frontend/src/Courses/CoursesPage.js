@@ -48,19 +48,20 @@ function getCourseDetails(courseID) {
 
 function handleClick(courseID) {
   // Get the course details from somewhere (database, API, etc.)
-  const courseDetails = getCourseDetails(courseID);
+  //const courseDetails = getCourseDetails(courseID);
 
   // Set the course details in state
   this.setState({
     showModal: true,
-    courseDetails,
+    //courseDetails,
   });
 }
 
 
 // Modal component
 const CourseModal = (props) => {
-  return (
+  return (true
+    /*
     <Modal show={props.showModal} onHide={props.closeModal}>
       <Modal.Header closeButton>
         <Modal.Title>{props.courseDetails.name}</Modal.Title>
@@ -74,6 +75,7 @@ const CourseModal = (props) => {
         </Button>
       </Modal.Footer>
     </Modal>
+    */
   );
 }
 

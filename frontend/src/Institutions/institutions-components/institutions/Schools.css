@@ -1,0 +1,15 @@
+.schools {
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #003366;
+    width: 50rem;
+    max-width: 95%;
+    height: 50rem;
+    max-width: 75%;
+    overflow: auto;
+    text-align:justify;
+}
+
+.filter {
+  right:0;
+}
