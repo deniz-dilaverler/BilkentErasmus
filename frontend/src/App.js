@@ -1,6 +1,7 @@
 import "./App.css";
 import Sidebar from "./Sidebar/Sidebar";
 import LoginForm from "./Login/LoginForm";
+import CoursesPage from "./Courses/CoursesPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginForm />} />
+          <Route path="/courses" element={<CoursesPage />} />
         </Routes>
       </BrowserRouter>
     </div>
