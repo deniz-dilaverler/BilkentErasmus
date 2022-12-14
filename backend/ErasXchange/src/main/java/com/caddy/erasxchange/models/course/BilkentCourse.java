@@ -1,5 +1,6 @@
 package com.caddy.erasxchange.models.course;
 
+import com.caddy.erasxchange.models.Department;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,11 @@ public class BilkentCourse extends Course{
     @Type(type = "org.hibernate.type.TextType")
     private String coordinatorMail;
 
+
     @ManyToMany(mappedBy = "equivalentCourses")
     private Set<ExternalCourse> externalCourses;
+
+
+
 
 }

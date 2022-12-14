@@ -34,6 +34,8 @@ public class ExternalCourse extends Course {
     @Type(type = "org.hibernate.type.TextType")
     private String syllabusLink;
 
+    private Boolean isErasmus;
+
     @ManyToMany
     @JoinTable(
             name = "external_bilkent_course",

@@ -21,7 +21,7 @@ import java.util.Set;
 @Entity
 @Table(name = "universities")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class University extends BaseEntity {
+public  abstract class University extends BaseEntity {
 
     @Column(name = "name")
     @Type(type = "org.hibernate.type.TextType")

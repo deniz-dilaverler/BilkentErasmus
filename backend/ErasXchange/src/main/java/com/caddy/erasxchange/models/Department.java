@@ -10,5 +10,6 @@ public enum Department {
     EE,
     ME,
     IE,
-    MAN
+    MAN,
+    MATH,
 }
