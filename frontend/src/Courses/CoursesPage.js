@@ -1,82 +1,79 @@
-import React, { useState, useEffect } from 'react';
-import { Modal } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import './Courses.css';
+import React, { useState, useEffect } from "react";
+import { Modal } from "react-bootstrap";
+import "./Courses.css";
 
 const CoursesPage = () => {
   const [courses, setCourses] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:8080/courses')
-      .then(response => response.json())
-      .then(courses => setCourses(courses));
+    fetch("http://localhost:8080/courses")
+      .then((response) => response.json())
+      .then((courses) => setCourses(courses));
   }, []);
 
+  const [filteredItems, setFilteredItems] = useState(courses);
+
+  const openModal = (course) => {
+    setSelectedCourse(course);
+  };
+
+  const closeModal = () => {
+    setSelectedCourse(null);
+  };
+
+  function handleFilter() {
+    //only show approved for now
+    setFilteredItems(courses.filter((course) => course.isApproved === true));
+  }
+
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Course Name</th>
-          <th>School Name</th>
-          <th>Equivalent Course</th>
-          <th>Approval Status</th>
-          <th>Details</th>
-        </tr>
-      </thead>
-      <tbody>
-        {courses.map(course => (
-          <tr key={course.id}>
-            <td>{course.name}</td>
-            <td>{course.schoolName}</td>
-            <td>{course.equivalentCourse}</td>
-            <td>{course.approvalStatus}</td>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Course Name</th>
+            <th>School Name</th>
+            <th>Equivalent Course</th>
+            <th>Approval Status</th>
+            <th>Details</th>
             <td>
-              <button onClick={() => handleClick(course.id)} className="details__button">Details</button>
+              <button>Add Course</button>
+            </td>
+            <td>
+              <button onClick={handleFilter}>Filter</button>
             </td>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {filteredItems.map((course) => (
+            <tr key={course.id}>
+              <td>{course.name}</td>
+              <td>{course.school}</td>
+              <td>{course.equivalent}</td>
+              <td>{course.isApproved ? "Approved" : "Not Approved"}</td>
+              <td>
+                <button onClick={() => openModal(course)}>Details</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <Modal
+        isOpen={selectedCourse !== null}
+        onRequestClose={closeModal}
+        shouldCloseOnOverlayClick={true}
+      >
+        {selectedCourse !== null && (
+          <div>
+            <h2>{selectedCourse.name}</h2>
+            <p>{selectedCourse.details}</p>
+            <button onClick={closeModal}>Close</button>
+          </div>
+        )}
+      </Modal>
+    </div>
   );
 };
-
-function getCourseDetails(courseID) {
-  // Make an HTTP request to the backend to get the details for the specified course
-  return fetch(`http://localhost:8080/courses/${courseID}`)
-    .then(response => response.json());
-}
-
-function handleClick(courseID) {
-  // Get the course details from somewhere (database, API, etc.)
-  //const courseDetails = getCourseDetails(courseID);
-
-  // Set the course details in state
-  this.setState({
-    showModal: true,
-    //courseDetails,
-  });
-}
-
-
-// Modal component
-const CourseModal = (props) => {
-  return (true
-    /*
-    <Modal show={props.showModal} onHide={props.closeModal}>
-      <Modal.Header closeButton>
-        <Modal.Title>{props.courseDetails.name}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <p>{props.courseDetails.description}</p>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={props.closeModal}>
-          Close
-        </Button>
-      </Modal.Footer>
-    </Modal>
-    */
-  );
-}
 
 export default CoursesPage;

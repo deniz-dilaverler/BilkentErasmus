@@ -18,9 +18,9 @@ export const SidebarData = [
     link: "/instutitions",
   },
   {
-    title: "Application",
+    title: "Applications",
     icon: <BorderColorIcon />,
-    link: "/application",
+    link: "/applications",
   },
   {
     title: "Courses ",

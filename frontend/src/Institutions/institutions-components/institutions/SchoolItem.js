@@ -7,21 +7,15 @@ import Button from 'react-bootstrap/Button';
 function SchoolItem(props) {
   const [details, showDetails] = useState();
 
-  function handleClick(courseID) {
-    // Get the course details from somewhere (database, API, etc.)
-    const courseDetails = {
-        name: "Course Name",
-        schoolName: "School Name",
-        equivalentCourse: "Equivalent Course",
-        approvalStatus: "Approval Status",
-    }
+  const [selectedInstitution, setSelectedInstitution] = useState(null);
 
-    // Set the course details in state
-    this.setState({
-      showModal: true,
-      courseDetails,
-    });
-  }
+  const openModal = (props) => {
+    setSelectedInstitution(props);
+  };
+
+  const closeModal = () => {
+    setSelectedInstitution(null);
+  };
 
   return (
     <InstitutionCard className="school-item">
@@ -37,31 +31,26 @@ function SchoolItem(props) {
       <div className="school-item__description">
         <button
           className="school-item__description_button"
-          onClick={handleClick}
+          onClick={() => openModal(props)}
         >
           Details
         </button>
       </div>
+      <Modal
+        isOpen={selectedInstitution !== null}
+        onRequestClose={closeModal}
+        shouldCloseOnOverlayClick={true}
+      >
+        {selectedInstitution !== null && (
+          <div>
+            <h2>{selectedInstitution.name}</h2>
+            <p>{selectedInstitution.details}</p>
+            <button onClick={closeModal}>Close</button>
+          </div>
+        )}
+      </Modal>
     </InstitutionCard>
   );
 }
-export default SchoolItem;
 
-// Modal component
-const InstutitonsModal = (props) => {
-  return (
-    <Modal show={props.showModal} onHide={props.closeModal}>
-      <Modal.Header closeButton>
-        <Modal.Title>{props.courseDetails.name}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <p>{props.courseDetails.description}</p>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={props.closeModal}>
-          Close
-        </Button>
-      </Modal.Footer>
-    </Modal>
-  );
-};
+export default SchoolItem;

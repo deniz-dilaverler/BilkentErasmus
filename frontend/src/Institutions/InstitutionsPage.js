@@ -1,7 +1,7 @@
 import Schools from "./institutions-components/institutions/Schools";
 import NewSchool from "./institutions-components/new-institution/NewSchool";
 import React, {useState} from "react";
-import './InstitutionsMainPage.css';
+import './InstitutionsPage.css';
 
 const initialInstitutions = [
   {

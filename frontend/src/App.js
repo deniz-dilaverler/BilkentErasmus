@@ -2,7 +2,8 @@ import "./App.css";
 import Sidebar from "./Sidebar/Sidebar";
 import LoginForm from "./Login/LoginForm";
 import CoursesPage from "./Courses/CoursesPage";
-import InstitutionsMainPage from "./Institutions/InstitutionsMainPage";
+import InstitutionsPage from "./Institutions/InstitutionsPage";
+import ApplicationsPage from "./Applications/ApplicationsPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -12,8 +13,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginForm />} />
+          <Route path="/instutitions" element={<InstitutionsPage />} />
+          <Route path="/applications" element={<ApplicationsPage />} />
           <Route path="/courses" element={<CoursesPage />} />
-          <Route path="/instutitions" element={<InstitutionsMainPage />} />
         </Routes>
       </BrowserRouter>
     </div>
