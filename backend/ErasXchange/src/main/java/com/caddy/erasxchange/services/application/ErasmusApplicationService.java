@@ -31,9 +31,9 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
 
     @Autowired
     public ErasmusApplicationService(ErasmusApplicationRepository repository, StudentService studentService, ErasmusApplicationMapper erasmusMapper,
-                                         ErasmusApplicationPlacer applicationPlacer,
-StudentRepository studentRepository) {
-        super(repository, studentService,applicationPlacer );
+                                     ErasmusApplicationPlacer applicationPlacer,
+                                     StudentRepository studentRepository) {
+        super(repository, studentService, applicationPlacer);
         this.erasmusMapper = erasmusMapper;
     }
 
@@ -101,10 +101,10 @@ StudentRepository studentRepository) {
         List<Student> students = studentService.findStudentsByDepartment(department);
         for (Student student : students) {
             ErasmusApplication erasmusApplication = student.getErasmusApplication();
-            if(erasmusApplication != null) {
+            if (erasmusApplication != null) {
                 applications.add(erasmusApplication);
             }
-         }
+        }
         applicationPlacer.startPlacements(applications, department);
 
     }

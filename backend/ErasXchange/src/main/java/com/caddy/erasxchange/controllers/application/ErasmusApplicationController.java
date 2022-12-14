@@ -35,4 +35,24 @@ public class ErasmusApplicationController {
                                                 HttpStatus.OK);
     }
 
+    @GetMapping("/bybilkentid/{bilkentId}")
+    public ResponseEntity<ErasmusApplicationDto> getApplicationByBilkentId(@PathVariable Integer bilkentId) {
+        ErasmusApplicationDto app =  erasmusApplicationService.getApplicationByBilkentId(bilkentId);
+
+        return new ResponseEntity<ErasmusApplicationDto>(app,
+                HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{appId}/{cancelAll}")
+    public ResponseEntity cancelApplication(@PathVariable Long appId, @PathVariable  boolean  cancelAll) {
+        erasmusApplicationService.cancelApplication(appId,cancelAll );
+
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
+
+
+
 }
