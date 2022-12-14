@@ -4,6 +4,9 @@ import com.caddy.erasxchange.models.BaseEntity;
 import com.caddy.erasxchange.models.Semester;
 import com.caddy.erasxchange.models.users.Student;
 import com.caddy.erasxchange.models.University;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +24,7 @@ public abstract class Application extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
+    @JsonManagedReference
     private Student student;
 
     @Column(name = "status")

@@ -2,10 +2,13 @@ package com.caddy.erasxchange.models.users;
 
 import com.caddy.erasxchange.models.application.BilateralApplication;
 import com.caddy.erasxchange.models.application.ErasmusApplication;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
@@ -23,7 +26,8 @@ public class Student extends User {
     @Column(name = "gpa")
     private Double gpa;
 
-    @OneToOne(mappedBy = "student")
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
+    @JsonBackReference
     private ErasmusApplication erasmusApplication;
 
     @OneToOne(mappedBy = "student")

@@ -5,10 +5,17 @@ package com.caddy.erasxchange.models;
 TODO: ADdd the remainining Departments
  */
 public enum Department {
-    CS,
-    IAED,
-    EE,
-    ME,
-    IE,
-    MAN
+    CS("CS"),
+    IAED("IAED"),
+    EEE("EEE"),
+    ME("ME"),
+    IE("IE"),
+    MAN("MAN");
+
+    private String label;
+
+    Department(String label) {
+        this.label = label;
+    }
+
 }
