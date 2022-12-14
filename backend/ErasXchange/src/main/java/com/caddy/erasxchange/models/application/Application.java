@@ -20,7 +20,7 @@ import javax.persistence.*;
 @Setter
 @MappedSuperclass
 
-public abstract class Application extends BaseEntity {
+public abstract class Application extends BaseEntity implements  Comparable<Application>{
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
@@ -35,28 +35,13 @@ public abstract class Application extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Semester semester;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "choice1")
-    private University choice1;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "choice2")
-    private University choice2;
+    @Override
+    public int compareTo(Application app) {
+        if (this.student.getExchangeScore() > app.getStudent().getExchangeScore()) return 1;
+        else if (this.student.getExchangeScore() == app.getStudent().getExchangeScore()) return 0;
+        else  return -1;
+    }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "choice3")
-    private University choice3;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "choice4")
-    private University choice4;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "choice5")
-    private University choice5;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "placed_school")
-    private University placedSchool;
-
+    public abstract void setPlacedSchoolToNull();
 }

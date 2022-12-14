@@ -2,8 +2,10 @@ package com.caddy.erasxchange.services;
 
 import com.caddy.erasxchange.models.BaseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,19 +16,13 @@ public abstract class GenericService<T extends BaseEntity, Repository extends Jp
         this.repository = repository;
     }
 
-    public T findById(Long id) {
-        Optional<T> optional = repository.findById(id);
 
-        if(optional.isEmpty()) throw new EntityNotFoundException();
-        else return optional.get();
 
-    }
-
-    public void addEtity(T entity) {
+    public void saveEtity(T entity) {
         repository.save(entity);
     }
 
-    public void addEntities(Iterable<T> entities) {
+    public void saveEntities(Iterable<T> entities) {
         repository.saveAll(entities);
     }
 
@@ -38,5 +34,13 @@ public abstract class GenericService<T extends BaseEntity, Repository extends Jp
         return repository.existsById(id);
     }
 
+    public T findById(Long id) {
+        Optional<T> optional = repository.findById(id);
 
+        if (optional.isEmpty()) throw new ResourceNotFoundException(getClassName() +  " with id: " + id + ",  not found") ;
+        else return optional.get();
+    }
+
+    //this is needed by the findById() method to throw errors with relevant naming
+    protected abstract String getClassName();
 }

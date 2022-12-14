@@ -1,24 +1,24 @@
 package com.caddy.erasxchange.DTOs;
 
 import com.caddy.erasxchange.models.Department;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.caddy.erasxchange.models.university.Program;
+import lombok.*;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
 /**
- * A DTO for the {@link com.caddy.erasxchange.models.Program} entity
+ * A DTO for the {@link Program} entity
  */
 @AllArgsConstructor
-
+@NoArgsConstructor
 @Getter
 @Setter
+@ToString
+@Accessors(chain = true)
 public class ProgramDto implements Serializable {
-    final private Long id;
-    final private Integer quota;
-    final private String name;
-    final private Department department;
-    final private Long universityId;
+    private Long id;
+    private Integer quota;
+    private Department department;
+    private Long universityId;
 }

@@ -1,6 +1,6 @@
 package com.caddy.erasxchange.models.course;
 
-import com.caddy.erasxchange.models.University;
+import com.caddy.erasxchange.models.university.University;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,10 +8,8 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
-enum ApprovalStatus {PENDING, ACCEPTED, DENIED}
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

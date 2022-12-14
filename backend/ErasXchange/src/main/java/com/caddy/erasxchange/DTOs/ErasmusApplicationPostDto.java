@@ -2,10 +2,8 @@ package com.caddy.erasxchange.DTOs;
 
 import com.caddy.erasxchange.models.Semester;
 import com.caddy.erasxchange.models.application.AppStatus;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -16,7 +14,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ApplicationPostDto implements Serializable {
+@ToString
+@Accessors(chain = true)
+public class ErasmusApplicationPostDto implements Serializable {
     private Long studentId;
     private AppStatus status;
     private Semester semester;
@@ -25,5 +25,4 @@ public class ApplicationPostDto implements Serializable {
     private Long choice3Id;
     private Long choice4Id;
     private Long choice5Id;
-    private Long placedSchoolId;
 }

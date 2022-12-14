@@ -1,5 +1,8 @@
-package com.caddy.erasxchange.models;
+package com.caddy.erasxchange.models.university;
 
+import com.caddy.erasxchange.models.BaseEntity;
+import com.caddy.erasxchange.models.Department;
+import com.caddy.erasxchange.models.university.University;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
@@ -11,16 +14,12 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "programs")
-public class Program  extends BaseEntity{
+public class Program  extends BaseEntity {
 
     @Column(name = "quota")
     private Integer quota;
 
 
-
-    @Column(name = "name")
-    @Type(type = "org.hibernate.type.TextType")
-    private String name;
 
     @Column(name = "department")
     @Enumerated(EnumType.STRING)
