@@ -2,15 +2,16 @@ package com.caddy.erasxchange.models.course;
 
 import com.caddy.erasxchange.models.BaseEntity;
 import com.caddy.erasxchange.models.Department;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @MappedSuperclass

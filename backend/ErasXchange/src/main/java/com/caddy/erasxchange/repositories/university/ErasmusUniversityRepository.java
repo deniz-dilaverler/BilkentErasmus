@@ -1,6 +1,6 @@
 package com.caddy.erasxchange.repositories.university;
 
-import com.caddy.erasxchange.models.university.ErasmusUniversity;
+import com.caddy.erasxchange.models.forms.university.ErasmusUniversity;
 import org.springframework.stereotype.Repository;
 
 @Repository

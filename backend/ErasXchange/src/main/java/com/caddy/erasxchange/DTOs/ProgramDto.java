@@ -1,7 +1,7 @@
 package com.caddy.erasxchange.DTOs;
 
 import com.caddy.erasxchange.models.Department;
-import com.caddy.erasxchange.models.university.Program;
+import com.caddy.erasxchange.models.forms.university.Program;
 import lombok.*;
 import lombok.experimental.Accessors;
 

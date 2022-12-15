@@ -1,4 +1,4 @@
-package com.caddy.erasxchange.models.university;
+package com.caddy.erasxchange.models.forms.university;
 
 import com.caddy.erasxchange.models.BaseEntity;
 import com.caddy.erasxchange.models.Semester;
@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -27,9 +28,13 @@ public  abstract class University extends BaseEntity {
     @Type(type = "org.hibernate.type.TextType")
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "coordinator_id", referencedColumnName = "id")
-    private Coordinator coordinator;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "universities_join_coordinators",
+            joinColumns = { @JoinColumn(name = "university_id")},
+            inverseJoinColumns = {@JoinColumn(name = "coordinator_id")}
+    )
+    private Set<Coordinator> coordinators;
 
 
 
@@ -40,7 +45,7 @@ public  abstract class University extends BaseEntity {
 
     private String country;
 
-    @OneToMany(mappedBy = "university")
+    @OneToMany(mappedBy = "university", cascade = CascadeType.PERSIST)
     private Set<ExternalCourse> courses;
 
 

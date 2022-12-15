@@ -35,6 +35,7 @@ public abstract class GenericService<T extends BaseEntity, Repository extends Jp
     }
 
     public T findById(Long id) {
+        if (id == null ) throw new NullPointerException(getClassName() + " the id value can't be null");
         Optional<T> optional = repository.findById(id);
 
         if (optional.isEmpty()) throw new ResourceNotFoundException(getClassName() +  " with id: " + id + ",  not found") ;

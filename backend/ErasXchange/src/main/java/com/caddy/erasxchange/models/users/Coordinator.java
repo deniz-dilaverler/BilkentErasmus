@@ -1,6 +1,6 @@
 package com.caddy.erasxchange.models.users;
 
-import com.caddy.erasxchange.models.university.University;
+import com.caddy.erasxchange.models.forms.university.University;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.Set;
 @Table(name = "coordinators")
 public class Coordinator extends User {
 
-    @OneToMany(mappedBy = "coordinator")
+    @ManyToMany(mappedBy = "coordinators")
     private Set<University> responsibleSchools;
 
 

@@ -6,7 +6,7 @@ import com.caddy.erasxchange.mappers.ErasmusApplicationMapper;
 import com.caddy.erasxchange.models.Department;
 import com.caddy.erasxchange.models.application.AppStatus;
 import com.caddy.erasxchange.models.application.ErasmusApplication;
-import com.caddy.erasxchange.models.university.Program;
+import com.caddy.erasxchange.models.forms.university.Program;
 import com.caddy.erasxchange.models.users.Student;
 import com.caddy.erasxchange.repositories.application.ErasmusApplicationRepository;
 
@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.LinkedList;
-import java.util.List;
 
 
 @Service

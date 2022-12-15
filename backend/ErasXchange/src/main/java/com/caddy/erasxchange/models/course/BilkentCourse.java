@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -27,10 +28,8 @@ public class BilkentCourse extends Course{
     private String coordinatorMail;
 
 
-    @ManyToMany(mappedBy = "equivalentCourses")
-    private Set<ExternalCourse> externalCourses;
+    @OneToMany(mappedBy = "bilkentCourse")
 
-
-
+    private Set<EquivalenceItem> externalCourses = new HashSet<>();
 
 }

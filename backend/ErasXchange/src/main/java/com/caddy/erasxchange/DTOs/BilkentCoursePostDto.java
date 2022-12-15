@@ -18,13 +18,11 @@ import java.util.Set;
 @Accessors(chain = true)
 public class BilkentCoursePostDto implements Serializable {
     private String name;
+    private Department department;
+    private String courseCode;
     private Double ects;
     private Double normalCredit;
     private String coordinatorName;
     private String coordinatorMail;
-    private Set<Long> externalCourseIds;
-    private Department department;
-    private String courseCode;
-
-
+    private Set<EquivalenceItemDto> externalCourses;
 }

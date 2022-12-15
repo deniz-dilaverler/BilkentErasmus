@@ -1,10 +1,8 @@
-package com.caddy.erasxchange.models.university;
+package com.caddy.erasxchange.models.forms.university;
 
 import com.caddy.erasxchange.models.BaseEntity;
 import com.caddy.erasxchange.models.Department;
-import com.caddy.erasxchange.models.university.University;
 import lombok.*;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 

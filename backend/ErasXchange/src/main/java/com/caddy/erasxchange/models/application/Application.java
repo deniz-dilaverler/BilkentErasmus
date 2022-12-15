@@ -3,7 +3,6 @@ package com.caddy.erasxchange.models.application;
 import com.caddy.erasxchange.models.BaseEntity;
 import com.caddy.erasxchange.models.Semester;
 import com.caddy.erasxchange.models.users.Student;
-import com.caddy.erasxchange.models.university.University;
 import lombok.*;
 
 import javax.persistence.*;

@@ -4,15 +4,14 @@ import com.caddy.erasxchange.DTOs.ErasmusUniversityDto;
 import com.caddy.erasxchange.DTOs.ProgramDto;
 import com.caddy.erasxchange.mappers.ErasmusUniversityMapper;
 import com.caddy.erasxchange.mappers.ProgramMapper;
-import com.caddy.erasxchange.models.university.Program;
-import com.caddy.erasxchange.models.university.ErasmusUniversity;
+import com.caddy.erasxchange.models.forms.university.Program;
+import com.caddy.erasxchange.models.forms.university.ErasmusUniversity;
+import com.caddy.erasxchange.models.users.Coordinator;
 import com.caddy.erasxchange.repositories.university.ErasmusUniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.NoResultException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ErasmusUniversityService extends com.caddy.erasxchange.services.GenericService<ErasmusUniversity, ErasmusUniversityRepository> {
@@ -31,7 +30,9 @@ public class ErasmusUniversityService extends com.caddy.erasxchange.services.Gen
     public void addUniversity(ErasmusUniversityDto erasmusUniversityDto) {
         erasmusUniversityDto.setId(null);
         ErasmusUniversity erasmusUniversity = erasmusUniversityMapper.toEntity(erasmusUniversityDto);
-        erasmusUniversity.getCoordinator().getResponsibleSchools().add(erasmusUniversity);
+        for(Coordinator coordinator : erasmusUniversity.getCoordinators()) {
+            coordinator.getResponsibleSchools().add(erasmusUniversity);
+        }
         repository.save(erasmusUniversity);
 
     }

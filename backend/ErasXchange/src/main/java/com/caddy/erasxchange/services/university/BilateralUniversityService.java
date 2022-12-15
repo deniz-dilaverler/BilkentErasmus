@@ -1,16 +1,14 @@
 package com.caddy.erasxchange.services.university;
 
 import com.caddy.erasxchange.DTOs.BilateralUniversityDto;
-import com.caddy.erasxchange.DTOs.ErasmusUniversityDto;
 import com.caddy.erasxchange.mappers.BilateralUniversityMapper;
-import com.caddy.erasxchange.models.university.BilateralUniversity;
+import com.caddy.erasxchange.models.forms.university.BilateralUniversity;
+import com.caddy.erasxchange.models.users.Coordinator;
 import com.caddy.erasxchange.repositories.university.BilateralUniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.NoResultException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BilateralUniversityService extends  UniversityService<BilateralUniversity, BilateralUniversityRepository> {
@@ -24,7 +22,9 @@ public class BilateralUniversityService extends  UniversityService<BilateralUniv
 
     public void addUniversity(BilateralUniversityDto bilateralUniversityDto) {
         BilateralUniversity bilateralUniversity = bilateralUniversityMapper.toEntity(bilateralUniversityDto);
-        bilateralUniversity.getCoordinator().getResponsibleSchools().add(bilateralUniversity);
+        for(Coordinator coordinator : bilateralUniversity.getCoordinators()) {
+            coordinator.getResponsibleSchools().add(bilateralUniversity);
+        }
         repository.save(bilateralUniversity);
     }
 

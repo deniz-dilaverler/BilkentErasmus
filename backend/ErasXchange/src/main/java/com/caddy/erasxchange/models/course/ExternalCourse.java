@@ -1,13 +1,15 @@
 package com.caddy.erasxchange.models.course;
 
-import com.caddy.erasxchange.models.university.University;
+import com.caddy.erasxchange.models.forms.university.University;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -36,11 +38,7 @@ public class ExternalCourse extends Course {
 
     private Boolean isErasmus;
 
-    @ManyToMany
-    @JoinTable(
-            name = "external_bilkent_course",
-            joinColumns = { @JoinColumn(name = "external_course_id")},
-            inverseJoinColumns = {@JoinColumn(name = "bilkent_course_id")}
-    )
-    private Set<BilkentCourse> equivalentCourses;
+    @OneToMany(mappedBy = "externalCourse")
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+    private Set<EquivalenceItem> equivalentCourses = new HashSet<>();
 }

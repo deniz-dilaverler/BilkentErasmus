@@ -44,6 +44,10 @@ public class BilkentCourseService extends CourseService<BilkentCourse, BilkentCo
         return  courseMapper.toDtoList(super.findAll());
     }
 
+
+    public void updateSrsCourses() {
+        setCoursesFromSrs();
+    }
     private void setCoursesFromSrs() {
         log.info("Fetching bilkentCourse data from srs");
 
@@ -55,15 +59,11 @@ public class BilkentCourseService extends CourseService<BilkentCourse, BilkentCo
             if(optional.isEmpty()) {
                 updatedCourses.add(courseMapper.postToEntity(srsCourse) );
             } else {
-                updatedCourses.add(courseMapper.partialUpdatePost( srsCourse,optional.get()));
+                updatedCourses.add(courseMapper.postPartialUpdate( srsCourse,optional.get()));
             }
         }
         if(updatedCourses.size() >0) {
             repository.saveAll(updatedCourses);
         }
-    }
-
-    public void updateSrsCourses() {
-        setCoursesFromSrs();
     }
 }

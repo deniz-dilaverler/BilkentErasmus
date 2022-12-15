@@ -1,7 +1,6 @@
 package com.caddy.erasxchange.external_system_sim;
 
 import com.caddy.erasxchange.DTOs.BilkentCoursePostDto;
-import com.caddy.erasxchange.DTOs.ExternalCourseDto;
 import com.caddy.erasxchange.models.Department;
 import org.springframework.stereotype.Service;
 

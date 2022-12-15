@@ -1,6 +1,7 @@
 package com.caddy.erasxchange.DTOs;
 
 import com.caddy.erasxchange.models.Semester;
+import com.caddy.erasxchange.models.forms.university.BilateralUniversity;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -8,7 +9,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 /**
- * A DTO for the {@link com.caddy.erasxchange.models.university.BilateralUniversity} entity
+ * A DTO for the {@link BilateralUniversity} entity
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +20,7 @@ import java.util.Set;
 public class BilateralUniversityDto implements Serializable {
     private Long id;
     private String name;
-    private Long coordinatorId;
+    private Set<Long> coordinatorIds;
     private String languageRequirement;
     private Semester semester;
     private String country;

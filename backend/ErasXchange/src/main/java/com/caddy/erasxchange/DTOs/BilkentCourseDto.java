@@ -19,12 +19,11 @@ import java.util.Set;
 public class BilkentCourseDto implements Serializable {
     private Long id;
     private String name;
+    private Department department;
+    private String courseCode;
     private Double ects;
     private Double normalCredit;
     private String coordinatorName;
     private String coordinatorMail;
-    private Set<Long> externalCourseIds;
-    private Department department;
-    private String courseCode;
-
+    private Set<EquivalenceItemDto> externalCourses;
 }
