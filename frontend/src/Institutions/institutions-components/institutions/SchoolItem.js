@@ -8,17 +8,8 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
 function SchoolItem(props) {
-  const [details, showDetails] = useState();
 
-  const [selectedInstitution, setSelectedInstitution] = useState(null);
-
-  const openModal = (props) => {
-    setSelectedInstitution(props);
-  };
-
-  const closeModal = () => {
-    setSelectedInstitution(null);
-  };
+  const [modalShow, setModalShow] = React.useState(false);
 
   return (
     <Container className="school-item">
@@ -28,21 +19,24 @@ function SchoolItem(props) {
         <Col><h2>{props.language}</h2></Col>
         <Col><button
           className="school-item__description_button"
-          onClick={() => openModal(props)}>
+          onClick={() => setModalShow(true)}>
           Details
         </button></Col>
         <Modal
-        isOpen={selectedInstitution !== null}
-        onRequestClose={closeModal}
-        shouldCloseOnOverlayClick={true}
-      >
-        {selectedInstitution !== null && (
-          <div>
-            <h2>{selectedInstitution.name}</h2>
-            <p>{selectedInstitution.details}</p>
-            <button onClick={closeModal}>Close</button>
-          </div>
-        )}
+          show={modalShow}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+        <Modal.Body>
+          <h4>{props.name}</h4>
+          <p>
+            Quota:{props.quota}
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => setModalShow(false)}>Close</Button>
+        </Modal.Footer>
       </Modal>
       </Row>
     </Container>

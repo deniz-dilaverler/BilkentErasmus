@@ -3,6 +3,7 @@ import './Schools.css';
 import InstitutionCard from "../UI/InstitutionCard";
 import SchoolFilter from "./SchoolFilter";
 import React, {useState} from "react";
+import Container from 'react-bootstrap/Container';
 
 function Schools(props) {
 
@@ -19,7 +20,7 @@ function Schools(props) {
     })
 
     return(
-            <InstitutionCard className="schools">
+            <Container className="schools">
                 <div className="filter"><SchoolFilter onChangeFilter={filterChangeHandler} selected={filteredSchool}></SchoolFilter></div>
                 {props.institutions.map((school) => 
                     <SchoolItem
@@ -27,9 +28,10 @@ function Schools(props) {
                         name = {school.name}
                         country = {school.country}
                         language = {school.language}
+                        quota = {school.quota}
                     />
                 )}
-            </InstitutionCard>
+            </Container>
     );
 }
 export default Schools;

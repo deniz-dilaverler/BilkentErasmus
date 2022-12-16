@@ -69,7 +69,7 @@ function InstitutionsMainPage() {
     <div>
           <div className = "header"><h2>Partner Institutions</h2></div>
           <NewSchool onAddSchool={addSchoolHandler} ></NewSchool>
-      <Schools institutions={institutions}></Schools>
+          <Schools institutions={institutions}></Schools>
     </div>
   );
 }
