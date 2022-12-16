@@ -1,0 +1,27 @@
+.cancel button {
+    font: inherit;
+    cursor: pointer;
+    padding: 1rem 2rem;
+    border: 1px solid #F0F8FF;
+    background-color: #F0F8FF;
+    color: #003366;
+    border-radius: 12px;
+    margin-right: 1rem;
+  }
+  
+  .cancel button:hover,
+  .cancel button:active {
+    background-color: #cdd9e2;
+    border-color: #cdd9e2;
+  }
+  
+  .new-expense button.alternative {
+    color: #220131;
+    border-color: transparent;
+    background-color: transparent;
+  }
+  
+  .cancel button.alternative:hover,
+  .cancel button.alternative:active {
+    background-color: #ddb3f8;
+  }

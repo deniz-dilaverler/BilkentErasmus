@@ -1,0 +1,29 @@
+.applications {
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #003366;
+    width: 50rem;
+    max-width: 95%;
+    height: 40rem;
+    max-width: 75%;
+    overflow: auto;
+    text-align:justify;
+}
+
+.applications h3 {
+    font-size: 2rem;
+    flex: 1;
+    margin: 0 1rem;
+    color: #e7e7ec;
+  }
+
+.applications h4 {
+    font-size: 1.3rem;
+    flex: 1;
+    margin: 1 2rem;
+    color: #e7e7ec;
+}
+
+.filter {
+  right:0;
+}

@@ -1,4 +1,7 @@
+import StudentAppCard from "./StudentAppCard";
+import './StudentAppItem.css';
 function StudentAppItem(props) {
+
 
     return (
       <StudentAppCard className="application-item">
@@ -14,7 +17,7 @@ function StudentAppItem(props) {
         <div className="application-item__description">
           <button
             className="school-item__description_button"
-            onClick={() => openModal(props)}
+          
           >
             Details
           </button>
