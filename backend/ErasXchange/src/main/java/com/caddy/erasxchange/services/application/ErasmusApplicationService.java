@@ -92,6 +92,7 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
         }
 
         //TODO: Generate event, according to wether the app was placed or not and fully canceled or not, send it to coordinator
+
     }
 
     public void startPlacements(Department department) {
@@ -106,6 +107,18 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
         }
         applicationPlacer.startPlacements(applications, department);
 
+    }
+
+    private ErasmusApplication getHighestWaitingBin(Department department) {
+        List<ErasmusApplication> waiting =  repository.findByStatusAndStudentDepartment(AppStatus.WAITING_BIN,department);
+        if (waiting.size() <= 0)
+            throw new EntityNotFoundException("There are no one in the waiting list for erasmus application department: " + department);
+        ErasmusApplication highest = waiting.get(0);
+        for(ErasmusApplication app : waiting) {
+            if(highest.compareTo(app) < 0) highest = app;
+        }
+
+        return highest;
     }
 
 

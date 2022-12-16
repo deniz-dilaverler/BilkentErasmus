@@ -1,6 +1,7 @@
 package com.caddy.erasxchange.models.application;
 
 import com.caddy.erasxchange.models.BaseEntity;
+import com.caddy.erasxchange.models.Department;
 import com.caddy.erasxchange.models.Semester;
 import com.caddy.erasxchange.models.users.Student;
 import lombok.*;
@@ -38,5 +39,8 @@ public abstract class Application extends BaseEntity implements  Comparable<Appl
         else  return -1;
     }
 
+    public Department getDepaterment() {
+        return this.student.getDepartment();
+    }
     public abstract void setPlacedSchoolToNull();
 }

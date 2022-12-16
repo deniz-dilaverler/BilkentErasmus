@@ -12,8 +12,9 @@ import com.caddy.erasxchange.models.forms.university.ErasmusUniversity;
 import com.caddy.erasxchange.repositories.course.ExternalCourseRepository;
 import com.caddy.erasxchange.repositories.university.BilateralUniversityRepository;
 import com.caddy.erasxchange.repositories.university.ErasmusUniversityRepository;
+import com.sun.istack.NotNull;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
