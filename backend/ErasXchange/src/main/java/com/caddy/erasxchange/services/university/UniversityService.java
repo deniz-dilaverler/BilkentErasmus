@@ -1,6 +1,6 @@
 package com.caddy.erasxchange.services.university;
 
-import com.caddy.erasxchange.models.forms.university.University;
+import com.caddy.erasxchange.models.university.University;
 import com.caddy.erasxchange.repositories.university.UniversityRepository;
 import com.caddy.erasxchange.services.GenericService;
 

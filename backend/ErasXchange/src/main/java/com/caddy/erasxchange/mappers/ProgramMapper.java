@@ -1,7 +1,7 @@
 package com.caddy.erasxchange.mappers;
 
 import com.caddy.erasxchange.DTOs.ProgramDto;
-import com.caddy.erasxchange.models.forms.university.Program;
+import com.caddy.erasxchange.models.university.Program;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")

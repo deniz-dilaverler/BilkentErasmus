@@ -2,7 +2,7 @@ package com.caddy.erasxchange.mappers;
 
 import com.caddy.erasxchange.DTOs.BilateralUniversityDto;
 import com.caddy.erasxchange.models.course.ExternalCourse;
-import com.caddy.erasxchange.models.forms.university.BilateralUniversity;
+import com.caddy.erasxchange.models.university.BilateralUniversity;
 import com.caddy.erasxchange.models.users.Coordinator;
 import com.caddy.erasxchange.services.courses.ExternalCourseService;
 import com.caddy.erasxchange.services.user.CoordinatorService;

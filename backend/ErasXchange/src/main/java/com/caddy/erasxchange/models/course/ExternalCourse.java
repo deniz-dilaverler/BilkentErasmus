@@ -1,6 +1,6 @@
 package com.caddy.erasxchange.models.course;
 
-import com.caddy.erasxchange.models.forms.university.University;
+import com.caddy.erasxchange.models.university.University;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

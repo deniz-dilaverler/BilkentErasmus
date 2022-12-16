@@ -1,6 +1,6 @@
 package com.caddy.erasxchange.models.application;
 
-import com.caddy.erasxchange.models.forms.university.ErasmusUniversity;
+import com.caddy.erasxchange.models.university.ErasmusUniversity;
 import com.caddy.erasxchange.models.users.Student;
 import lombok.Getter;
 import lombok.Setter;

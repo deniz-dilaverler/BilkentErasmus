@@ -1,4 +1,4 @@
-package com.caddy.erasxchange.models.forms.university;
+package com.caddy.erasxchange.models.university;
 
 import com.caddy.erasxchange.models.BaseEntity;
 import com.caddy.erasxchange.models.Department;
@@ -25,6 +25,6 @@ public class Program  extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uni_id")
-    private University university;
+    private ErasmusUniversity university;
 
 }

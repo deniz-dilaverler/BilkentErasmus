@@ -2,7 +2,7 @@ package com.caddy.erasxchange.services.university;
 
 import com.caddy.erasxchange.DTOs.BilateralUniversityDto;
 import com.caddy.erasxchange.mappers.BilateralUniversityMapper;
-import com.caddy.erasxchange.models.forms.university.BilateralUniversity;
+import com.caddy.erasxchange.models.university.BilateralUniversity;
 import com.caddy.erasxchange.models.users.Coordinator;
 import com.caddy.erasxchange.repositories.university.BilateralUniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;

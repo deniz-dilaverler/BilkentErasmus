@@ -1,4 +1,4 @@
-package com.caddy.erasxchange.models.forms.university;
+package com.caddy.erasxchange.models.university;
 
 import com.caddy.erasxchange.models.BaseEntity;
 import com.caddy.erasxchange.models.Semester;
