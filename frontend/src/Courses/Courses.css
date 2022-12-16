@@ -3,7 +3,8 @@ table {
   width: 100%;
 }
 
-th, td {
+th,
+td {
   padding: 8px;
   text-align: left;
   border-bottom: 1px solid #ddd;
@@ -41,4 +42,94 @@ button:focus {
   max-width: 600px;
   max-height: 80%;
   overflow-y: auto;
+}
+
+.courses-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.course-filters {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.course-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+}
+
+.course-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.course-name,
+.school-name,
+.equivalent-course,
+.approval-status {
+  flex: 1;
+  text-align: center;
+}
+
+.details-button {
+  flex: 0 0 100px;
+  border: none;
+  background-color: #3f51b5;
+  color: white;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-course-button {
+  border: none;
+  background-color: #3f51b5;
+  color: white;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.add-course-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+}
+
+.add-course-form label {
+  margin-bottom: 5px;
+}
+
+.add-course-form input,
+.add-course-form select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.add-course-form button {
+  border: none;
+  background-color: #3f51b5;
+  color: white;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
 }
