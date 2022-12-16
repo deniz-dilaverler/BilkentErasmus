@@ -1,19 +1,6 @@
 package com.caddy.erasxchange.bootstrap;
 
-import com.caddy.erasxchange.models.Department;
-import com.caddy.erasxchange.models.course.ExternalCourse;
-import com.caddy.erasxchange.models.university.ErasmusUniversity;
-import com.caddy.erasxchange.models.university.Program;
-import com.caddy.erasxchange.repositories.ProgramRepository;
-import com.github.javafaker.Faker;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-
-import java.util.LinkedList;
-import java.util.List;
-
-import static com.caddy.erasxchange.models.Department.CS;
 
 @Component
 public class BootStrapData {

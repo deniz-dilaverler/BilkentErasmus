@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -34,11 +36,9 @@ public class ExternalCourse extends Course {
     @Type(type = "org.hibernate.type.TextType")
     private String syllabusLink;
 
-    @ManyToMany
-    @JoinTable(
-            name = "external_bilkent_course",
-            joinColumns = { @JoinColumn(name = "external_course_id")},
-            inverseJoinColumns = {@JoinColumn(name = "bilkent_course_id")}
-    )
-    private Set<BilkentCourse> equivalentCourses;
+    private Boolean isErasmus;
+
+    @OneToMany(mappedBy = "externalCourse")
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+    private Set<EquivalenceItem> equivalentCourses = new HashSet<>();
 }
