@@ -1,5 +1,6 @@
 package com.caddy.erasxchange.models.course;
 
+import com.caddy.erasxchange.models.Department;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -25,7 +27,9 @@ public class BilkentCourse extends Course{
     @Type(type = "org.hibernate.type.TextType")
     private String coordinatorMail;
 
-    @ManyToMany(mappedBy = "equivalentCourses")
-    private Set<ExternalCourse> externalCourses;
+
+    @OneToMany(mappedBy = "bilkentCourse")
+
+    private Set<EquivalenceItem> externalCourses = new HashSet<>();
 
 }

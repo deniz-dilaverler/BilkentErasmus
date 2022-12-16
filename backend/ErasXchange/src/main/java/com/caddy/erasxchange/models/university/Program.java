@@ -2,9 +2,7 @@ package com.caddy.erasxchange.models.university;
 
 import com.caddy.erasxchange.models.BaseEntity;
 import com.caddy.erasxchange.models.Department;
-import com.caddy.erasxchange.models.university.University;
 import lombok.*;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -27,6 +25,6 @@ public class Program  extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uni_id")
-    private University university;
+    private ErasmusUniversity university;
 
 }

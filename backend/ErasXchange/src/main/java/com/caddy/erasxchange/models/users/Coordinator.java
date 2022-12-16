@@ -17,7 +17,7 @@ import java.util.Set;
 @Table(name = "coordinators")
 public class Coordinator extends User {
 
-    @OneToMany(mappedBy = "coordinator")
+    @ManyToMany(mappedBy = "coordinators")
     private Set<University> responsibleSchools;
 
 
