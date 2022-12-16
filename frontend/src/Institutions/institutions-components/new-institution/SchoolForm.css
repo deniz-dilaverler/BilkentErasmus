@@ -32,3 +32,8 @@
     font-size: 1rem;
     color: black;
   }
+
+  .select {
+    margin-top: 2rem;
+    text-decoration-color: #F0F8FF;
+  }

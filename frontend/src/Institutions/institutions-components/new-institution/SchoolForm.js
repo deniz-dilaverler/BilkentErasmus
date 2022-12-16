@@ -8,12 +8,33 @@ import FormLabel from '@mui/material/FormLabel';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
-import Multiselect from 'multiselect-react-dropdown';
-import Select from 'react-select';
+import { Theme, useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-const languages = {
-    options: [{name: 'English B1', id: 1},{name: 'English B2', id: 2},{name: 'English C1', id: 3},{name: 'German B1', id: 4},{name: 'German B2', id: 5},
-    {name: 'Italian B1', id: 6}, {name: 'Italian B2', id: 7}, {name: 'French B1', id: 8}, {name: 'French B2', id: 9}]
+const languages = [
+    'English B1',
+    'English B2',
+    'English C1',
+    'German B1',
+    'German B2',
+    'Italian B1',
+    'Italian B2',
+    'French B1',
+    'French B2',
+  ];
+
+    const ITEM_HEIGHT = 48;
+    const ITEM_PADDING_TOP = 8;
+    const MenuProps = {
+    PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
 };
 
 const SchoolForm = (props) => {
@@ -36,18 +57,6 @@ const SchoolForm = (props) => {
     const allowanceChangeHandler = (event) => {
         setEnteredAllowance(event.target.value);
     }
-    const onSelect = (event) => {
-        console.log("hi");
-        //setEnteredInstLanguage(event.target.value);
-        console.log(event.target.value)
-        //console.log(languages.selectedValue);
-        
-    };
-
-    const onRemove = (selectedList, selectedItem) => {
-        console.log("hi");
-        //setEnteredInstLanguage(enteredInstLanguage + event.target.value);
-    };
 
     const countryChangeHandler = (event) => {
         setEnteredInstCountry(event.target.value)
@@ -56,6 +65,7 @@ const SchoolForm = (props) => {
         setEnteredProgramType(event.target.value);
         //console.log(event.target.value)
     }
+
     const submitHandler = (event) => {
         event.preventDefault();
         if ( enteredInstName !== "" && enteredInstCountry !== "" && enteredInstLanguage !== "" )
@@ -77,24 +87,34 @@ const SchoolForm = (props) => {
         {
             props.onSaveSchoolData(-1); // For NULL Check
         }
-        
+    }
 
-        
-    };
-    /*
-    <Multiselect
-                options={languages.options} // Options to display in the dropdown
-                selectedValues={languages.selectedValue} // Preselected value to persist in dropdown
-                onSelect={onSelect} // Function will trigger on select event
-                onRemove={onRemove} // Function will trigger on remove event
-                displayValue="name" // Property name to display in the dropdown options
-            />
+    function getStyles(name, language, theme) {
+        return {
+          fontWeight:
+          language.indexOf(name) === -1
+              ? theme.typography.fontWeightRegular
+              : theme.typography.fontWeightMedium,
+        };
+      }
 
-            
-    <div className = "new-expense__control">
-                <label>Language Requirements</label>
-                <input type="text" value={enteredInstLanguage} onChange={languageChangeHandler}></input>
-            </div> */
+        const theme = useTheme();
+        const [language, setLanguage] = React.useState([]);
+  
+
+        const handleChange = (event) => {
+            const {
+              target: { value },
+            } = event;
+            setLanguage(
+              // On autofill we get a stringified value.
+              typeof value === 'string' ? value.split(',') : value,
+            );
+            console.log("Here is person name:")
+            console.log(language)
+          };
+    
+
 
     return(
         <Container className = "school-form">
@@ -137,6 +157,35 @@ const SchoolForm = (props) => {
                 </Col>
             </Row>
             <Row>
+                <Col>
+                <div className="select">
+                <FormControl sx={{ m: 1, width: 300 }}>
+        <InputLabel id="demo-multiple-name-label">Languages</InputLabel>
+        <Select
+          labelId="demo-multiple-name-label"
+          id="demo-multiple-name"
+          multiple
+          value={language}
+          onChange={handleChange}
+          input={<OutlinedInput label="Name" />}
+          MenuProps={MenuProps}
+          sx={{color: "#F0F8FF"}}
+        >
+          {languages.map((language) => (
+            <MenuItem
+              key={language}
+              value={language}
+              style={getStyles(language, language, theme)}
+            >
+              {language}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      </div>
+                </Col>
+            </Row>
+            <Row>
                 <Col className="school-form_actions">
                     <button type="button" onClick={props.onCancel}>Cancel</button>
                 </Col>
@@ -146,15 +195,7 @@ const SchoolForm = (props) => {
             </Row>
         </Container>
     ); 
-        /*
-
-        <div className = "new-expense__actions">
-            <button type="button" onClick={props.onCancel}>Cancel</button>
-            <button type="submit">Add Institution</button>
-        </div>
-        </Container>
-    </form>
-    */
+    
 };
 
 export default SchoolForm;
