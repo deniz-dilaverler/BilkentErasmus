@@ -21,10 +21,12 @@ public abstract class Course extends BaseEntity {
     @Type(type = "org.hibernate.type.TextType")
     private String name;
 
+
     @Enumerated(EnumType.STRING)
     private Department department;
 
     private String courseCode;
+
 
     @Column(name = "ects")
     private Double ects;
