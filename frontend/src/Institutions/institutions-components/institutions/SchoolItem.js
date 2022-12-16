@@ -2,6 +2,9 @@ import "./SchoolItem.css";
 import InstitutionCard from "../UI/InstitutionCard";
 import React, { useState } from "react";
 import { Modal } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
 function SchoolItem(props) {
@@ -18,25 +21,17 @@ function SchoolItem(props) {
   };
 
   return (
-    <InstitutionCard className="school-item">
-      <div className="school-item__description">
-        <h2>{props.name}</h2>
-      </div>
-      <div className="school-item__description">
-        <h2>{props.country}</h2>
-      </div>
-      <div className="school-item__description">
-        <h2>{props.language}</h2>
-      </div>
-      <div className="school-item__description">
-        <button
+    <Container className="school-item">
+      <Row>
+        <Col><h2>{props.name}</h2></Col>
+        <Col><h2>{props.country}</h2></Col>
+        <Col><h2>{props.language}</h2></Col>
+        <Col><button
           className="school-item__description_button"
-          onClick={() => openModal(props)}
-        >
+          onClick={() => openModal(props)}>
           Details
-        </button>
-      </div>
-      <Modal
+        </button></Col>
+        <Modal
         isOpen={selectedInstitution !== null}
         onRequestClose={closeModal}
         shouldCloseOnOverlayClick={true}
@@ -49,7 +44,8 @@ function SchoolItem(props) {
           </div>
         )}
       </Modal>
-    </InstitutionCard>
+      </Row>
+    </Container>
   );
 }
 

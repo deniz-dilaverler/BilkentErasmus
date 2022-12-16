@@ -1,6 +1,6 @@
 
 import React, {useState} from "react";
-import StudentApplications from "./StudentApplications";
+import StudentApplications from "./StudentApplications"
 
 // Mock data, database'den çek
 const studentApplications = [
