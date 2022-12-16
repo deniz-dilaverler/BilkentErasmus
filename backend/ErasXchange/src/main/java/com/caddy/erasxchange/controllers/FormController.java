@@ -1,7 +1,9 @@
 package com.caddy.erasxchange.controllers;
 
 import com.caddy.erasxchange.models.Department;
+import com.caddy.erasxchange.models.Semester;
 import com.caddy.erasxchange.models.application.ErasmusApplication;
+import com.caddy.erasxchange.models.forms.CourseTransferForm;
 import com.caddy.erasxchange.models.forms.PreApprovalForm;
 import com.caddy.erasxchange.models.university.ErasmusUniversity;
 import com.caddy.erasxchange.models.users.Student;
@@ -31,7 +33,18 @@ public class FormController {
         ((Student)form.getSender()).setErasmusApplication(new ErasmusApplication());
         ((Student)form.getSender()).getErasmusApplication().setPlacedSchool(new ErasmusUniversity());
         ((Student)form.getSender()).getErasmusApplication().getPlacedSchool().setName("A uni");
+        CourseTransferForm form1 = new CourseTransferForm();
+        form1.setStudent(new Student());
+        form1.getStudent().setFirstName("a");
+        form1.getStudent().setLastName("b");
+        form1.getStudent().setDepartment(Department.CS);
+        form1.getStudent().setBilkentId(22002200);
+        ((Student)form1.getStudent()).setErasmusApplication(new ErasmusApplication());
+        ((Student)form1.getStudent()).getErasmusApplication().setPlacedSchool(new ErasmusUniversity());
+        ((Student)form1.getStudent()).getErasmusApplication().getPlacedSchool().setName("A uni");
+        ((Student)form1.getStudent()).getErasmusApplication().setSemester(Semester.SPRING);
         formService.generatePreAppPdf(form);
+        formService.generateTransferPdf(form1);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
