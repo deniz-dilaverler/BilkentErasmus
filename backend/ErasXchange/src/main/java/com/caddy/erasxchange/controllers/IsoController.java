@@ -1,6 +1,5 @@
 package com.caddy.erasxchange.controllers;
 
-import com.caddy.erasxchange.models.application.ErasmusApplication;
 import com.caddy.erasxchange.models.users.Student;
 import com.caddy.erasxchange.services.StorageService;
 import com.caddy.erasxchange.services.user.IsoService;

@@ -13,7 +13,6 @@ import java.time.Instant;
 import java.util.List;
 
 
-enum FormApprovalStatus  {PENDING, REJECTED, APPROVED}
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

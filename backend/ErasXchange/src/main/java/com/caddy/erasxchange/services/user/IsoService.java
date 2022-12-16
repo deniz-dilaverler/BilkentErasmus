@@ -5,8 +5,8 @@ import com.caddy.erasxchange.models.application.AppStatus;
 import com.caddy.erasxchange.models.application.ErasmusApplication;
 import com.caddy.erasxchange.models.users.Role;
 import com.caddy.erasxchange.models.users.Student;
-import com.caddy.erasxchange.repositories.UniversityRepository;
 import com.caddy.erasxchange.repositories.application.ErasmusApplicationRepository;
+import com.caddy.erasxchange.repositories.university.ErasmusUniversityRepository;
 import com.caddy.erasxchange.repositories.user.StudentRepository;
 import com.caddy.erasxchange.services.StorageService;
 import org.apache.poi.ss.usermodel.Cell;
@@ -24,10 +24,10 @@ public class IsoService {
 
     private StudentRepository studentRepository;
     private ErasmusApplicationRepository applicationRepository;
-    private UniversityRepository universityRepository;
+    private ErasmusUniversityRepository universityRepository;
     private StorageService storageService;
 
-    public IsoService(StudentRepository studentRepository, ErasmusApplicationRepository applicationRepository, UniversityRepository universityRepository, StorageService storageService) {
+    public IsoService(StudentRepository studentRepository, ErasmusApplicationRepository applicationRepository, ErasmusUniversityRepository universityRepository, StorageService storageService) {
         this.studentRepository = studentRepository;
         this.applicationRepository = applicationRepository;
         this.universityRepository = universityRepository;
