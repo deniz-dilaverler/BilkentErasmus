@@ -1,8 +1,10 @@
 package com.caddy.erasxchange.controllers.university;
 
 
+import com.caddy.erasxchange.DTOs.AddErasmusUniversityDto;
 import com.caddy.erasxchange.DTOs.ErasmusUniversityDto;
 import com.caddy.erasxchange.DTOs.ProgramDto;
+import com.caddy.erasxchange.models.university.ErasmusUniversity;
 import com.caddy.erasxchange.services.university.ErasmusUniversityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,9 +33,9 @@ public class ErasmusUniversityController {
     }
 
     @PostMapping("/")
-    public ResponseEntity addUniversity(@RequestBody ErasmusUniversityDto universityDto) {
+    public ResponseEntity addUniversity(@RequestBody AddErasmusUniversityDto university) {
 
-        erasmusUniversityService.addUniversity(universityDto);
+        erasmusUniversityService.addUniversity(university);
 
         return new ResponseEntity(HttpStatus.OK);
     }

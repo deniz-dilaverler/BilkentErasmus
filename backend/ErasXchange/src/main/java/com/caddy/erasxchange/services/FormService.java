@@ -16,6 +16,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.net.URISyntaxException;
@@ -23,6 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FormService {
@@ -37,11 +39,18 @@ public class FormService {
     }
 
     public List<PreApprovalForm> getPreApprovalFormsBySender(String username) {
-        return preApprovalFormRepository.findBySender(userRepository.findByBilkentId(Integer.parseInt(username)));
+        Optional<User> optional =  userRepository.findByBilkentId(Integer.parseInt(username));
+        if(optional.isEmpty()) throw new EntityNotFoundException("User with bilkent id :" + username + " doesn't exist");
+        User user = optional.get();
+
+        return preApprovalFormRepository.findBySender(user);
     }
 
     public List<CourseTransferForm> getCourseTransferFormsBySender(String username) {
-        return courseTransferFormRepository.findBySender(userRepository.findByBilkentId(Integer.parseInt(username)));
+        Optional<User> optional =  userRepository.findByBilkentId(Integer.parseInt(username));
+        if(optional.isEmpty()) throw new EntityNotFoundException("User with bilkent id :" + username + " doesn't exist");
+        User user = optional.get();
+        return courseTransferFormRepository.findBySender(user);
     }
 
     public void generatePreAppPdf(PreApprovalForm form) throws Exception {

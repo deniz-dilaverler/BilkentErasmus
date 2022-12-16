@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -31,6 +32,7 @@ public class ErasmusUniversity extends University {
     }
 
     @Override
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     public void setCourses(Set<ExternalCourse> courses) {
         super.setCourses(courses);
     }

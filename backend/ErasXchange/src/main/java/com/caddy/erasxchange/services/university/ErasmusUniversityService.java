@@ -1,5 +1,6 @@
 package com.caddy.erasxchange.services.university;
 
+import com.caddy.erasxchange.DTOs.AddErasmusUniversityDto;
 import com.caddy.erasxchange.DTOs.ErasmusUniversityDto;
 import com.caddy.erasxchange.DTOs.ProgramDto;
 import com.caddy.erasxchange.mappers.ErasmusUniversityMapper;
@@ -27,12 +28,9 @@ public class ErasmusUniversityService extends com.caddy.erasxchange.services.Gen
         this.erasmusUniversityMapper = erasmusUniversityMapper;
     }
 
-    public void addUniversity(ErasmusUniversityDto erasmusUniversityDto) {
-        erasmusUniversityDto.setId(null);
-        ErasmusUniversity erasmusUniversity = erasmusUniversityMapper.toEntity(erasmusUniversityDto);
-        for(Coordinator coordinator : erasmusUniversity.getCoordinators()) {
-            coordinator.getResponsibleSchools().add(erasmusUniversity);
-        }
+    public void addUniversity(AddErasmusUniversityDto addDto) {
+        ErasmusUniversity erasmusUniversity = erasmusUniversityMapper.addToEntity(addDto);
+
         repository.save(erasmusUniversity);
 
     }

@@ -3,11 +3,14 @@ package com.caddy.erasxchange.services.user;
 import com.caddy.erasxchange.models.Department;
 import com.caddy.erasxchange.models.application.AppStatus;
 import com.caddy.erasxchange.models.application.ErasmusApplication;
+import com.caddy.erasxchange.models.university.University;
+import com.caddy.erasxchange.models.users.Iso;
 import com.caddy.erasxchange.models.users.Role;
 import com.caddy.erasxchange.models.users.Student;
 import com.caddy.erasxchange.repositories.application.ErasmusApplicationRepository;
 import com.caddy.erasxchange.repositories.university.ErasmusUniversityRepository;
 import com.caddy.erasxchange.repositories.user.StudentRepository;
+import com.caddy.erasxchange.services.GenericService;
 import com.caddy.erasxchange.services.StorageService;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -16,11 +19,13 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class IsoService {
+public class IsoService  {
 
     private StudentRepository studentRepository;
     private ErasmusApplicationRepository applicationRepository;
@@ -83,6 +88,7 @@ public class IsoService {
                     case ("Preferred University #5") -> application.setChoice5(universityRepository.findByName(readCell(cell)));
                     default -> {
                     }
+                    
                 }
 
             }

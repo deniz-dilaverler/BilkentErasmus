@@ -6,6 +6,7 @@ import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface ProgramMapper {
+    @Mapping(target = "id", ignore = true)
     Program toEntity(ProgramDto programDto);
 
     ProgramDto toDto(Program program);

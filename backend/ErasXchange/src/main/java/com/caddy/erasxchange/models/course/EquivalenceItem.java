@@ -1,6 +1,7 @@
 package com.caddy.erasxchange.models.course;
 
 import com.caddy.erasxchange.models.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Entity
-@Table(name = "equyivalence_item")
+@Table(name = "equivalence_item")
 public class EquivalenceItem extends BaseEntity {
     @ManyToOne( cascade = javax.persistence.CascadeType.PERSIST)
     @JoinColumn(name = "external_course_id")
@@ -27,6 +28,7 @@ public class EquivalenceItem extends BaseEntity {
 
     @ManyToOne( cascade = javax.persistence.CascadeType.PERSIST)
     @JoinColumn(name = "bilkent_course_id")
+    @JsonManagedReference
     BilkentCourse bilkentCourse;
 
     ApprovalStatus approvalStatus;

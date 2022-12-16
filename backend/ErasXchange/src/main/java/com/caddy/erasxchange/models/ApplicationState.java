@@ -20,10 +20,7 @@ import java.util.Map;
 public class ApplicationState extends  BaseEntity {
 
     @ElementCollection
-    @MapKeyClass(Department.class)
-    @MapKeyEnumerated
-    @MapKeyColumn(name = "key_column_1")
-    @MapKeyJoinColumn(name = "key_column_2")
+    @MapKeyColumn(name = "enum_value")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Map<Department, Boolean> erasmusAppsPlaced = new HashMap<Department, Boolean>();
 

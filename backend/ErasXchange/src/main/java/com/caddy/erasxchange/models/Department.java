@@ -6,13 +6,12 @@ TODO: ADdd the remainining Departments
  */
 public enum Department {
 
-=======
     CS("CS"),
     IAED("IAED"),
     EEE("EEE"),
     ME("ME"),
     IE("IE"),
-    MAN("MAN")
+    MAN("MAN"),
     MATH("MATH");
 
     private String label;

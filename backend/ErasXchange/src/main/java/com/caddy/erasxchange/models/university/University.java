@@ -38,14 +38,14 @@ public  abstract class University extends BaseEntity {
 
 
 
-
     private String languageRequirement;
     private Semester semester;
 
 
     private String country;
 
-    @OneToMany(mappedBy = "university", cascade = CascadeType.PERSIST)
+    @OneToMany( cascade = CascadeType.PERSIST)
+
     private Set<ExternalCourse> courses;
 
 

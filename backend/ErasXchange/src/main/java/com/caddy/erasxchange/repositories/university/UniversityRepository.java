@@ -7,4 +7,5 @@ import org.springframework.data.repository.NoRepositoryBean;
 @NoRepositoryBean
 public interface UniversityRepository<Uni extends University> extends JpaRepository<Uni, Long> {
 
+    Uni findByName(String name);
 }

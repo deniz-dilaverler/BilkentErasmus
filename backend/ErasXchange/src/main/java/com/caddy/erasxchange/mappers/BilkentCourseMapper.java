@@ -14,11 +14,7 @@ public interface BilkentCourseMapper {
     BilkentCourse toEntity(BilkentCourseDto bilkentCourseDto);
 
     BilkentCourseDto toDto(BilkentCourse bilkentCourse);
-
-    @AfterMapping
-    default void linkExternalCourses(@MappingTarget BilkentCourse bilkentCourse) {
-        bilkentCourse.getExternalCourses().forEach(externalCourse -> externalCourse.setBilkentCourse(bilkentCourse));
-    }
+    
     List<BilkentCourseDto> toDtoList(List<BilkentCourse> bilkentCourses);
     BilkentCourse postToEntity(BilkentCoursePostDto bilkentCoursePostDto);
 

@@ -1,6 +1,7 @@
 package com.caddy.erasxchange.models.course;
 
 import com.caddy.erasxchange.models.Department;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +30,7 @@ public class BilkentCourse extends Course{
 
 
     @OneToMany(mappedBy = "bilkentCourse")
-
-    private Set<EquivalenceItem> externalCourses = new HashSet<>();
+    @JsonBackReference
+    private Set<EquivalenceItem> externalCourses;
 
 }

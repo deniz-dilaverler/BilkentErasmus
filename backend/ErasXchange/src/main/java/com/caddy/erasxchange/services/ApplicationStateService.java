@@ -22,6 +22,7 @@ public class ApplicationStateService {
     }
 
     private void initState() {
+        /*
         ApplicationState applicationState = null;
         if (repository.count() == 0) {
             applicationState = new ApplicationState();
@@ -37,10 +38,8 @@ public class ApplicationStateService {
 
         }
         repository.saveAndFlush(applicationState);
-        applicationState = null;
 
-        applicationState = getState();
-        System.out.println(applicationState.getBilateralAppsPlaced().size());
+         */
     }
 
     public boolean erasmusAppsPlaced(Department department) {
