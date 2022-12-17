@@ -10,3 +10,13 @@ body {
     padding: 0;
     background-color: aliceblue;
 }
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Apply the animation to the spinner element */
+.spinner {
+  animation: spin 1s infinite linear;
+}

@@ -23,7 +23,7 @@ function App() {
   }, []);
 
   /**if (loading) {
-    return <p>Loading...</p>;
+    return <p className = "spinner">Loading...</p>;
   }
   */
 
