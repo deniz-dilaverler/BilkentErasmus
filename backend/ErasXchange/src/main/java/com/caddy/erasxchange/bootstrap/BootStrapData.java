@@ -109,26 +109,29 @@ public class BootStrapData {
         coordinator1.getResponsibleSchools().add(erasmusUniversity1);
 
         erasmusUniversities.add(erasmusUniversity1);
+        programRepository.save(program);
 
-
-        ErasmusUniversity erasmusUniversity2 = new ErasmusUniversity();
-        erasmusUniversity2.setAllowance(300).setSemester(Semester.BOTH).setName("TU Vienna").setLanguageRequirement("German B2")
-                .setCountry("Austria").getCoordinators().add(coordinator2);
-
-
-        programs = new HashSet<>();
-        program = new Program().setDepartment(Department.CS).setQuota(4);
-        programs.add(program);
-        erasmusUniversity2.setPrograms(programs);
-        program.setUniversity(erasmusUniversity2);
-        erasmusUniversities.add(erasmusUniversity2);
-        coordinator2.getResponsibleSchools().add(erasmusUniversity2);
+//
+//        ErasmusUniversity erasmusUniversity2 = new ErasmusUniversity();
+//        erasmusUniversity2.setAllowance(300).setSemester(Semester.BOTH).setName("TU Vienna").setLanguageRequirement("German B2")
+//                .setCountry("Austria").getCoordinators().add(coordinator2);
+//
+//
+//        programs = new HashSet<>();
+//        program = new Program().setDepartment(Department.CS).setQuota(4);
+//        programs.add(program);
+//        erasmusUniversity2.setPrograms(programs);
+//        program.setUniversity(erasmusUniversity2);
+//        erasmusUniversities.add(erasmusUniversity2);
+//        coordinator2.getResponsibleSchools().add(erasmusUniversity2);
+//
+//        programRepository.save(program);
 
 
 
         ErasmusUniversity erasmusUniversity3 = new ErasmusUniversity();
-        erasmusUniversity3.setAllowance(250).setSemester(Semester.BOTH).setName("University of Twente").setLanguageRequirement("English B2")
-                .setCountry("Austria").getCoordinators().add(coordinator2);
+        erasmusUniversity3.setAllowance(250).setSemester(Semester.BOTH).setName("ESIEE Paris").setLanguageRequirement("France B2")
+                .setCountry("France").getCoordinators().add(coordinator2);
         coordinator2.getResponsibleSchools().add(erasmusUniversity3);
         programs = new HashSet<>();
         program = new Program().setDepartment(Department.CS).setQuota(3);
@@ -140,7 +143,7 @@ public class BootStrapData {
 
 
         ErasmusUniversity erasmusUniversity4 = new ErasmusUniversity();
-        erasmusUniversity4.setAllowance(250).setSemester(Semester.BOTH).setName("TELECOM ParisTech").setLanguageRequirement("English B2")
+        erasmusUniversity4.setAllowance(250).setSemester(Semester.BOTH).setName("ESIEA (Ecole Superieure d'Informatique, Electronique et Automatique)").setLanguageRequirement("English B2")
                 .setCountry("France").getCoordinators().add(coordinator1);
         programs = new HashSet<>();
         program = new Program().setDepartment(Department.CS).setQuota(1);
@@ -152,7 +155,7 @@ public class BootStrapData {
         programRepository.save(program);
 
         ErasmusUniversity erasmusUniversity5 = new ErasmusUniversity();
-        erasmusUniversity5.setAllowance(250).setSemester(Semester.BOTH).setName("TU Universitat Berlin").setLanguageRequirement("German A2")
+        erasmusUniversity5.setAllowance(250).setSemester(Semester.BOTH).setName("Technical University of Berlin").setLanguageRequirement("German A2")
                 .setCountry("Germany").getCoordinators().add(coordinator1);
         programs = new HashSet<>();
         program = new Program().setDepartment(Department.CS).setQuota(2);
@@ -165,7 +168,7 @@ public class BootStrapData {
 
 
         ErasmusUniversity erasmusUniversity6 = new ErasmusUniversity();
-        erasmusUniversity6.setAllowance(450).setSemester(Semester.BOTH).setName("University of l'Aquila").setLanguageRequirement("English B1")
+        erasmusUniversity6.setAllowance(450).setSemester(Semester.BOTH).setName("Universita degli Studi di L'Aquila").setLanguageRequirement("English B1")
                 .setCountry("Italy").getCoordinators().add(coordinator2);
         programs = new HashSet<>();
         program = new Program().setDepartment(Department.CS).setQuota(2);
@@ -202,8 +205,64 @@ public class BootStrapData {
 
         programRepository.save(program);
 
+        ErasmusUniversity erasmusUniversity9 = new ErasmusUniversity();
+        erasmusUniversity9.setAllowance(250).setSemester(Semester.BOTH)
+                .setName("École Polytechnique Fédérale (EPF)")
+                .setLanguageRequirement("French B2")
+                .setCountry("France").getCoordinators().add(coordinator1);
+        programs = new HashSet<>();
+        program = new Program().setDepartment(Department.CS).setQuota(3);
+        programs.add(program);
+        program.setUniversity(erasmusUniversity9);
+        erasmusUniversities.add(erasmusUniversity9);
+        coordinator1.getResponsibleSchools().add(erasmusUniversity9);
+
+        programRepository.save(program);
+
+        ErasmusUniversity erasmusUniversity10 = new ErasmusUniversity();
+        erasmusUniversity10.setAllowance(250).setSemester(Semester.BOTH)
+                .setName("TU Universitaet Dortmund")
+                .setLanguageRequirement("German B2")
+                .setCountry("Germany").getCoordinators().add(coordinator2);
+        programs = new HashSet<>();
+        program = new Program().setDepartment(Department.CS).setQuota(3);
+        programs.add(program);
+        program.setUniversity(erasmusUniversity10);
+        erasmusUniversities.add(erasmusUniversity10);
+        coordinator2.getResponsibleSchools().add(erasmusUniversity10);
+
+        programRepository.save(program);
 
 
+
+
+        ErasmusUniversity erasmusUniversity11 = new ErasmusUniversity();
+        erasmusUniversity11.setAllowance(250).setSemester(Semester.BOTH)
+                .setName("Saarland University")
+                .setLanguageRequirement("German B2")
+                .setCountry("Germany").getCoordinators().add(coordinator2);
+        programs = new HashSet<>();
+        program = new Program().setDepartment(Department.CS).setQuota(3);
+        programs.add(program);
+        program.setUniversity(erasmusUniversity11);
+        erasmusUniversities.add(erasmusUniversity11);
+        coordinator2.getResponsibleSchools().add(erasmusUniversity11);
+
+        programRepository.save(program);
+
+        ErasmusUniversity erasmusUniversity12 = new ErasmusUniversity();
+        erasmusUniversity12.setAllowance(250).setSemester(Semester.BOTH)
+                .setName("Vrije University")
+                .setLanguageRequirement("English B2")
+                .setCountry("Germany").getCoordinators().add(coordinator2);
+        programs = new HashSet<>();
+        program = new Program().setDepartment(Department.CS).setQuota(3);
+        programs.add(program);
+        program.setUniversity(erasmusUniversity12);
+        erasmusUniversities.add(erasmusUniversity12);
+        coordinator2.getResponsibleSchools().add(erasmusUniversity12);
+
+        programRepository.save(program);
 
         erasmusUniversityRepository.saveAll(erasmusUniversities);
         coordinatorRepository.saveAll(coordinatorList);
