@@ -44,7 +44,7 @@ public class AuthService {
         this.mailSender = mailSender;
     }
 
-    public ResponseEntity<String> login(LoginDto loginDto) {
+    public String login(LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsername(), loginDto.getPassword()));
         SecurityUser user = securityUserRepository.findByUsername(loginDto.getUsername());
@@ -52,7 +52,7 @@ public class AuthService {
         roles.add(user.getRole());
         String token = jwtProvider.createToken(user.getUsername(), roles);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new ResponseEntity<>(token, HttpStatus.OK);
+        return token;
     }
 
     public void register(User user, String siteURL)
