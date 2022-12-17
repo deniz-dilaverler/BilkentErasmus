@@ -9,8 +9,8 @@ const SchoolFilter = (props) => {
         props.onChangeFilter(event.target.value);
     }
   return (
-    <div className='expenses-filter'>
-      <div className='expenses-filter__control'>
+    <div>
+      <div>
         <select value={props.selected} onChange={filterChangeHandler}>
           <option value='Germany'>Germany</option>
           <option value='France'>France</option>

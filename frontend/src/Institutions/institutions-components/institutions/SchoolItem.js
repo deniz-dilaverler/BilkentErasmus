@@ -18,7 +18,6 @@ function SchoolItem(props) {
         <Col><h2>{props.country}</h2></Col>
         <Col><h2>{props.language}</h2></Col>
         <Col><button
-          className="school-item__description_button"
           onClick={() => setModalShow(true)}>
           Details
         </button></Col>

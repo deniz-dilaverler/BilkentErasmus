@@ -3,7 +3,6 @@
     padding: 1rem;
     background-color: #003366;
     width: 50rem;
-    max-width: 95%;
     height: 50rem;
     max-width: 75%;
     overflow: auto;
@@ -12,7 +11,7 @@
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
 }
 
-.applications h3 {
+.schools h3 {
     font-size: 1.5rem;
     flex: 1;
     margin: 2 2rem;

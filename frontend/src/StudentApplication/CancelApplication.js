@@ -29,7 +29,7 @@ function CancelApplication(props) {
 
     // fetch application publish data:
     const isPublished = () => {
-        return true;
+        return false;
     }
 
     const [open, setOpen] = useState(false);

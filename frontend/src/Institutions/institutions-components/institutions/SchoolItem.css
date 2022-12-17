@@ -1,7 +1,5 @@
 
 .school-item {
-  justify-content: normal;
-  align-items: normal;
   padding: 0.5rem;
   margin: 1rem 0;
   background-color: #F0F8FF;
@@ -11,7 +9,6 @@
 
 .school-item h2 {
   font-size: 1rem;
-  flex: 1;
   margin: 0 1rem;
   color: #131314;
   text-align: center;
@@ -19,7 +16,6 @@
 
 .school-item h1 {
   font-size: 1.5rem;
-  flex: 1;
   margin: 0 1rem;
   color: #131314;
   text-align: left;

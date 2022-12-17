@@ -21,7 +21,7 @@ function StudentApplications(props) {
 
     // get if application placement process started or not
     const isApplicationsStarted = () => {
-        return true;
+        return false;
     }
 
     // if all student application is cancelled, show cancelled:
