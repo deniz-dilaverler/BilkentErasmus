@@ -27,12 +27,12 @@ function LoginForm() {
       } else {
         // store authentication information in the client's session
         sessionStorage.setItem("authToken", data.authToken);
-        sessionStorage.setItem("username", data.username);
+        //sessionStorage.setItem("username", data.username);
         setError("");
         window.location.pathname = "/dashboard";
       }
     } catch (error) {
-      setError("An unexpected error occurred.");
+      setError("Authentication failed.");
     }
   };
 
