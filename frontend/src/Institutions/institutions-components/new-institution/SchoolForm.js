@@ -106,7 +106,7 @@ const SchoolForm = (props) => {
     var country = enteredInstCountry
     var allowance = enteredAllowance
     var coordinatorIds = [1]
-    var programs = [2
+    var programs = [
       {
         id: -1,
         quota: 0,
