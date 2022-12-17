@@ -25,7 +25,7 @@ public interface ErasmusUniversityMapper {
     // @Mapping(target = "courseIds", expression = "java(coursesToCourseIds(erasmusUniversity.getCourses()))")
     @Mapping(source = "courses", target = "courseIds")
     @Mapping(source = "coordinators", target = "coordinatorIds")
-    //@Mapping(expression = "java(coordinatorsToCoordinatorIds(erasmusUniversity.getCoordinators()))", target = "coordinatorIds")
+    @Mapping(target = "isErasmus", constant = "true")
     ErasmusUniversityDto toDto(ErasmusUniversity erasmusUniversity);
 
     List<ErasmusUniversityDto> toDtoList(List<ErasmusUniversity> erasmusUniversity);
