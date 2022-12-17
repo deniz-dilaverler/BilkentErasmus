@@ -7,8 +7,10 @@ import com.caddy.erasxchange.mappers.ErasmusUniversityMapper;
 import com.caddy.erasxchange.mappers.ProgramMapper;
 import com.caddy.erasxchange.models.university.Program;
 import com.caddy.erasxchange.models.university.ErasmusUniversity;
+import com.caddy.erasxchange.models.users.Coordinator;
 import com.caddy.erasxchange.repositories.ProgramRepository;
 import com.caddy.erasxchange.repositories.university.ErasmusUniversityRepository;
+import com.caddy.erasxchange.services.user.CoordinatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,25 +22,36 @@ public class ErasmusUniversityService extends com.caddy.erasxchange.services.Gen
     final ProgramMapper programMapper;
     final ErasmusUniversityMapper erasmusUniversityMapper;
     final private ProgramRepository programRepository;
+    final private CoordinatorService coordinatorService;
+
     @Autowired
-    public ErasmusUniversityService(ErasmusUniversityRepository repository, ProgramMapper programMapper, ErasmusUniversityMapper erasmusUniversityMapper, ProgramRepository programRepository) {
+    public ErasmusUniversityService(ErasmusUniversityRepository repository, ProgramMapper programMapper, ErasmusUniversityMapper erasmusUniversityMapper, ProgramRepository programRepository,
+                                    ErasmusUniversityRepository erasmusUniversityRepository, CoordinatorService coordinatorService) {
         super(repository);
 
         this.programMapper = programMapper;
         this.erasmusUniversityMapper = erasmusUniversityMapper;
         this.programRepository = programRepository;
+        this.coordinatorService = coordinatorService;
     }
 
     public void addUniversity(AddErasmusUniversityDto addDto) {
         System.out.println(addDto);
         ErasmusUniversity erasmusUniversity = erasmusUniversityMapper.addToEntity(addDto);
+        ErasmusUniversity erasUni = repository.findByName(erasmusUniversity.getName());
+        Coordinator coordinator = coordinatorService.findById(addDto.getCoordinatorId());
 
-//        for(Program program : erasmusUniversity.getPrograms()) {
-//            program.setId(null);
-//            program.setUniversity(erasmusUniversity);
-//        }
+        Program program = new Program().setDepartment(coordinator.getDepartment()).setQuota(addDto.getQuota());
+        if (erasUni != null)
+            erasmusUniversity = erasUni;
 
+        erasmusUniversity.getPrograms().add(program);
+        program.setUniversity(erasmusUniversity);
+//
+        coordinator.getResponsibleSchools().add(erasmusUniversity);
+        erasmusUniversity.getCoordinators().add(coordinator);
 
+        coordinatorService.saveEtity(coordinator);
         repository.save(erasmusUniversity);
     }
 

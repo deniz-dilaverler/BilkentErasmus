@@ -23,4 +23,6 @@ public class AddErasmusUniversityDto implements Serializable {
     private Semester semester;
     private String country;
     private Integer allowance;
+    private Integer quota;
+    private Long coordinatorId;
 }
