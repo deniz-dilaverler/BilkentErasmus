@@ -1,9 +1,10 @@
 .applications {
     position: relative;
     margin: 2rem auto;
+    margin-left: 5rem;
     padding: 1rem;
     background-color: #003366;
-    width: 70rem;
+    width: 60rem;
     max-width: 95%;
     height: 50rem;
     overflow: auto;

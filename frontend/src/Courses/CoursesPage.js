@@ -15,7 +15,7 @@ const CoursesPage = () => {
   const [approvalStatus, setApprovalStatus] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8080/courses")
+    fetch("http://localhost:8080/course/bilkent/all")
       .then((response) => response.json())
       .then((courses) => setCourses(courses));
   }, []);
@@ -130,7 +130,7 @@ const CoursesPage = () => {
         <tbody>
           {filteredItems.map((course) => (
             <tr key={course.id}>
-              <td>{course.name}</td>
+              <td>{course.courseCode}</td>
               <td>{course.school}</td>
               <td>{course.equivalent}</td>
               <td>{course.isApproved ? "Approved" : "Not Approved"}</td>
