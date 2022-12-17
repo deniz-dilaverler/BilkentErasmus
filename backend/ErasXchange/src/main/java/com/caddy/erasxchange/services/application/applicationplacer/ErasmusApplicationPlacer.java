@@ -120,6 +120,7 @@ public class ErasmusApplicationPlacer implements ApplicationPlacementStrategy<Er
 
     private void sortApplications() {
         Collections.sort(applications);
+        Collections.reverse(applications);
     }
 
     private void initializeQuotas(Department department) {
