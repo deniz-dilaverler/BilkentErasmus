@@ -30,12 +30,13 @@ public class ErasmusUniversityService extends com.caddy.erasxchange.services.Gen
     }
 
     public void addUniversity(AddErasmusUniversityDto addDto) {
+        System.out.println(addDto);
         ErasmusUniversity erasmusUniversity = erasmusUniversityMapper.addToEntity(addDto);
 
-        for(Program program : erasmusUniversity.getPrograms()) {
-            program.setId(null);
-            program.setUniversity(erasmusUniversity);
-        }
+//        for(Program program : erasmusUniversity.getPrograms()) {
+//            program.setId(null);
+//            program.setUniversity(erasmusUniversity);
+//        }
 
 
         repository.save(erasmusUniversity);

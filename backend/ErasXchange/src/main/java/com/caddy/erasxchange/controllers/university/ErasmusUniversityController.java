@@ -32,9 +32,9 @@ public class ErasmusUniversityController {
 
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity addUniversity(@RequestBody AddErasmusUniversityDto university) {
-
+        System.out.println(university);
         erasmusUniversityService.addUniversity(university);
 
         return new ResponseEntity(HttpStatus.OK);

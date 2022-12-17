@@ -22,7 +22,5 @@ public class AddErasmusUniversityDto implements Serializable {
     private String languageRequirement;
     private Semester semester;
     private String country;
-    private Integer allowence;
-    private Set<Long> coordinatorIds;
-    private Set<ProgramDto> programs;
+    private Integer allowance;
 }

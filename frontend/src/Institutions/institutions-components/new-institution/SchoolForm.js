@@ -65,38 +65,69 @@ const SchoolForm = (props) => {
         setEnteredProgramType(event.target.value);
         //console.log(event.target.value)
     }
-    
-    const submitHandler = (event) => {
-        event.preventDefault();
-        if ( enteredInstName !== "" && enteredInstCountry !== "" )
+    const [error, setError] = useState("");
+
+
+
+  const submitHandler = async (event) => {
+    event.preventDefault();
+    if ( enteredInstName !== "" && enteredInstCountry !== "" )
         {
           console.log("Buraya giriyor mu?")
+
             const schoolData = {
-                name: enteredInstName,
-                languageRequirement: "dil",
-                semester: "FALL",
-                country: enteredInstCountry,
-                allowence: enteredAllowance,
-                coordinatorIds:[ 1],
-                programs: [
-                  {
-                    id: -1,
-                    quota: 3,
-                    department: "CS",
-                    universityId: -1
-                  }
-                ]
-            };
+              name: "string",
+              languageRequirement: "string",
+              semester: "FALL",
+              country: "string",
+              allowence: 0,
+              coordinatorIds: [
+                1
+              ],
+              programs: [
+                {
+                  id: -1,
+                  quota: 0,
+                  department: "EE",
+                  universityId: -1
+                }
+              ]
+            }
+
             props.onSaveSchoolData(schoolData);
             setEnteredInstLanguage('');
             setEnteredInstName('');
             setEnteredInstCountry('');
             setEnteredInstQuota('');
-        }
-        else
-        {
-            props.onSaveSchoolData(-1); // For NULL Check
-        }
+            console.log("school data:")
+            console.log(schoolData)
+    var name = "enteredInstName"
+    var languageRequirement = "enteredInstLanguage"
+    var semester = "FALL"
+    var country = "myCountry"
+    var allowance = 3;
+    var coordinatorIds = [1]
+    var programs = [
+      {
+        id: -1,
+        quota: 0,
+        department: "EE",
+        universityId: -1
+      }
+    ]
+    const response = await fetch("http://localhost:8080/university/erasmus", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({name, languageRequirement, semester, country, allowance})
+
+    });
+    console.log(JSON.stringify({schoolData}))
+    console.log("peki buraya?")
+    console.log(schoolData)
+  };
+    
     }
 
     function getStyles(name, language, theme) {
@@ -123,9 +154,24 @@ const SchoolForm = (props) => {
             console.log("Here is person name:")
             console.log(language)
           };
-    
-
-
+ /*   
+{
+                "name": enteredInstName,
+                "languageRequirement": "dil",
+                "semester": "FALL",
+                "country": enteredInstCountry,
+                "allowence": enteredAllowance,
+                "coordinatorIds":[ 1],
+                "programs": [
+                  {
+                    "id": -1,
+                    "quota": 3,
+                    "department": "CS",
+                    "universityId": -1
+                  }
+                ]
+            };
+*/
     return(
         <Container className = "school-form">
             <form onSubmit={submitHandler}></form>
