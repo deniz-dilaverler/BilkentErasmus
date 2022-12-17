@@ -29,6 +29,7 @@ function LoginForm() {
         sessionStorage.setItem("authToken", data.authToken);
         sessionStorage.setItem("username", data.username);
         setError("");
+        window.location.pathname = "/dashboard";
       }
     } catch (error) {
       setError("An unexpected error occurred.");

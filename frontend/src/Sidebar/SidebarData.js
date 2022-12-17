@@ -3,7 +3,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import SchoolIcon from '@mui/icons-material/School';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
-import PersonIcon from "@mui/icons-material/Person";
+import TableViewIcon from '@mui/icons-material/TableView';
 
 export const SidebarData = [
   {
@@ -27,8 +27,8 @@ export const SidebarData = [
     link: "/courses",
   },
   {
-    title: "Profile",
-    icon: <PersonIcon />,
-    link: "/profile",
+    title: "Forms",
+    icon: <TableViewIcon />,
+    link: "/forms",
   },
 ];
