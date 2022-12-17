@@ -10,7 +10,9 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -21,9 +23,11 @@ import java.util.Set;
 @Table(name = "coordinators")
 public class Coordinator extends User {
 
-    @ManyToMany(mappedBy = "coordinators")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<University> responsibleSchools = new HashSet<>() ;
+    @ManyToMany(mappedBy = "coordinators", fetch = FetchType.EAGER)
+
+    private Set<University> responsibleSchools  =  new HashSet<>() ;
+
+
 
     // Id accessors must be in the child class for mapstruct to be able to access them
     @Override

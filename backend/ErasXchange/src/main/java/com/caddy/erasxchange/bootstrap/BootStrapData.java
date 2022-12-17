@@ -4,6 +4,7 @@ import com.caddy.erasxchange.models.Department;
 import com.caddy.erasxchange.models.Semester;
 import com.caddy.erasxchange.models.university.ErasmusUniversity;
 import com.caddy.erasxchange.models.university.Program;
+import com.caddy.erasxchange.models.university.University;
 import com.caddy.erasxchange.models.users.Coordinator;
 import com.caddy.erasxchange.repositories.ProgramRepository;
 import com.caddy.erasxchange.repositories.university.ErasmusUniversityRepository;
@@ -18,9 +19,11 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import javax.transaction.Transactional;
+import javax.xml.bind.SchemaOutputResolver;
 import java.util.*;
 
 @Service
+@Transactional
 public class BootStrapData {
 
     private static final Department[] departments =Department.values();
@@ -71,6 +74,7 @@ public class BootStrapData {
 
         List<Coordinator> coordinatorList = new ArrayList<>();
         Coordinator coordinator1 = new Coordinator();
+        coordinator1.setFirstName("asd");
         coordinator1.setFirstName("Can");
         coordinator1.setLastName("Alkan");
         coordinator1.setEmail("can.alkan@gmail.com");
@@ -80,15 +84,16 @@ public class BootStrapData {
         coordinatorList.add(coordinator1);
 
 
+
         Coordinator coordinator2 = new Coordinator();
-        coordinator1.setFirstName("Çiğdem");
-        coordinator1.setLastName("Gündüz Demir");
-        coordinator1.setEmail("çiğdem.demir@gmail.com");
-        coordinator1.setDepartment(Department.CS);
-        coordinator1.setPassword("12345");
-        coordinator1.setBilkentId(11111111);
+        coordinator2.setFirstName("Çiğdem");
+        coordinator2.setLastName("Gündüz Demir");
+        coordinator2.setEmail("çiğdem.demir@gmail.com");
+        coordinator2.setDepartment(Department.CS);
+        coordinator2.setPassword("12345");
+        coordinator2.setBilkentId(11111111);
         coordinatorList.add(coordinator2);
-        coordinatorRepository.saveAllAndFlush(coordinatorList);
+
         //coordinatorRepository.saveAll(coordinatorList);
 
 
@@ -99,7 +104,9 @@ public class BootStrapData {
         Set<Program> programs = new HashSet<>();
         Program program = new Program().setDepartment(Department.CS).setQuota(4);
         programs.add(program);
+        program.setUniversity(erasmusUniversity1);
         erasmusUniversity1.setPrograms(programs);
+        coordinator1.getResponsibleSchools().add(erasmusUniversity1);
 
         erasmusUniversities.add(erasmusUniversity1);
 
@@ -110,11 +117,13 @@ public class BootStrapData {
 
 
         programs = new HashSet<>();
-        program = new Program().setDepartment(Department.CS).setQuota(3);
+        program = new Program().setDepartment(Department.CS).setQuota(4);
         programs.add(program);
         erasmusUniversity2.setPrograms(programs);
-
+        program.setUniversity(erasmusUniversity2);
         erasmusUniversities.add(erasmusUniversity2);
+        coordinator2.getResponsibleSchools().add(erasmusUniversity2);
+
 
 
         ErasmusUniversity erasmusUniversity3 = new ErasmusUniversity();
@@ -122,21 +131,41 @@ public class BootStrapData {
                 .setCountry("Austria").getCoordinators().add(coordinator2);
         coordinator2.getResponsibleSchools().add(erasmusUniversity3);
         programs = new HashSet<>();
-        program = new Program().setDepartment(Department.CS).setQuota(2);
+        program = new Program().setDepartment(Department.CS).setQuota(3);
         programs.add(program);
-
+        program.setUniversity(erasmusUniversity3);
         erasmusUniversities.add(erasmusUniversity3);
-        erasmusUniversityRepository.saveAllAndFlush(erasmusUniversities);
+        coordinator2.getResponsibleSchools().add(erasmusUniversity3);
+        programRepository.save(program);
 
+
+        ErasmusUniversity erasmusUniversity4 = new ErasmusUniversity();
+        erasmusUniversity4.setAllowence(250).setSemester(Semester.BOTH).setName("Uniiii").setLanguageRequirement("English B2")
+                .setCountry("Japan").getCoordinators().add(coordinator1);
+        programs = new HashSet<>();
+        program = new Program().setDepartment(Department.CS).setQuota(1);
+        programs.add(program);
+        program.setUniversity(erasmusUniversity4);
+        erasmusUniversities.add(erasmusUniversity4);
+        coordinator1.getResponsibleSchools().add(erasmusUniversity4);
+
+
+        programRepository.save(program);
+        erasmusUniversityRepository.saveAll(erasmusUniversities);
+        coordinatorRepository.saveAll(coordinatorList);
 
 
         ErasmusUniversity eras = erasmusUniversityRepository.findById(1L).get();
         System.out.println(eras.getCoordinators().size());
 
-        Coordinator coordinator = coordinatorService.findById(1L);
+        Coordinator coordinator = coordinatorRepository.findById(1L).get();
+
 
         System.out.println(coordinator.getResponsibleSchools().size());
 
+        for(University university : coordinator.getResponsibleSchools()) {
+            System.out.println(university);
+        }
 
 
     }
