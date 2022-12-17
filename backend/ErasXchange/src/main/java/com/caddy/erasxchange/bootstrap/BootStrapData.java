@@ -6,6 +6,7 @@ import com.caddy.erasxchange.models.university.ErasmusUniversity;
 import com.caddy.erasxchange.models.university.Program;
 import com.caddy.erasxchange.models.university.University;
 import com.caddy.erasxchange.models.users.Coordinator;
+import com.caddy.erasxchange.models.users.Role;
 import com.caddy.erasxchange.repositories.ProgramRepository;
 import com.caddy.erasxchange.repositories.university.ErasmusUniversityRepository;
 import com.caddy.erasxchange.repositories.user.CoordinatorRepository;
@@ -81,6 +82,7 @@ public class BootStrapData {
         coordinator1.setDepartment(Department.CS);
         coordinator1.setPassword("12345");
         coordinator1.setBilkentId(222222222);
+        coordinator1.setRole(Role.ROLE_COORDINATOR);
         coordinatorList.add(coordinator1);
 
 
@@ -92,7 +94,9 @@ public class BootStrapData {
         coordinator2.setDepartment(Department.CS);
         coordinator2.setPassword("12345");
         coordinator2.setBilkentId(11111111);
+        coordinator2.setRole(Role.ROLE_COORDINATOR);
         coordinatorList.add(coordinator2);
+
 
         //coordinatorRepository.saveAll(coordinatorList);
 
