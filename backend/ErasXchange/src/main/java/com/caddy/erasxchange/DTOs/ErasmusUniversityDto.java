@@ -27,5 +27,5 @@ public class ErasmusUniversityDto implements Serializable {
     private Boolean isErasmus;
     private Set<Long> courseIds;
     private Set<ProgramDto> programs;
-    private Integer allowence;
+    private Integer allowance;
 }

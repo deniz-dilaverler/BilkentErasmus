@@ -8,6 +8,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -20,9 +21,9 @@ import java.util.Set;
 @Table(name = "erasmus_university")
 public class ErasmusUniversity extends University {
     @OneToMany(mappedBy = "university", cascade = CascadeType.ALL,  fetch = FetchType.EAGER)
-    private Set<Program> programs;
+    private Set<Program> programs = new HashSet<>();
 
-    private Integer allowence;
+    private Integer allowance;
 
     @Override
     public Set<ExternalCourse> getCourses() {

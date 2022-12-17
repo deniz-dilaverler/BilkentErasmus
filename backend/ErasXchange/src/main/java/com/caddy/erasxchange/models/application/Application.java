@@ -40,7 +40,7 @@ public abstract class Application extends BaseEntity implements  Comparable<Appl
     @Override
     public int compareTo(Application app) {
         if (this.student.getExchangeScore() > app.getStudent().getExchangeScore()) return 1;
-        else if (this.student.getExchangeScore() == app.getStudent().getExchangeScore()) return 0;
+        else if (this.student.getExchangeScore().equals(app.getStudent().getExchangeScore())) return 0;
         else  return -1;
     }
 
