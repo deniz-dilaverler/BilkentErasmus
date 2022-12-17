@@ -68,14 +68,16 @@ const SchoolForm = (props) => {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        if ( enteredInstName !== "" && enteredInstCountry !== "" && enteredInstLanguage !== "" )
+        if ( enteredInstName !== "" && enteredInstCountry !== "" )
         {
+          console.log("Buraya giriyor mu?")
             const schoolData = {
                 name: enteredInstName,
+                languageRequirement: "dil",
+                semester: "FALL",
                 country: enteredInstCountry,
-                language: enteredInstLanguage,
-                quota: enteredInstQuota,
-                key: Math.random(),
+                allowance: enteredAllowance,
+                coordinatorIds:[ 1],
             };
             props.onSaveSchoolData(schoolData);
             setEnteredInstLanguage('');
@@ -158,31 +160,6 @@ const SchoolForm = (props) => {
             </Row>
             <Row>
                 <Col>
-                <div className="select">
-                <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-name-label">Languages</InputLabel>
-        <Select
-          labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
-          multiple
-          value={language}
-          onChange={handleChange}
-          input={<OutlinedInput label="Name" />}
-          MenuProps={MenuProps}
-          sx={{color: "#F0F8FF"}}
-        >
-          {languages.map((language) => (
-            <MenuItem
-              key={language}
-              value={language}
-              style={getStyles(language, language, theme)}
-            >
-              {language}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      </div>
                 </Col>
             </Row>
             <Row>
@@ -190,7 +167,7 @@ const SchoolForm = (props) => {
                     <button type="button" onClick={props.onCancel}>Cancel</button>
                 </Col>
                 <Col>
-                    <button type="submit">Add Institution</button>
+                    <button type="submit" onClick={submitHandler}>Add Institution</button>
                 </Col>
             </Row>
         </Container>

@@ -15,26 +15,20 @@ function Schools(props) {
         setFilteredSchool(filteredSchool);
     };
 
-    props.institutions.map((school) => 
-
-       console.log(school.programs)
-    )
-
     const filteredSchools = props.institutions.filter(school => {
         return school.country === filteredSchool
     })
-    
+    console.log(props.institutions)
     return(
             <Container className="schools">
                 <div className="filter"><SchoolFilter onChangeFilter={filterChangeHandler} selected={filteredSchool}></SchoolFilter></div>
                 {props.institutions.map((school) => 
-
                     <SchoolItem
                         key = {school.id}
                         name = {school.name}
                         country = {school.country}
                         language = {school.languageRequirement}
-                        programs = {school.programs}
+                        //programs = {!school.programs === undefined ? school.programs[0]:console.log("zort") }
                     />
                 )}
             </Container>

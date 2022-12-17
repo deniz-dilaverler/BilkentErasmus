@@ -29,13 +29,7 @@ function SchoolItem(props) {
           centered
         >
         <Modal.Body>
-          <h4>{props.name}</h4>
-          
-          {props.programs.map((prog) => 
-          <p>
-            slm
-        </p>
-            )}
+        <h4>{props.name}</h4>
           
         </Modal.Body>
         <Modal.Footer>
@@ -47,4 +41,7 @@ function SchoolItem(props) {
   );
 }
 
-export default SchoolItem;
+export default SchoolItem;   
+/*
+       {props.programs === undefined ? console.log("undefined'ım"):<p>props.programs[0].department</p>}
+        */
