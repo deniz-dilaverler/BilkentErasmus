@@ -80,7 +80,8 @@ public class BootStrapData {
         coordinator1.setLastName("Alkan");
         coordinator1.setEmail("can.alkan@gmail.com");
         coordinator1.setDepartment(Department.CS);
-        coordinator1.setPassword("12345");
+        //password:"pass"
+        coordinator1.setPassword("$2a$12$l1vmwtZF3nQ9zH152w850.BEbG/5yWyIljazxbSJZahCxNHZS3hBu");
         coordinator1.setBilkentId(222222222);
         coordinator1.setRole(Role.ROLE_COORDINATOR);
         coordinatorList.add(coordinator1);
@@ -92,7 +93,8 @@ public class BootStrapData {
         coordinator2.setLastName("Dundar");
         coordinator2.setEmail("çiğdem.demir@gmail.com");
         coordinator2.setDepartment(Department.CS);
-        coordinator2.setPassword("12345");
+        //password:"pass"
+        coordinator2.setPassword("$2a$12$l1vmwtZF3nQ9zH152w850.BEbG/5yWyIljazxbSJZahCxNHZS3hBu");
         coordinator2.setBilkentId(11111111);
         coordinator2.setRole(Role.ROLE_COORDINATOR);
         coordinatorList.add(coordinator2);
