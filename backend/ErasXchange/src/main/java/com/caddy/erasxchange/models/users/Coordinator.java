@@ -5,8 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -18,8 +22,8 @@ import java.util.Set;
 public class Coordinator extends User {
 
     @ManyToMany(mappedBy = "coordinators")
-    private Set<University> responsibleSchools;
-
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<University> responsibleSchools = new HashSet<>() ;
 
     // Id accessors must be in the child class for mapstruct to be able to access them
     @Override

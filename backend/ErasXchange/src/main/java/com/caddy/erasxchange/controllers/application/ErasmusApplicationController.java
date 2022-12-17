@@ -46,7 +46,6 @@ public class ErasmusApplicationController {
     public ResponseEntity cancelApplication(@PathVariable Long appId, @PathVariable  boolean  cancelAll) {
         erasmusApplicationService.cancelApplication(appId,cancelAll );
 
-
         return new ResponseEntity(HttpStatus.OK);
     }
 

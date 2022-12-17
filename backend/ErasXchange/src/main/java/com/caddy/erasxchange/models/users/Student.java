@@ -26,11 +26,11 @@ public class Student extends User {
     @Column(name = "gpa")
     private Double gpa;
 
-    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL , fetch = FetchType.EAGER)
     @JsonBackReference
     private ErasmusApplication erasmusApplication;
 
-    @OneToOne(mappedBy = "student")
+    @OneToOne(mappedBy = "student",  fetch = FetchType.EAGER)
     private BilateralApplication bilateralApplication;
 
 

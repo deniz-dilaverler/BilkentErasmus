@@ -3,6 +3,7 @@ package com.caddy.erasxchange.models;
 import com.caddy.erasxchange.models.users.User;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.time.Instant;
@@ -18,7 +19,7 @@ public class Event extends BaseEntity {
 
     private String contents;
 
-    @ManyToMany(mappedBy = "events" )
+    @ManyToMany(mappedBy = "events")
     private Set<User> people;
 
 }

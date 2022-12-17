@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 @Getter
@@ -18,10 +18,10 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Accessors( chain = true)
 @Table(name = "erasmus_university")
 public class ErasmusUniversity extends University {
-    @OneToMany(mappedBy = "university", cascade = CascadeType.PERSIST)
-
+    @OneToMany(mappedBy = "university", cascade = CascadeType.PERSIST,  fetch = FetchType.EAGER)
     private Set<Program> programs;
 
     private Integer allowence;
@@ -32,8 +32,8 @@ public class ErasmusUniversity extends University {
     }
 
     @Override
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    public void setCourses(Set<ExternalCourse> courses) {
+    public ErasmusUniversity setCourses(Set<ExternalCourse> courses) {
         super.setCourses(courses);
+        return this;
     }
 }

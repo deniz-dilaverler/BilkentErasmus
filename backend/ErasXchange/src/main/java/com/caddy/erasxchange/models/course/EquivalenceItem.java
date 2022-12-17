@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -28,7 +30,7 @@ public class EquivalenceItem extends BaseEntity {
 
     @ManyToOne( cascade = javax.persistence.CascadeType.PERSIST)
     @JoinColumn(name = "bilkent_course_id")
-    @JsonManagedReference
+    @LazyCollection(LazyCollectionOption.FALSE)
     BilkentCourse bilkentCourse;
 
     ApprovalStatus approvalStatus;

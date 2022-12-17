@@ -3,6 +3,7 @@ package com.caddy.erasxchange.models.university;
 import com.caddy.erasxchange.models.BaseEntity;
 import com.caddy.erasxchange.models.Department;
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@Accessors(chain = true)
 @Table(name = "programs")
 public class Program  extends BaseEntity {
 
@@ -23,7 +25,7 @@ public class Program  extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Department department;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "uni_id")
     private ErasmusUniversity university;
 

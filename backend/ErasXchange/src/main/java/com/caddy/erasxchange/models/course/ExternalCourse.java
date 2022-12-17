@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -40,5 +42,6 @@ public class ExternalCourse extends Course {
 
     @OneToMany(mappedBy = "externalCourse")
     @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Set<EquivalenceItem> equivalentCourses = new HashSet<>();
 }

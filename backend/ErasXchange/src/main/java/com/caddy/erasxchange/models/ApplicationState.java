@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.HashMap;
@@ -20,11 +22,16 @@ import java.util.Map;
 public class ApplicationState extends  BaseEntity {
 
     @ElementCollection
-    @MapKeyColumn(name = "enum_value")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @MapKeyEnumerated
+    @MapKeyClass(Department.class)
+    @MapKeyColumn(name = "key_column_1")
+    @MapKeyJoinColumn(name = "key_column_2")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Map<Department, Boolean> erasmusAppsPlaced = new HashMap<Department, Boolean>();
 
     @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
     @MapKeyEnumerated
     @MapKeyClass(Department.class)
     @MapKeyColumn(name = "key_column_3")

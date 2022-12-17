@@ -18,11 +18,11 @@ public class ApplicationStateService {
     @Autowired
     public ApplicationStateService(ApplicationStateRepository repository) {
         this.repository = repository;
-        initState();
+       // initState();
     }
 
     private void initState() {
-        /*
+
         ApplicationState applicationState = null;
         if (repository.count() == 0) {
             applicationState = new ApplicationState();
@@ -39,7 +39,9 @@ public class ApplicationStateService {
         }
         repository.saveAndFlush(applicationState);
 
-         */
+        ApplicationState state = getState();
+        System.out.println(state.getBilateralAppsPlaced().size());
+
     }
 
     public boolean erasmusAppsPlaced(Department department) {

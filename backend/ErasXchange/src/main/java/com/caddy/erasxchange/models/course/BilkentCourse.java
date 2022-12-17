@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -30,7 +32,7 @@ public class BilkentCourse extends Course{
 
 
     @OneToMany(mappedBy = "bilkentCourse")
-    @JsonBackReference
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Set<EquivalenceItem> externalCourses;
 
 }

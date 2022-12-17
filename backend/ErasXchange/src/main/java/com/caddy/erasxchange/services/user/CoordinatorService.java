@@ -19,6 +19,9 @@ public class CoordinatorService extends GenericService<Coordinator, CoordinatorR
         super(repository);
     }
 
+    public  void get(Long id) {
+        System.out.println(repository.findById(id).get().getResponsibleSchools().size());
+    }
     @Override
     protected String getClassName() {
         return Coordinator.class.getName();
