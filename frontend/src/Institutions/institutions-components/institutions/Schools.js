@@ -15,6 +15,8 @@ function Schools(props) {
         setFilteredSchool(filteredSchool);
     };
 
+    
+
     const filteredSchools = props.institutions.filter(school => {
         return school.country === filteredSchool
     })
@@ -27,7 +29,7 @@ function Schools(props) {
                         key = {school.id}
                         name = {school.name}
                         country = {school.country}
-                        language = {school.language}
+                        language = {school.languageRequirement}
                         quota = {school.quota}
                     />
                 )}
