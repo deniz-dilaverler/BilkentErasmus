@@ -13,7 +13,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   // Fetch the user's role from the back-end when the component mounts
-  useEffect(() => {
+  /**useEffect(() => {
     fetch("/user")
       .then((response) => response.json())
       .then((data) => {
@@ -21,6 +21,7 @@ function App() {
         setLoading(false);
       });
   }, []);
+  */
 
   /**if (loading) {
     return <p className = "spinner">Loading...</p>;

@@ -7,32 +7,25 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     try {
-      const response = await fetch("/api/login", {
-        method: "POST",
+      const response = await fetch("http://localhost:8080/api/login", {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
       });
-      const data = await response.json();
-
-      if (data.error) {
-        setError(data.error);
-      } else {
-        // store authentication information in the client's session
-        sessionStorage.setItem("authToken", data.authToken);
-        //sessionStorage.setItem("username", data.username);
-        setError("");
+      if (response.ok) {
+        const token = response.headers.get('Authorization');
+        console.log(token);
         window.location.pathname = "/dashboard";
+      } else {
+        throw new Error(response.statusText);
       }
-    } catch (error) {
-      setError("Authentication failed.");
+    } catch (err) {
+      setError(err.message);
     }
   };
 
