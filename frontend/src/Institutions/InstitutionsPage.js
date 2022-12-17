@@ -1,6 +1,6 @@
 import Schools from "./institutions-components/institutions/Schools";
 import NewSchool from "./institutions-components/new-institution/NewSchool";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import './InstitutionsPage.css';
 
 const initialInstitutions = [
@@ -56,7 +56,16 @@ const initialInstitutions = [
 ];
 
 
+
+
 function InstitutionsMainPage() {
+
+  useEffect(() => {
+    fetch("http://localhost:8080/university/erasmus/all")
+      .then((response) => response.json())
+      .then((institutions) => setInstitutions(institutions));
+  }, []);
+
   const [institutions, setInstitutions] = useState(initialInstitutions);
   const addSchoolHandler = school => {
     setInstitutions(

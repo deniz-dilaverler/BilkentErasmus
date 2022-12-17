@@ -11,6 +11,7 @@ function SchoolItem(props) {
 
   const [modalShow, setModalShow] = React.useState(false);
 
+
   return (
     <Container className="school-item">
       <Row>
