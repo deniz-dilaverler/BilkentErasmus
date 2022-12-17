@@ -105,6 +105,8 @@ public class ErasmusApplicationPlacer implements ApplicationPlacementStrategy<Er
                 continue;
             }
 
+            application.setStatus(AppStatus.WAITING_BIN);
+
         }
 
         repository.saveAllAndFlush(applications);
