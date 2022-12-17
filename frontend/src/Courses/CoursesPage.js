@@ -7,6 +7,7 @@ const CoursesPage = () => {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [modalShow, setModalShow] = React.useState(false);
+  const [modalDetailsShow, setModalDetailsShow] = useState();
 
   //addCourseForm
   const [courseName, setCourseName] = useState("");
@@ -29,6 +30,13 @@ const CoursesPage = () => {
   const closeModal = () => {
     setSelectedCourse(null);
   };
+
+  const setDetailsModalHandler = (course) => {
+    setModalDetailsShow(true);
+    setSelectedCourse(course);
+  }
+
+
 
   // Handles submitting the form to the Spring backend
   async function handleSubmit(event) {
@@ -128,32 +136,36 @@ const CoursesPage = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredItems.map((course) => (
+          {courses.map((course) => (
             <tr key={course.id}>
               <td>{course.courseCode}</td>
               <td>{course.school}</td>
               <td>{course.equivalent}</td>
               <td>{course.isApproved ? "Approved" : "Not Approved"}</td>
               <td>
-                <button onClick={() => openModal(course)}>Details</button>
+                <button onClick={() => setDetailsModalHandler(course)}>Details</button>
               </td>
-            </tr>
-          ))}
+              <Modal
+              show={modalDetailsShow}
+              size="lg"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+            >
+            <Modal.Body>
+              <h4>{course.courseCode}</h4>
+              <p>
+                Quota:
+              </p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button onClick={() => setModalDetailsShow(false)}>Close</Button>
+            </Modal.Footer>
+          </Modal>
+                </tr>
+              ))}
         </tbody>
       </table>
-      <Modal
-        isOpen={selectedCourse !== null}
-        onRequestClose={closeModal}
-        shouldCloseOnOverlayClick={true}
-      >
-        {selectedCourse !== null && (
-          <div>
-            <h2>{selectedCourse.name}</h2>
-            <p>{selectedCourse.details}</p>
-            <button onClick={closeModal}>Close</button>
-          </div>
-        )}
-      </Modal>
+      
     </div>
   );
 };
