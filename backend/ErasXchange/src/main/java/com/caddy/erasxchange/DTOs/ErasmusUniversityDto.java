@@ -24,6 +24,7 @@ public class ErasmusUniversityDto implements Serializable {
     private String languageRequirement;
     private Semester semester;
     private String country;
+    private Boolean isErasmus;
     private Set<Long> courseIds;
     private Set<ProgramDto> programs;
     private Integer allowence;

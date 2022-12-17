@@ -61,6 +61,7 @@ public class ExternalCourseService extends CourseService<ExternalCourse, Externa
     public void addCourse(@NotNull ExternalCoursePostDto externalCoursePostDto) {
         if (externalCoursePostDto.getEquivalentCourses().size() > 0)
             throw new IllegalArgumentException("ExternalCoursePostDto can't have equivalent courses during addition to the server");
+
         ExternalCourse newCourse = courseMapper.postToEntity(externalCoursePostDto);
         newCourse.setApprovalStatus(ApprovalStatus.PENDING);
 

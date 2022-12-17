@@ -46,6 +46,11 @@ public class ErasmusUniversityController {
         System.out.println("Cum");
         List<ErasmusUniversityDto> universities = erasmusUniversityService.getUniversities();
         System.out.println(universities);
+
+        for(ErasmusUniversityDto dto: universities) {
+            System.out.println(dto.getPrograms().size());
+        }
+
         return new ResponseEntity<List<ErasmusUniversityDto>>(universities, HttpStatus.OK);
     }
 
