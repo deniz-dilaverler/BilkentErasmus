@@ -45,6 +45,7 @@ public class ErasmusApplicationPlacer implements ApplicationPlacementStrategy<Er
                 application.setStatus(AppStatus.WAITING_BIN);
                 continue;
             }
+
             if(quotas.get(application.getChoice1()) > 0) {
                 application.setStatus(AppStatus.PLACED);
                 application.setPlacedSchool(application.getChoice1());
@@ -58,9 +59,9 @@ public class ErasmusApplicationPlacer implements ApplicationPlacementStrategy<Er
                 application.setStatus(AppStatus.WAITING_BIN);
                 continue;
             }
-            if(quotas.get(application.getChoice1()) > 0) {
+            if(quotas.get(application.getChoice2()) > 0) {
                 application.setStatus(AppStatus.PLACED);
-                application.setPlacedSchool(application.getChoice1());
+                application.setPlacedSchool(application.getChoice2());
                 //decreemt quota
                 quotas.put(choice, quotas.get(choice) - 1);
                 continue;
@@ -71,9 +72,9 @@ public class ErasmusApplicationPlacer implements ApplicationPlacementStrategy<Er
                 application.setStatus(AppStatus.WAITING_BIN);
                 continue;
             }
-            if(quotas.get(application.getChoice1()) > 0) {
+            if(quotas.get(application.getChoice3()) > 0) {
                 application.setStatus(AppStatus.PLACED);
-                application.setPlacedSchool(application.getChoice1());
+                application.setPlacedSchool(application.getChoice3());
                 //decreemt quota
                 quotas.put(choice, quotas.get(choice) - 1);
                 continue;
@@ -84,9 +85,9 @@ public class ErasmusApplicationPlacer implements ApplicationPlacementStrategy<Er
                 application.setStatus(AppStatus.WAITING_BIN);
                 continue;
             }
-            if(quotas.get(application.getChoice1()) > 0) {
+            if(quotas.get(application.getChoice4()) > 0) {
                 application.setStatus(AppStatus.PLACED);
-                application.setPlacedSchool(application.getChoice1());
+                application.setPlacedSchool(application.getChoice4());
                 //decreemt quota
                 quotas.put(choice, quotas.get(choice) - 1);
                 continue;
@@ -97,9 +98,9 @@ public class ErasmusApplicationPlacer implements ApplicationPlacementStrategy<Er
                 application.setStatus(AppStatus.WAITING_BIN);
                 continue;
             }
-            if(quotas.get(application.getChoice1()) > 0) {
+            if(quotas.get(application.getChoice5()) > 0) {
                 application.setStatus(AppStatus.PLACED);
-                application.setPlacedSchool(application.getChoice1());
+                application.setPlacedSchool(application.getChoice5());
                 //decreemt quota
                 quotas.put(choice, quotas.get(choice) - 1);
                 continue;
