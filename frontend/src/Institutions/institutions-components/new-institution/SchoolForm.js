@@ -65,7 +65,7 @@ const SchoolForm = (props) => {
         setEnteredProgramType(event.target.value);
         //console.log(event.target.value)
     }
-
+    
     const submitHandler = (event) => {
         event.preventDefault();
         if ( enteredInstName !== "" && enteredInstCountry !== "" )
@@ -76,8 +76,16 @@ const SchoolForm = (props) => {
                 languageRequirement: "dil",
                 semester: "FALL",
                 country: enteredInstCountry,
-                allowance: enteredAllowance,
+                allowence: enteredAllowance,
                 coordinatorIds:[ 1],
+                programs: [
+                  {
+                    id: -1,
+                    quota: 3,
+                    department: "CS",
+                    universityId: -1
+                  }
+                ]
             };
             props.onSaveSchoolData(schoolData);
             setEnteredInstLanguage('');

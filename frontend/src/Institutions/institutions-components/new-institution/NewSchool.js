@@ -3,41 +3,31 @@ import './NewSchool.css';
 import SchoolForm from "./SchoolForm";
 
 const NewSchool = (props) => {
-    
-    const saveSchoolDataHandler = (enteredSchoolData) => {
+    const [error, setError] = useState("");
 
-
-        try {
-            const response = await fetch("/api/login", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ enteredSchoolData }),
-            });
-            const data = await response.json();
-      
-            if (data.error) {
-              setError(data.error);
-            } else {
-              console.log("oldu aşko yolladım <3")
-            }
-          } catch (error) {
-            setError("An unexpected error occurred.");
-          }
-        };
-
-
-
-
-
-
-
-
-
-
-
-
+    const saveSchoolDataHandler = async (event, enteredSchoolData) => {
+        event.preventDefault()
+        console.log("yolladım")
+            try {
+                const response = await fetch("http://localhost:8080/university/erasmus", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({enteredSchoolData}),
+                });
+                const data = await response.json();
+          
+                if (data.error) {
+                  setError(data.error);
+                } else {
+                  // store authentication information in the client's session
+                console.log("yolladım")
+                  setError("");
+                }
+              } catch (error) {
+                setError("An unexpected error occurred.");
+              }
 
         const schoolData = {
             ...enteredSchoolData,
