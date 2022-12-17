@@ -53,7 +53,7 @@ public class FormService {
         return courseTransferFormRepository.findBySender(user);
     }
 
-    public void generatePreAppPdf(PreApprovalForm form) throws Exception {
+    public void generatePreAppPdf(PreApprovalForm form) throws FileNotFoundException, DocumentException {
         Document document = new Document(PageSize.A4.rotate(),20,20,50,50);
 //        Path path = Paths.get(ClassLoader.getSystemResource("bilkent-logo.png").toURI());
         PdfWriter.getInstance(document, new FileOutputStream(form.getSender().getFirstName() + "_"
@@ -181,6 +181,42 @@ public class FormService {
         detailTable.addCell("Name of previous department:");
         detailTable.setWidthPercentage(98);
         document.add(detailTable);
+
+        PdfPTable courseTable = new PdfPTable(8);
+        courseTable.setWidths(new int[] {1,4,15,4,4,15,4,15});
+        cell = new PdfPCell(new Phrase("Transferred Courses"));
+        cell.setColspan(5);
+        courseTable.addCell(cell);
+        cell = new PdfPCell(new Phrase("Course or requirement to be exempted if transferred course is completed with a passing grade"));
+        cell.setColspan(3);
+        courseTable.addCell(cell);
+        courseTable.addCell("");
+        courseTable.addCell("Course Code");
+        courseTable.addCell("Course Name");
+        courseTable.addCell("Credits");
+        courseTable.addCell("Grade");
+        courseTable.addCell("Course Code and Name for a Required Course,\n" +
+                "Elective Group Name for an Elective Requirement");
+        courseTable.addCell("Credits");
+        courseTable.addCell("Elective Requirement Exemptions\n" +
+                "only: Course code(s) of directly\n" +
+                "equivalent course(s), if any");
+        courseTable.addCell("1");
+        courseTable.addCell("");
+        courseTable.addCell("");
+        courseTable.addCell("");
+        courseTable.addCell("");
+        courseTable.addCell("");
+        courseTable.addCell("");
+        courseTable.addCell("");
+        courseTable.addCell("");
+        courseTable.setSpacingBefore(10);
+        courseTable.setSpacingAfter(10);
+        courseTable.setWidthPercentage(98);
+        document.add(courseTable);
+
+        PdfPTable signTable = new PdfPTable(4);
+
 
         document.close();
     }

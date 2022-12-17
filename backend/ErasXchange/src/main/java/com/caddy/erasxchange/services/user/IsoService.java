@@ -1,6 +1,7 @@
 package com.caddy.erasxchange.services.user;
 
 import com.caddy.erasxchange.models.Department;
+import com.caddy.erasxchange.models.Semester;
 import com.caddy.erasxchange.models.application.AppStatus;
 import com.caddy.erasxchange.models.application.ErasmusApplication;
 import com.caddy.erasxchange.models.university.University;
@@ -80,7 +81,7 @@ public class IsoService  {
                     case ("Transcript Grade(4/4)") -> {
                         student.setGpa(Double.parseDouble(readCell(cell)));
                     }
-//                    case ("Duration Preferred") -> application.setSemester(Semester.valueOf(cell.getStringCellValue()));
+                    case ("Duration Preferred") -> application.setSemester(Semester.valueOf(cell.getStringCellValue()));
                     case ("Preferred University #1") -> application.setChoice1(universityRepository.findByName(readCell(cell)));
                     case ("Preferred University #2") -> application.setChoice2(universityRepository.findByName(readCell(cell)));
                     case ("Preferred University #3") -> application.setChoice3(universityRepository.findByName(readCell(cell)));
