@@ -1,6 +1,7 @@
 package com.caddy.erasxchange.DTOs;
 
 import com.caddy.erasxchange.models.Semester;
+import com.caddy.erasxchange.models.university.Program;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -23,4 +24,5 @@ public class AddErasmusUniversityDto implements Serializable {
     private String country;
     private Integer allowence;
     private Set<Long> coordinatorIds;
+    private Set<ProgramDto> programs;
 }

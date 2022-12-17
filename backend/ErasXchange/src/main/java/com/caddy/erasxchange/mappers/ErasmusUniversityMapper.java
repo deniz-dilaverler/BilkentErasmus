@@ -45,6 +45,7 @@ public interface ErasmusUniversityMapper {
     }
 
     @Mapping(source = "coordinatorIds", target = "coordinators")
+    @Mapping(source = "programs", target = "programs")
     ErasmusUniversity addToEntity(AddErasmusUniversityDto addErasmusUniversityDto);
 
 
