@@ -30,9 +30,13 @@ function SchoolItem(props) {
         >
         <Modal.Body>
           <h4>{props.name}</h4>
+          
+          {props.programs.map((prog) => 
           <p>
-            Quota:{props.quota}
-          </p>
+            slm
+        </p>
+            )}
+          
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => setModalShow(false)}>Close</Button>
