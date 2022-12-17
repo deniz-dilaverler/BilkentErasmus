@@ -7,7 +7,7 @@ import com.caddy.erasxchange.mappers.ErasmusUniversityMapper;
 import com.caddy.erasxchange.mappers.ProgramMapper;
 import com.caddy.erasxchange.models.university.Program;
 import com.caddy.erasxchange.models.university.ErasmusUniversity;
-import com.caddy.erasxchange.models.users.Coordinator;
+import com.caddy.erasxchange.repositories.ProgramRepository;
 import com.caddy.erasxchange.repositories.university.ErasmusUniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,16 +16,17 @@ import java.util.List;
 
 @Service
 public class ErasmusUniversityService extends com.caddy.erasxchange.services.GenericService<ErasmusUniversity, ErasmusUniversityRepository> {
-    final ProgramService programService;
+
     final ProgramMapper programMapper;
     final ErasmusUniversityMapper erasmusUniversityMapper;
-
+    final private ProgramRepository programRepository;
     @Autowired
-    public ErasmusUniversityService(ErasmusUniversityRepository repository, ProgramService programService, ProgramMapper programMapper, ErasmusUniversityMapper erasmusUniversityMapper) {
+    public ErasmusUniversityService(ErasmusUniversityRepository repository, ProgramMapper programMapper, ErasmusUniversityMapper erasmusUniversityMapper, ProgramRepository programRepository) {
         super(repository);
-        this.programService = programService;
+
         this.programMapper = programMapper;
         this.erasmusUniversityMapper = erasmusUniversityMapper;
+        this.programRepository = programRepository;
     }
 
     public void addUniversity(AddErasmusUniversityDto addDto) {
@@ -40,7 +41,9 @@ public class ErasmusUniversityService extends com.caddy.erasxchange.services.Gen
         Program program = programMapper.toEntity(programDto);
         university.getPrograms().add(program);
         program.setUniversity(university);
-        programService.saveEtity(program);
+        programRepository.save(program);
+        repository.save(university);
+
     }
 
     public List<ErasmusUniversityDto> getUniversities() {

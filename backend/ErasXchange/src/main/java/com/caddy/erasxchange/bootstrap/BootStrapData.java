@@ -140,8 +140,8 @@ public class BootStrapData {
 
 
         ErasmusUniversity erasmusUniversity4 = new ErasmusUniversity();
-        erasmusUniversity4.setAllowence(250).setSemester(Semester.BOTH).setName("Uniiii").setLanguageRequirement("English B2")
-                .setCountry("Japan").getCoordinators().add(coordinator1);
+        erasmusUniversity4.setAllowence(250).setSemester(Semester.BOTH).setName("TELECOM ParisTech ").setLanguageRequirement("English B2")
+                .setCountry("France").getCoordinators().add(coordinator1);
         programs = new HashSet<>();
         program = new Program().setDepartment(Department.CS).setQuota(1);
         programs.add(program);
