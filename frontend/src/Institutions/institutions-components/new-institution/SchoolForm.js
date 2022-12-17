@@ -63,9 +63,8 @@ const SchoolForm = (props) => {
     }
     const radioButtonChangeHandler = (event) => {
         setEnteredProgramType(event.target.value);
-        //console.log(event.target.value)
     }
-    const [error, setError] = useState("");
+
 
 
 
@@ -101,13 +100,13 @@ const SchoolForm = (props) => {
             setEnteredInstQuota('');
             console.log("school data:")
             console.log(schoolData)
-    var name = "enteredInstName"
+    var name = enteredInstName
     var languageRequirement = "enteredInstLanguage"
     var semester = "FALL"
-    var country = "myCountry"
-    var allowance = 3;
+    var country = enteredInstCountry
+    var allowance = enteredAllowance
     var coordinatorIds = [1]
-    var programs = [
+    var programs = [2
       {
         id: -1,
         quota: 0,

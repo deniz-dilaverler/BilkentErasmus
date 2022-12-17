@@ -60,12 +60,12 @@ const initialInstitutions = [
 
 function InstitutionsMainPage() {
 
-  useEffect(() => {
+  /*useEffect(() => {
     fetch("http://localhost:8080/university/erasmus/all")
       .then((response) => response.json())
       .then((institutions) => setInstitutions(institutions));
   }, []);
-
+*/
   const [institutions, setInstitutions] = useState(initialInstitutions);
   const addSchoolHandler = school => {
     setInstitutions(
@@ -78,7 +78,7 @@ function InstitutionsMainPage() {
     <div>
           <div className = "header"><h2>Partner Institutions</h2></div>
           <NewSchool onAddSchool={addSchoolHandler} ></NewSchool>
-          <Schools institutions={institutions}></Schools>
+          <Schools institutions={initialInstitutions}></Schools>
     </div>
   );
 }
