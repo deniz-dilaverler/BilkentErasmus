@@ -1,0 +1,39 @@
+.school-form {
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem;
+    text-align: left;
+  }
+  
+  .school-form label {
+    font-weight: bold;
+    margin: 0.5rem;
+    display: block;
+    color: #F0F8FF;
+    font-size: 1rem;
+  }
+  
+  .school-form input {
+    font: inherit;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 20rem;
+    height: 2rem;
+    max-width: 100%;
+  }
+
+  .school-form button {
+    text-align: right;
+    margin-top: 2rem;
+  }
+
+  .school-form h4 {
+    font-size: 1rem;
+    color: black;
+  }
+
+  .select {
+    margin-top: 2rem;
+    text-decoration-color: #F0F8FF;
+  }

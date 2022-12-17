@@ -1,0 +1,23 @@
+.schools {
+    position: relative;
+    left: 20px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #003366;
+    width: 50rem;
+    height: 50rem;
+    max-width: 75%;
+    overflow: auto;
+    text-align:justify;
+    border-radius: 12px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+}
+
+.schools h3 {
+    font-size: 1.5rem;
+    flex: 1;
+    margin: 2 2rem;
+    color: #e7e7ec;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+  }

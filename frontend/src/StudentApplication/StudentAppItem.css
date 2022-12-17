@@ -1,0 +1,26 @@
+
+.application-item {
+    justify-content: normal;
+    align-items: normal;
+    padding: 0.5rem;
+    margin: 1rem 0;
+    background-color: #F0F8FF;
+    border-radius: 12px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+  }
+
+  .application-item h2 {
+    font-size: 1.2rem;
+    flex: 1;
+    margin: 0 1rem;
+    color: #131314;
+    text-align: center;
+  }
+
+  .application-item h1 {
+    font-size: 1.5rem;
+    flex: 1;
+    margin: 0 1rem;
+    color: #131314;
+    text-align: left;
+  }

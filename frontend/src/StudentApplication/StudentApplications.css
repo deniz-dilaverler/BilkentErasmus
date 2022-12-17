@@ -1,0 +1,34 @@
+.applications {
+    position: relative;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #003366;
+    width: 70rem;
+    max-width: 95%;
+    height: 50rem;
+    overflow: auto;
+    text-align:justify;
+    border-radius: 12px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+}
+
+.applications h3 {
+    font-size: 1.5rem;
+    flex: 1;
+    margin: 2 2rem;
+    color: #e7e7ec;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+  }
+
+.applications h4 {
+    font-size: 1.2rem;
+    flex: 1;
+    margin: 1 2rem;
+    color: #e7e7ec;
+    text-align: center;
+}
+
+.filter {
+  right:0;
+}

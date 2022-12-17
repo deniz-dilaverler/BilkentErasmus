@@ -1,0 +1,34 @@
+.cancel {
+  margin: 2rem, 0rem, 2rem, 0rem;
+}
+
+.cancel button {
+  font: inherit;
+  cursor: pointer;
+  padding: 1rem 2rem;
+  border: 1px solid #F0F8FF;
+  background-color: #F0F8FF;
+  color: #003366;
+  border-radius: 12px;
+  margin-right: 0.3rem;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+}
+
+.cancel button:hover,
+.cancel button:active {
+  background-color: #F0F8FF;
+  border-color: #F0F8FF;
+}
+
+.cancel button.alternative {
+  color: #F0F8FF;
+  border-color: transparent;
+  background-color: transparent;
+}
+
+.cancel button.alternative:hover,
+.cancel button.alternative:active {
+  background-color: #031425;
+}
