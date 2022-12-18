@@ -114,9 +114,7 @@ const SchoolForm = (props) => {
       // if they are not null
       if (enteredInstName !== "" && enteredInstCountry !== "" && enteredInstQuota !== "" && enteredProgramType !== "" && enteredAllowance !== "" && language.length >= 1 )
       {
-        // typecheck allowence and quota
-        if ( typeof enteredAllowance === "number" && typeof enteredInstQuota === "number" )
-        {
+
           const schoolData = {
             name: enteredInstName,
             languageRequirement: language,
@@ -154,11 +152,6 @@ const SchoolForm = (props) => {
             },
             body: JSON.stringify({ name, languageRequirement, semester, country, allowance, quota, coordinatorId })
           });
-        }
-        // if there are 
-        else {
-          setOpenInt(true)
-        }
       }
       // if they are NULL, do not send, refill form!
       else 
@@ -296,7 +289,7 @@ const SchoolForm = (props) => {
         </Col>
         <Col>
           <label>Quota</label>
-          <input type="text" value={enteredInstQuota} onChange={quotaChangeHandler}></input>
+          <input type="number" value={enteredInstQuota} onChange={quotaChangeHandler}></input>
         </Col>
       </Row>
       <Row>
@@ -307,7 +300,7 @@ const SchoolForm = (props) => {
         <Col>
           {enteredProgramType === "erasmus" && <div className="new-expense__control">
             <label>Allowance</label>
-            <input type="text" value={enteredAllowance} onChange={allowanceChangeHandler}></input>
+            <input type="number" value={enteredAllowance} onChange={allowanceChangeHandler}></input>
           </div>}
         </Col>
       </Row>
