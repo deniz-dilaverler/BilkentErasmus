@@ -35,8 +35,8 @@ const studentApplicationsMockData = [
 
 function StudentApplicationsPage() {
 
-        // student applications
-        const [studentApplications, setStudentApplications] = useState();
+      // student applications
+      const [studentApplications, setStudentApplications] = useState();
       // FETCH STUDENT APPLICATIONS!
       useEffect(() => {
         fetch("http://localhost:8080/application/erasmus/3")
@@ -45,6 +45,7 @@ function StudentApplicationsPage() {
       }, []);
       if ( !studentApplications )
         return null;
+
       console.log("Student applications")
       console.log(studentApplications)
 
