@@ -4,24 +4,7 @@ import { SidebarData } from "./SidebarData";
 import { useState, useEffect } from "react";
 import LogoutButton from "../Login/LogoutButton";
 
-function Sidebar(props) {
-  const [sidebarVisible, setSidebarVisible] = useState(true);
-
-  useEffect(() => {
-    // check if the user is authenticated
-    const authToken = sessionStorage.getItem("authToken");
-    const username = sessionStorage.getItem("username");
-
-    if (!authToken || !username) {
-      // hide the sidebar if the user is not authenticated, true for now
-      setSidebarVisible(true);
-    }
-  }, []);
-
-  if (!sidebarVisible) {
-    return null;
-  }
-
+function Sidebar() {
   return (
     <div className="Sidebar">
       <ul className="SidebarList">

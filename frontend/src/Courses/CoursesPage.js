@@ -3,7 +3,7 @@ import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "./Courses.css";
 
-const CoursesPage = () => {
+const CoursesPage = ({loggedIn, setLoggedIn}) => {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [modalShow, setModalShow] = React.useState(false);
@@ -13,7 +13,9 @@ const CoursesPage = () => {
   const [schoolName, setSchoolName] = useState("");
   const [equivalentCourse, setEquivalentCourse] = useState("");
   const [approvalStatus, setApprovalStatus] = useState("");
-
+  
+  setLoggedIn(true);
+  
   useEffect(() => {
     fetch("http://localhost:8080/course/bilkent/all")
       .then((response) => response.json())

@@ -2,32 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import "./Login.css";
 
-function LoginForm() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await fetch("http://localhost:8080/api/login", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
-      if (response.ok) {
-        const token = response.headers.get('Authorization');
-        console.log(token);
-        window.location.pathname = "/dashboard";
-      } else {
-        throw new Error(response.statusText);
-      }
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+function LoginForm({username, setUsername, password, setPassword, error, setError, handleSubmit}) {
 
   return (
     <form onSubmit={handleSubmit} className="login-form">
