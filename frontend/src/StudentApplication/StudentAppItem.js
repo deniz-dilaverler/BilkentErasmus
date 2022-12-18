@@ -9,10 +9,10 @@ function StudentAppItem(props) {
       <Container className="application-item" fluid>
         <Row>
           <Col>
-          <h2>{props.school}</h2>
+          <h1>{props.no}</h1>
           </Col>
           <Col>
-          <h2>{props.country}</h2>
+          <h2>{props.school}</h2>
           </Col>
           <Col>
           <h2>{props.semester}</h2>

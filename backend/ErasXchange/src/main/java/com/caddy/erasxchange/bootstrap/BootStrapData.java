@@ -10,15 +10,12 @@ import com.caddy.erasxchange.models.university.ErasmusUniversity;
 import com.caddy.erasxchange.models.university.Program;
 import com.caddy.erasxchange.models.university.University;
 import com.caddy.erasxchange.models.users.Coordinator;
-import com.caddy.erasxchange.models.users.Iso;
 import com.caddy.erasxchange.models.users.Role;
-import com.caddy.erasxchange.models.users.User;
 import com.caddy.erasxchange.repositories.ProgramRepository;
 import com.caddy.erasxchange.repositories.course.BilkentCourseRepository;
 import com.caddy.erasxchange.repositories.course.EquivalenceItemRepository;
 import com.caddy.erasxchange.repositories.university.ErasmusUniversityRepository;
 import com.caddy.erasxchange.repositories.user.CoordinatorRepository;
-import com.caddy.erasxchange.repositories.user.UserRepository;
 import com.caddy.erasxchange.services.courses.BilkentCourseService;
 import com.caddy.erasxchange.services.user.CoordinatorService;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -40,11 +37,9 @@ public class BootStrapData {
     private final EquivalenceItemRepository equivalenceItemRepository;
     private final BilkentCourseRepository bilkentCourseRepository;
     private final BilkentCourseService bilkentCourseService;
-    private final UserRepository<User> userRepository;
 
     public BootStrapData(ProgramRepository programRepository, ErasmusUniversityRepository repository,
-                         CoordinatorRepository coordinatorRepository, ErasmusUniversityRepository erasmusUniversityRepository, CoordinatorService coordinatorService, EquivalenceItemRepository equivalenceItemRepository, BilkentCourseRepository bilkentCourseRepository, BilkentCourseService bilkentCourseService,
-                         UserRepository userRepository) {
+                         CoordinatorRepository coordinatorRepository, ErasmusUniversityRepository erasmusUniversityRepository, CoordinatorService coordinatorService, EquivalenceItemRepository equivalenceItemRepository, BilkentCourseRepository bilkentCourseRepository, BilkentCourseService bilkentCourseService) {
         this.programRepository = programRepository;
         this.coordinatorRepository = coordinatorRepository;
         this.erasmusUniversityRepository = erasmusUniversityRepository;
@@ -52,7 +47,6 @@ public class BootStrapData {
         this.equivalenceItemRepository = equivalenceItemRepository;
         this.bilkentCourseRepository = bilkentCourseRepository;
         this.bilkentCourseService = bilkentCourseService;
-        this.userRepository = userRepository;
     }
 
     @EventListener(ApplicationReadyEvent.class)
@@ -96,9 +90,11 @@ public class BootStrapData {
         coordinator1.setDepartment(Department.CS);
         //password:"pass"
         coordinator1.setPassword("$2a$12$l1vmwtZF3nQ9zH152w850.BEbG/5yWyIljazxbSJZahCxNHZS3hBu");
-        coordinator1.setBilkentId(1000);
+        coordinator1.setBilkentId(222222222);
         coordinator1.setRole(Role.ROLE_COORDINATOR);
         coordinatorList.add(coordinator1);
+
+
 
         Coordinator coordinator2 = new Coordinator();
         coordinator2.setFirstName("Ayşegül");
@@ -107,22 +103,12 @@ public class BootStrapData {
         coordinator2.setDepartment(Department.CS);
         //password:"pass"
         coordinator2.setPassword("$2a$12$l1vmwtZF3nQ9zH152w850.BEbG/5yWyIljazxbSJZahCxNHZS3hBu");
-        coordinator2.setBilkentId(2000);
+        coordinator2.setBilkentId(11111111);
         coordinator2.setRole(Role.ROLE_COORDINATOR);
         coordinatorList.add(coordinator2);
 
-        Iso iso = new Iso();
-        iso.setBilkentId(3000);
-        iso.setDepartment(Department.CS);
-        iso.setFirstName("My");
-        iso.setLastName("ISO");
-        iso.setEmail("my.iso@example.com");
-        iso.setPassword("$2a$12$l1vmwtZF3nQ9zH152w850.BEbG/5yWyIljazxbSJZahCxNHZS3hBu");
-        iso.setRole(Role.ROLE_ISO);
-        userRepository.save(iso);
 
-
-//        coordinatorRepository.saveAll(coordinatorList);
+        //coordinatorRepository.saveAll(coordinatorList);
 
 
         List<ErasmusUniversity> erasmusUniversities = new LinkedList<>();
@@ -299,7 +285,7 @@ public class BootStrapData {
         ErasmusUniversity eras = erasmusUniversityRepository.findById(1L).get();
         System.out.println(eras.getCoordinators().size());
 
-        Coordinator coordinator = coordinatorRepository.findByBilkentId(1000).get();
+        Coordinator coordinator = coordinatorRepository.findById(1L).get();
 
 
         System.out.println(coordinator.getResponsibleSchools().size());
