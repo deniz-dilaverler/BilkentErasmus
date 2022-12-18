@@ -81,7 +81,13 @@ public class IsoService  {
                     case ("Transcript Grade(4/4)") -> {
                         student.setGpa(Double.parseDouble(readCell(cell)));
                     }
-                    case ("Duration Preferred") -> application.setSemester(Semester.valueOf(cell.getStringCellValue()));
+                    case ("Duration Preferred") -> {
+                        application.setSemester1(Semester.valueOf(cell.getStringCellValue()));
+                        application.setSemester2(Semester.valueOf(cell.getStringCellValue()));
+                        application.setSemester3(Semester.valueOf(cell.getStringCellValue()));
+                        application.setSemester4(Semester.valueOf(cell.getStringCellValue()));
+                        application.setSemester5(Semester.valueOf(cell.getStringCellValue()));
+                    }
                     case ("Preferred University #1") -> application.setChoice1(universityRepository.findByName(readCell(cell)));
                     case ("Preferred University #2") -> application.setChoice2(universityRepository.findByName(readCell(cell)));
                     case ("Preferred University #3") -> application.setChoice3(universityRepository.findByName(readCell(cell)));

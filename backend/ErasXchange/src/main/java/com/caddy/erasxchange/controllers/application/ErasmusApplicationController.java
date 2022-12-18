@@ -3,6 +3,7 @@ package com.caddy.erasxchange.controllers.application;
 
 import com.caddy.erasxchange.DTOs.ErasmusApplicationDto;
 import com.caddy.erasxchange.models.Department;
+import com.caddy.erasxchange.models.application.AppStatus;
 import com.caddy.erasxchange.services.application.ErasmusApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -65,6 +66,13 @@ public class ErasmusApplicationController {
         List<ErasmusApplicationDto> apps = erasmusApplicationService.getAll();
         return new ResponseEntity<>( apps, HttpStatus.OK) ;
 
+    }
+
+    @GetMapping("/status/{studentId}")
+    public ResponseEntity<AppStatus> getApplicationStatus(@PathVariable Long studentId) {
+        AppStatus status = erasmusApplicationService.getStudentAppStatus(studentId);
+
+        return new ResponseEntity<>(status, HttpStatus.OK);
     }
 
 

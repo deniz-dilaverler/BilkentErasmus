@@ -42,7 +42,11 @@ public class FormController {
         ((Student)form1.getStudent()).setErasmusApplication(new ErasmusApplication());
         ((Student)form1.getStudent()).getErasmusApplication().setPlacedSchool(new ErasmusUniversity());
         ((Student)form1.getStudent()).getErasmusApplication().getPlacedSchool().setName("A uni");
-        ((Student)form1.getStudent()).getErasmusApplication().setSemester(Semester.SPRING);
+        ((Student)form1.getStudent()).getErasmusApplication().setSemester1(Semester.SPRING);
+        ((Student)form1.getStudent()).getErasmusApplication().setSemester2(Semester.SPRING);
+        ((Student)form1.getStudent()).getErasmusApplication().setSemester3(Semester.SPRING);
+        ((Student)form1.getStudent()).getErasmusApplication().setSemester4(Semester.SPRING);
+        ((Student)form1.getStudent()).getErasmusApplication().setSemester5(Semester.SPRING);
         formService.generatePreAppPdf(form);
         formService.generateTransferPdf(form1);
         return new ResponseEntity<>(HttpStatus.OK);

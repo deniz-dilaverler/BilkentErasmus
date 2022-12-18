@@ -37,76 +37,99 @@ public class ErasmusApplicationPlacer implements ApplicationPlacementStrategy<Er
         sortApplications();
 
         for(ErasmusApplication application : applications) {
-            ErasmusUniversity choice = null;
+//            ErasmusUniversity choice = null;
+//
+//
+//            choice = application.getChoice1();
+//            if(choice == null ) {
+//                application.setStatus(AppStatus.WAITING_BIN);
+//                continue;
+//            }
+//
+//            if(quotas.get(application.getChoice1()) > 0) {
+//                application.setStatus(AppStatus.PLACED);
+//                application.setPlacedSchool(application.getChoice1());
+//                //decreemt quota
+//                quotas.put(choice, quotas.get(choice) - 1);
+//                continue;
+//            }
+//
+//            choice = application.getChoice2();
+//            if(choice == null ) {
+//                application.setStatus(AppStatus.WAITING_BIN);
+//                continue;
+//            }
+//            if(quotas.get(application.getChoice2()) > 0) {
+//                application.setStatus(AppStatus.PLACED);
+//                application.setPlacedSchool(application.getChoice2());
+//                //decreemt quota
+//                quotas.put(choice, quotas.get(choice) - 1);
+//                continue;
+//            }
+//
+//            choice = application.getChoice3();
+//            if(choice == null ) {
+//                application.setStatus(AppStatus.WAITING_BIN);
+//                continue;
+//            }
+//            if(quotas.get(application.getChoice3()) > 0) {
+//                application.setStatus(AppStatus.PLACED);
+//                application.setPlacedSchool(application.getChoice3());
+//                //decreemt quota
+//                quotas.put(choice, quotas.get(choice) - 1);
+//                continue;
+//            }
+//
+//            choice = application.getChoice4();
+//            if(choice == null ) {
+//                application.setStatus(AppStatus.WAITING_BIN);
+//                continue;
+//            }
+//            if(quotas.get(application.getChoice4()) > 0) {
+//                application.setStatus(AppStatus.PLACED);
+//                application.setPlacedSchool(application.getChoice4());
+//                //decreemt quota
+//                quotas.put(choice, quotas.get(choice) - 1);
+//                continue;
+//            }
+//
+//            choice = application.getChoice5();
+//            if(choice == null ) {
+//                application.setStatus(AppStatus.WAITING_BIN);
+//                continue;
+//            }
+//            if(quotas.get(application.getChoice5()) > 0) {
+//                application.setStatus(AppStatus.PLACED);
+//                application.setPlacedSchool(application.getChoice5());
+//                //decreemt quota
+//                quotas.put(choice, quotas.get(choice) - 1);
+//                continue;
+//            }
+//
+//            application.setStatus(AppStatus.WAITING_BIN);
             if(application.getStatus() == AppStatus.PLACED) continue;
+            ErasmusUniversity placedUni = null;
 
-            choice = application.getChoice1();
-            if(choice == null ) {
+            if (application.getChoice1()!= null && quotas.get(application.getChoice1()) > 0) {
+                placedUni = application.getChoice1();
+            } else if (application.getChoice2()!= null && quotas.get(application.getChoice2()) > 0) {
+                placedUni = application.getChoice2();
+            } else if (application.getChoice3()!= null && quotas.get(application.getChoice3()) > 0) {
+                placedUni = application.getChoice3();
+            }else if (application.getChoice4()!= null && quotas.get(application.getChoice4()) > 0) {
+                placedUni = application.getChoice4();
+            }else if (application.getChoice5()!= null && quotas.get(application.getChoice5()) > 0) {
+                placedUni = application.getChoice5();
+            }
+
+            if(placedUni == null)
                 application.setStatus(AppStatus.WAITING_BIN);
-                continue;
-            }
-
-            if(quotas.get(application.getChoice1()) > 0) {
+            else{
+                application.setPlacedSchool(placedUni);
                 application.setStatus(AppStatus.PLACED);
-                application.setPlacedSchool(application.getChoice1());
-                //decreemt quota
-                quotas.put(choice, quotas.get(choice) - 1);
-                continue;
+                //Decrement quota
+                quotas.put(placedUni, quotas.get(placedUni) - 1);
             }
-
-            choice = application.getChoice2();
-            if(choice == null ) {
-                application.setStatus(AppStatus.WAITING_BIN);
-                continue;
-            }
-            if(quotas.get(application.getChoice2()) > 0) {
-                application.setStatus(AppStatus.PLACED);
-                application.setPlacedSchool(application.getChoice2());
-                //decreemt quota
-                quotas.put(choice, quotas.get(choice) - 1);
-                continue;
-            }
-
-            choice = application.getChoice3();
-            if(choice == null ) {
-                application.setStatus(AppStatus.WAITING_BIN);
-                continue;
-            }
-            if(quotas.get(application.getChoice3()) > 0) {
-                application.setStatus(AppStatus.PLACED);
-                application.setPlacedSchool(application.getChoice3());
-                //decreemt quota
-                quotas.put(choice, quotas.get(choice) - 1);
-                continue;
-            }
-
-            choice = application.getChoice4();
-            if(choice == null ) {
-                application.setStatus(AppStatus.WAITING_BIN);
-                continue;
-            }
-            if(quotas.get(application.getChoice4()) > 0) {
-                application.setStatus(AppStatus.PLACED);
-                application.setPlacedSchool(application.getChoice4());
-                //decreemt quota
-                quotas.put(choice, quotas.get(choice) - 1);
-                continue;
-            }
-
-            choice = application.getChoice5();
-            if(choice == null ) {
-                application.setStatus(AppStatus.WAITING_BIN);
-                continue;
-            }
-            if(quotas.get(application.getChoice5()) > 0) {
-                application.setStatus(AppStatus.PLACED);
-                application.setPlacedSchool(application.getChoice5());
-                //decreemt quota
-                quotas.put(choice, quotas.get(choice) - 1);
-                continue;
-            }
-
-            application.setStatus(AppStatus.WAITING_BIN);
 
         }
 
@@ -140,7 +163,6 @@ public class ErasmusApplicationPlacer implements ApplicationPlacementStrategy<Er
             }
         }
     }
-
 
 
     @Override

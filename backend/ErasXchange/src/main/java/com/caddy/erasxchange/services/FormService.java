@@ -164,7 +164,7 @@ public class FormService {
         personalInfoTable.addCell("Department");
         personalInfoTable.addCell(form.getStudent().getDepartment().name());
         personalInfoTable.addCell("Semester");
-        personalInfoTable.addCell(form.getStudent().getErasmusApplication().getSemester().name());
+        personalInfoTable.addCell(form.getStudent().getErasmusApplication().getPlacedSchool().getSemester().name());
         personalInfoTable.setWidthPercentage(98);
         document.add(personalInfoTable);
 
