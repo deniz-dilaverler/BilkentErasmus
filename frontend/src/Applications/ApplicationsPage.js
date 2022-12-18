@@ -3,10 +3,11 @@ import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "../Courses/Courses.css";
 
-const ApplicationsPage = () => {
+const ApplicationsPage = ({loggedIn, setLoggedIn}) => {
   const [applications, setApplications] = useState([]);
   const [selectedApplication, setselectedApplication] = useState(null);
 
+  setLoggedIn(true);
   useEffect(() => {
     fetch("http://localhost:8080/applications")
       .then((response) => response.json())
