@@ -16,12 +16,12 @@ function StudentApplications(props) {
 
     // get if application is published or not
     const isApplicationsPublished = () => {
-        return false;
+        return true;
     }
 
     // get if application placement process started or not
     const isApplicationsStarted = () => {
-        return false;
+        return true;
     }
 
     // if all student application is cancelled, show cancelled:
@@ -121,16 +121,16 @@ function StudentApplications(props) {
     else if ( !isCancelled() && isApplicationsPublished() )
     {
         // placed institution, databaseden çek, şimdilik mock data:
-        /*
+        
         const placedInstitution = 
         {
             no: 1,
             school: 'Bamberg University',
             semester: 'Spring',
         };
-        */
         
-       const placedInstitution = -1; 
+        
+       //const placedInstitution = -1; 
         // if there is no placed institution:
         // show published application, -1 is for null check
         if ( placedInstitution === -1 )

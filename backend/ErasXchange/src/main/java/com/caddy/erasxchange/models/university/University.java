@@ -45,6 +45,7 @@ public  abstract class University extends BaseEntity {
 
 
     private String languageRequirement;
+    @Enumerated(EnumType.STRING)
     private Semester semester;
 
 

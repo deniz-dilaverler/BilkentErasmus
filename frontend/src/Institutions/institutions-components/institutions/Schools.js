@@ -12,17 +12,23 @@ function Schools(props) {
     const filterChangeHandler = selectedCountry => {
         console.log("Mirbaaaa");
         console.log(selectedCountry);
-        setFilteredSchool(filteredSchool);
+        setFilteredSchool(selectedCountry);
     };
 
     const filteredSchools = props.institutions.filter(school => {
-        return school.country === filteredSchool
+        if ( filteredSchool !== "All" ) {
+            return school.country === filteredSchool
+        }
+        else if ( filteredSchool === "All" ) {
+            return props.institutions
+        }
+        
     })
-    console.log(props.institutions)
+    console.log(filteredSchools)
     return(
             <Container className="schools">
-                <div className="filter"><SchoolFilter onChangeFilter={filterChangeHandler} selected={filteredSchool}></SchoolFilter></div>
-                {props.institutions.map((school) => 
+                <div><SchoolFilter onChangeFilter={filterChangeHandler} selected={filteredSchool}></SchoolFilter></div>
+                {filteredSchools.map((school) => 
                     <SchoolItem
                         key = {school.id}
                         name = {school.name}
