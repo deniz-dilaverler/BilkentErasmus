@@ -96,9 +96,12 @@ public class ErasmusApplicationController {
     }
 
 
+    /*
     @GetMapping("/checkallapss")
     public ResponseEntity<Boolean> checkApplicationsReady(Department department) {
         Boolean result = erasmusApplicationService.checkApplicationsAreCorrect(department);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+    */
+
 }

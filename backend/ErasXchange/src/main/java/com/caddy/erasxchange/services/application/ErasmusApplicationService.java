@@ -319,7 +319,7 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
         if (placementStatus == PlacementStatus.APPS_CORRECT ||
                 placementStatus == PlacementStatus.PUBLISHED) {
             return;
-        } else if (placementStatus == PlacementStatus.FILE_UPLOADED ||
+        } else if (placementStatus == PlacementStatus.APPS_CREATED ||
                     placementStatus == PlacementStatus.ACTIVATED) {
 
             List<ErasmusApplication> wrongApps = new ArrayList<>();

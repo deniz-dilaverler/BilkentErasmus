@@ -27,7 +27,7 @@ public class ApplicationStateService {
     @Autowired
     public ApplicationStateService(ApplicationStateRepository repository) {
         this.repository = repository;
-       // initState();
+       initState();
     }
 
     private void initState() {
