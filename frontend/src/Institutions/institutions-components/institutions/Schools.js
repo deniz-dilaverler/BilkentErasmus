@@ -20,7 +20,8 @@ function Schools(props) {
             return school.country === filteredSchool
         }
         else if ( filteredSchool === "All" ) {
-            return props.institutions
+            console.log(school)
+            return school !== undefined
         }
         
     })
