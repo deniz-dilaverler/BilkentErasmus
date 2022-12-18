@@ -18,4 +18,6 @@ public interface UserRepository<T extends User> extends JpaRepository<T, Long> {
     List<T> findByDepartment(Department department);
 
     List<T> findByDepartmentAndRole(Department department, Role role);
+
+    T findByVerificationCode(String code);
 }

@@ -70,7 +70,8 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-
+    @Column
+    private String verificationCode;
 
 
     // TODO: add permission property to check what operations they can do

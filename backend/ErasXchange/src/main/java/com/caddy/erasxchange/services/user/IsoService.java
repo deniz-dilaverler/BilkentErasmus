@@ -4,7 +4,6 @@ import com.caddy.erasxchange.models.Department;
 import com.caddy.erasxchange.models.Semester;
 import com.caddy.erasxchange.models.application.AppStatus;
 import com.caddy.erasxchange.models.application.ErasmusApplication;
-import com.caddy.erasxchange.models.users.Coordinator;
 import com.caddy.erasxchange.models.users.Role;
 import com.caddy.erasxchange.models.users.Student;
 import com.caddy.erasxchange.models.users.User;
@@ -12,6 +11,7 @@ import com.caddy.erasxchange.repositories.university.ErasmusUniversityRepository
 import com.caddy.erasxchange.repositories.user.CoordinatorRepository;
 import com.caddy.erasxchange.repositories.user.StudentRepository;
 import com.caddy.erasxchange.repositories.user.UserRepository;
+import com.caddy.erasxchange.security.AuthService;
 import com.caddy.erasxchange.services.ApplicationStateService;
 import com.caddy.erasxchange.services.EventService;
 import com.caddy.erasxchange.services.PlacementStatus;
@@ -39,10 +39,11 @@ public class IsoService  {
     private final EventService eventService;
     private final CoordinatorRepository coordinatorRepository;
     private final UserRepository<User> userRepository;
+    private final AuthService authService;
 
     public IsoService(StudentRepository studentRepository, ErasmusUniversityRepository universityRepository, StorageService storageService, ApplicationStateService applicationStateService, PasswordEncoder passwordEncoder, EventService eventService,
                       CoordinatorRepository coordinatorRepository,
-                      UserRepository<User> userRepository) {
+                      UserRepository<User> userRepository, AuthService authService) {
         this.studentRepository = studentRepository;
         this.universityRepository = universityRepository;
         this.storageService = storageService;
@@ -51,6 +52,7 @@ public class IsoService  {
         this.eventService = eventService;
         this.coordinatorRepository = coordinatorRepository;
         this.userRepository = userRepository;
+        this.authService = authService;
     }
 
     public List<Student> readExcel(String fileName) throws Exception {
@@ -116,6 +118,11 @@ public class IsoService  {
             application.setStatus(AppStatus.PENDING);
             application.setStudent(student);
             student.setErasmusApplication(application);
+            if (student.getLastName().equals("Güzey")) {
+                student.setEmail("aliemirguzey@gmail.com");
+                authService.sendRegisterMail(student);
+            }
+
             eventService.sendEvent(student, "Update on your Erasmus application", "Your application is now pending");
 //            student.setErasmusApplication(applicationRepository.findByStudent(student));
             studentRepository.save(student);
