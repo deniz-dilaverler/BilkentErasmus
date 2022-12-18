@@ -66,6 +66,12 @@ const SchoolForm = (props) => {
     setOpen(false);
   };
 
+  // if there are integer fields, alert user to enter only integer
+  const [openInt, setOpenInt] = useState(false)
+  const handleIntClose = () => {
+    setOpenInt(false);
+  };
+
 
   // set name:
   const institutionChangeHandler = (event) => {
@@ -108,43 +114,51 @@ const SchoolForm = (props) => {
       // if they are not null
       if (enteredInstName !== "" && enteredInstCountry !== "" && enteredInstQuota !== "" && enteredProgramType !== "" && enteredAllowance !== "" && language.length >= 1 )
       {
-        const schoolData = {
-          name: enteredInstName,
-          languageRequirement: language,
-          semester: enteredSemester,
-          country: enteredInstCountry,
-          allowence: enteredAllowance,
-          coordinatorIds: 1,
-          quota: enteredInstQuota,
+        // typecheck allowence and quota
+        if ( typeof enteredAllowance === "number" && typeof enteredInstQuota === "number" )
+        {
+          const schoolData = {
+            name: enteredInstName,
+            languageRequirement: language,
+            semester: enteredSemester,
+            country: enteredInstCountry,
+            allowence: enteredAllowance,
+            coordinatorIds: 1,
+            quota: enteredInstQuota,
+          }
+          // send it for display, and set values to null again in form:
+          props.onSaveSchoolData(schoolData);
+          setLanguage('');
+          setEnteredInstName('');
+          setEnteredInstCountry('');
+          setEnteredInstQuota('');
+          setEnteredAllowance('');
+
+          // for sending it to database:
+          var name = enteredInstName
+          var languageRequirement = language[0].toString()
+          console.log(language)
+          console.log(language[0])
+          console.log(language[0].toString())
+          var semester = enteredSemester
+          var country = enteredInstCountry
+          var allowance = enteredAllowance
+          var quota = enteredInstQuota
+          var coordinatorId = 1
+
+          // create JSON object, and send it:
+          const response = await fetch("http://localhost:8080/university/erasmus", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name, languageRequirement, semester, country, allowance, quota, coordinatorId })
+          });
         }
-        // send it for display, and set values to null again in form:
-        props.onSaveSchoolData(schoolData);
-        setLanguage('');
-        setEnteredInstName('');
-        setEnteredInstCountry('');
-        setEnteredInstQuota('');
-        setEnteredAllowance('');
-
-        // for sending it to database:
-        var name = enteredInstName
-        var languageRequirement = language[0].toString()
-        console.log(language)
-        console.log(language[0])
-        console.log(language[0].toString())
-        var semester = enteredSemester
-        var country = enteredInstCountry
-        var allowance = enteredAllowance
-        var quota = enteredInstQuota
-        var coordinatorId = 1
-
-        // create JSON object, and send it:
-        const response = await fetch("http://localhost:8080/university/erasmus", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name, languageRequirement, semester, country, allowance, quota, coordinatorId })
-        });
+        // if there are 
+        else {
+          setOpenInt(true)
+        }
       }
       // if they are NULL, do not send, refill form!
       else 
@@ -158,31 +172,38 @@ const SchoolForm = (props) => {
       // nullcheck
       if (enteredInstName !== "" && enteredInstCountry !== "" && enteredInstQuota !== "" && enteredProgramType !== "" && language.length >= 1 )
       {
-        const schoolData = {
-          name: enteredInstName,
-          languageRequirement: language,
-          semester: enteredSemester,
-          country: enteredInstCountry,
-          allowence: enteredAllowance,
-          coordinatorIds: 1,
-          quota: enteredInstQuota,
+        // typecheck quota
+        if ( typeof enteredInstQuota === "number" ) {
+          const schoolData = {
+            name: enteredInstName,
+            languageRequirement: language,
+            semester: enteredSemester,
+            country: enteredInstCountry,
+            allowence: enteredAllowance,
+            coordinatorIds: 1,
+            quota: enteredInstQuota,
+          }
+          // send it for display, and set values to null again in form:
+          props.onSaveSchoolData(schoolData);
+          setLanguage('');
+          setEnteredInstName('');
+          setEnteredInstCountry('');
+          setEnteredInstQuota('');
         }
-        // send it for display, and set values to null again in form:
-        props.onSaveSchoolData(schoolData);
-        setLanguage('');
-        setEnteredInstName('');
-        setEnteredInstCountry('');
-        setEnteredInstQuota('');
+        // alert user for input type (should be integer)
+        else {
+          setOpenInt(true)
+        }
       }
       // if NULL, alert user
       else 
       {
-        
+        setOpen(true);
       }
     }
     // something must have went wrong :( , alert user
     else {
-
+      setOpen(true);
     }
   } // end of form submit handler
 
@@ -317,6 +338,23 @@ const SchoolForm = (props) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>OK</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={openInt}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleIntClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Only input integer value"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            Please only add integer value to quota and allowence
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleIntClose}>OK</Button>
         </DialogActions>
       </Dialog>
     </Container>
