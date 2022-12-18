@@ -45,10 +45,10 @@ public class AuthService {
     public Optional<String> login(LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsername(), loginDto.getPassword()));
-        SecurityUser user = securityUserRepository.findByUsername(loginDto.getUsername());
+        User user = userRepository.findByBilkentId(Integer.parseInt(loginDto.getUsername())).get();
         List<Role> roles  = new ArrayList<>();
         roles.add(user.getRole());
-        Optional<String> token = Optional.of(jwtProvider.createToken(user.getUsername(), roles));
+        Optional<String> token = Optional.of(jwtProvider.createToken(user.getBilkentId().toString(), roles));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return token;
     }
