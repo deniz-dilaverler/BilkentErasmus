@@ -89,7 +89,7 @@ public class ErasmusApplicationController {
         erasmusApplicationService.changeSemester(appId, choiceNo);
     }
 
-    @GetMapping("/cancelChoice/semester/{appId}/{choiceNo}")
+    @PutMapping("/cancelChoice/semester/{appId}/{choiceNo}")
     @ResponseStatus(HttpStatus.OK)
     public void cancelChoice(@PathVariable Long appId, @PathVariable Integer choiceNo) {
         erasmusApplicationService.cancelChoice(appId, choiceNo);
