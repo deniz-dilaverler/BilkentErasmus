@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import "./Login.css";
+import jwt_decode from 'jwt-decode';
 
-function LoginForm({username, setUsername, password, setPassword, error, setError, handleSubmit}) {
+function LoginForm({username, setUsername, password, setPassword, error, handleSubmit}) {
 
   return (
     <form onSubmit={handleSubmit} className="login-form">

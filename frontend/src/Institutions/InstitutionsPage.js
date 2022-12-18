@@ -57,7 +57,9 @@ const initialInstitutions = [
 
 
 function InstitutionsMainPage({loggedIn, setLoggedIn}) {
+
   setLoggedIn(true);
+
   const [institutions, setInstitutions] = useState(initialInstitutions);
   const addSchoolHandler = school => {
     setInstitutions(

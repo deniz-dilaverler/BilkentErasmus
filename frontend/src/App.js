@@ -5,6 +5,7 @@ import CoursesPage from "./Courses/CoursesPage";
 import InstitutionsPage from "./Institutions/InstitutionsPage";
 import ApplicationsPage from "./Applications/ApplicationsPage";
 import StudentApplicationsPage from "./StudentApplication/StudentApplicationsPage";
+import NonLoggedSidebar from "./Sidebar/NonLoggedSidebar";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
@@ -34,8 +35,11 @@ function App() {
       if (response.ok) {
         setLoggedIn(true);
         const token = data.authToken;
-        setRole(jwt_decode(token).roles);
-        window.location.pathname = "/courses";
+        const decodedToken = jwt_decode(token);
+        const role = decodedToken.roles;
+        setRole(role);
+        localStorage.setItem('role', JSON.stringify(role));
+        window.location.pathname = "/instutitions";
       } else {
         throw new Error(response.statusText);
       }
@@ -47,6 +51,7 @@ function App() {
   return (
     <div className="App">
       {loggedIn && <Sidebar />}
+      {!loggedIn && <NonLoggedSidebar />}
       <BrowserRouter>
         <Routes>
           <Route
@@ -60,27 +65,34 @@ function App() {
                 error={error}
                 setError={setError}
                 handleSubmit={handleSubmit}
+                role={role}
               />
             }
           />
           <Route
             path="/instutitions"
             element={
-              <InstitutionsPage loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+              <InstitutionsPage
+                loggedIn={loggedIn}
+                setLoggedIn={setLoggedIn}
+                role={role}
+              />
             }
           />
           <Route
             path="/applications"
             element={
-              !(role === "ROLE_COORDINATOR") ? (
+              (JSON.parse(localStorage.getItem('role'))[0].authority === "ROLE_STUDENT") ? (
                 <StudentApplicationsPage
                   loggedIn={loggedIn}
                   setLoggedIn={setLoggedIn}
+                  role={role}
                 />
               ) : (
                 <ApplicationsPage
                   loggedIn={loggedIn}
                   setLoggedIn={setLoggedIn}
+                  role={role}
                 />
               )
             }
@@ -88,7 +100,31 @@ function App() {
           <Route
             path="/courses"
             element={
-              <CoursesPage loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+              <CoursesPage
+                loggedIn={loggedIn}
+                setLoggedIn={setLoggedIn}
+                role={role}
+              />
+            }
+          />
+          <Route
+            path="/coursesNonLogged"
+            element={
+              <CoursesPage
+                loggedIn={loggedIn}
+                setLoggedIn={setLoggedIn}
+                role={role}
+              />
+            }
+          />
+          <Route
+            path="/instutitionsNonLogged"
+            element={
+              <InstitutionsPage
+                loggedIn={loggedIn}
+                setLoggedIn={setLoggedIn}
+                role={role}
+              />
             }
           />
         </Routes>
@@ -96,4 +132,5 @@ function App() {
     </div>
   );
 }
+
 export default App;

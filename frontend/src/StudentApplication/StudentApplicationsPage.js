@@ -36,6 +36,7 @@ const studentApplications = [
 
 function StudentApplicationsPage({loggedIn, setLoggedIn}) {
   setLoggedIn(true);
+
   return (
     <div>
       <StudentApplications applications={studentApplications}></StudentApplications>
