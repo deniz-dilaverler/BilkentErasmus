@@ -14,21 +14,22 @@ import DialogTitle from '@mui/material/DialogTitle';
 function CancelApplication(props) {
 
     // cancel all applications!
-
+    const [cancelled, setCancelled] = useState();
     const cancelAllApplicationHandler = () => {
-        const statusData = "ALL"
-        props.cancelApplicationStatusData(statusData);
+        //TODO Cancel application in database!!!
+        fetch('http://localhost:8080/application/erasmus/' + props.applicationID +'/true', { method: 'DELETE' })
+        .then((cancelled) => setCancelled(cancelled));
+        // tekrar yüklenmesi de lazım, yani isCancelled useState olmalı herhade
         console.log("Cancel all applications!")
+        console.log(props.applicationID)
         setOpen(false);
     }
 
     const cancelCurrentApplicationHandler = () => {
-        const statusData = {
-            statType: "CURRENT",
-            no: props.no }
-          props.cancelApplicationStatusData(statusData);
-          console.log("Cancel current application!")
-          setOpen(false);
+        //TODO Cancel application in database!!!
+        // tekrar yüklenmesi de lazım sayfanın
+        console.log("Cancel current application!")
+        setOpenCur(false)
     }
 
     // fetch application publish data:

@@ -9,47 +9,11 @@ function StudentApplications(props) {
 
     // get student application status: (cancelled or not):
     const [status, setStatus] = useState();
+
     const [isPlacementStarted, setIsPlacementStarted] = useState();
-    const [faultyData, setFaultyData] = useState();
-
-    console.log("denize götten giriyim")
-    console.log(isPlacementStarted)
-    const applicationID = props.applications.id;
-
-        useEffect(() => {
-            fetch("http://localhost:8080/application/erasmus/wrongsemester/" + applicationID )
-                .then((response) => response.json())
-                .then((faultyData) => setFaultyData(faultyData));
-        }, []);
-        console.log("faulty data:")
-        console.log(faultyData)
-        
-    const [cancelled, setCancelled] = useState(false);
-    console.log("odddddddddddddddffffffffff")
-    console.log(status)
-    const cancelApplicationStatusHandler = (statusData) => {
-        console.log(statusData)
-        if (statusData === "ALL")
-        {
-            console.log("It is canceled!")
-            fetch('http://localhost:8080/application/erasmus/' + applicationID +'/true', { method: 'DELETE' })
-            .then((status) => setStatus("CANCELED"));
-            setStatus("CANCELED")
-        }
-        else if ( statusData.statType === "CURRENT" ) {
-            fetch('http://localhost:8080/application/erasmus/cancelChoice/semester/' + applicationID +'/' + statusData.no, { method: 'PUT' })
-            .then((isPlacementStarted) => setIsPlacementStarted("ACTIVATED"));
-            console.log("Şey ben current cancellıycam uwu")
-        }
-        else if ( statusData.statType === "SEMESTER_CHANGE" ) {
-            fetch('http://localhost:8080/application/erasmus/change/semester/' + applicationID +'/' + statusData.no, { method: 'PUT' })
-            .then((isPlacementStarted) => setIsPlacementStarted("ACTIVATED"));
-            
-            console.log("Şey ben SEMESTER DEYİŞCEMM uwu")
-        }
-    };
 
     const choices = [];
+    const applicationID = props.applications.id;
     console.log("gir")
     console.log(choices)
     if (props.applications.semester1 !== undefined) {
@@ -79,7 +43,7 @@ function StudentApplications(props) {
             {
                 semester: props.applications.semester4,
                     choiceNo: 4,
-                    choiceName: props.applications.choice4.name,
+                        choiceName: props.applications.choice4.name,
                 },
         )
     }
@@ -93,22 +57,6 @@ function StudentApplications(props) {
         )
     }
 
-    let faultyDatas = [];
-    if ( faultyData !== undefined ) {
-        for ( let i = 0; i < 5; i++ ) {
-            if ( faultyData[i] === false ) {
-                faultyDatas.push(
-                    {
-                        no: i+1,
-                        semester: choices[i].semester,
-                        name: choices[i].choiceName,
-                    }
-                );
-            }
-        } 
-    }
-    
-    console.log(faultyDatas)
     console.log("choices")
     console.log(choices)
 
@@ -147,7 +95,7 @@ function StudentApplications(props) {
     }
     // if student application is not started, just view all applications
     // also, student can cancel all applications
-    else if ( ( status !== "CANCELED" && isPlacementStarted === "APPS_CREATED" ) || (status !== "CANCELED" && isPlacementStarted === "APPS_CORRECT" ) ) {
+    else if (status !== "CANCELED" && isPlacementStarted === "APPS_CREATED") {
         if (props.applications) {
             return (
                 <Container className="applications">
@@ -162,58 +110,75 @@ function StudentApplications(props) {
                             />
                         )}
                     </div>
-                    <CancelApplication cancelApplicationStatusData={cancelApplicationStatusHandler}></CancelApplication>
+                    <CancelApplication applicationID={applicationID}></CancelApplication>
                 </Container>
             );
         }
     }
-    // if not cancelled and applications are started but not published, ACTIVATED status means that there are mistakes
-    // Hence, show mistakes if there any in this student
-    else if (status !== "CANCELED" && isPlacementStarted === "ACTIVATED") {
-        // fetch faulty data -> ask for a change
+    // if not cancelled and applications are started but not published, show if there are any mistakes!
+    //+
+    else if (status !== "CANCELED" && isApplicationsStarted() && status === "PLACED") {
+        // fetch faulty data if there is any -> ask for a change
         // can cancel all applications, too
-        if ( faultyDatas !== undefined ) {
-            if ( faultyDatas.length >= 1 ) {
-                return (
-                    <Container className="applications">
-                            <div>
-                                <h4>You have some applications you need to modify:</h4>
-                                {faultyDatas.map((app) =>
-                                    <ModifyFaultyData
-                                        key={app.no}
-                                        no={app.no}
-                                        school={app.name}
-                                        semester={app.semester}
-                                        cancelApplicationStatusData={cancelApplicationStatusHandler}
-                                    />
-                                )}
-                                <CancelApplication cancelApplicationStatusData={cancelApplicationStatusHandler}></CancelApplication>
-                            </div>
-                        </Container>
-                );
-            }
-            else {
-                return (
-                    <Container className="applications">
-                    <div><h4>Wait for your coordinator to start application placements</h4></div>
+        const fetchFaultyData = () => {
+            return [
+                {
+                    key: 1,
+                    no: 1,
+                    school: "Bamberg University",
+                    semester: "Fall",
+                },
+                {
+                    key: 4,
+                    no: 4,
+                    school: "Kingston University",
+                    semester: "Fall",
+                }
+            ];
+        }
+        // if there is faulty data, show it, too! + cancel all
+        if (fetchFaultyData !== -1) {
+            return (
+                <Container className="applications">
                     <div>
-                        {choices.map((application) =>
-                            <StudentAppItem
-                                key={application.choiceNo}
-                                no={application.choiceNo}
-                                school={application.choiceName}
-                                semester={application.semester}
+                        <h4>You have some applications you need to modify:</h4>
+                        {fetchFaultyData().map((faultyApplication) =>
+                            <ModifyFaultyData
+                                key={faultyApplication.no}
+                                no={faultyApplication.no}
+                                school={faultyApplication.school}
+                                semester={faultyApplication.semester}
                             />
                         )}
+                        <CancelApplication></CancelApplication>
                     </div>
-                    <CancelApplication cancelApplicationStatusData={cancelApplicationStatusHandler}></CancelApplication>
                 </Container>
-                );
-            }
+            );
+        }
+        // -1 is NULL CHECK, If there is no data, show no data
+        else if (fetchFaultyData === -1) {
+            return (
+                <Container className="applications">
+                    <div>
+                        <div><h4>Wait for your coordinator to publish application placements</h4></div>
+                        <div>
+                            {props.applications.map((application) =>
+                                <StudentAppItem
+                                    key={application.no}
+                                    no={application.no}
+                                    school={application.school}
+                                    semester={application.semester}
+                                />
+                            )}
+                        </div>
+                        <CancelApplication></CancelApplication>
+                    </div>
+                </Container>
+            );
         }
     }
-    // if applications are published and stated person is placed: show placement results!
-    else if (status !== "CANCELED" && isPlacementStarted === "") {
+    // if applications are published and stated person is placed: show placement
+    else if (status !== "CANCELED" && isApplicationsPublished()) {
         // placed institution, databaseden çek, şimdilik mock data:
 
         const placedInstitution =
@@ -224,8 +189,9 @@ function StudentApplications(props) {
         };
 
 
-        // if placed institution is null, it means that user is in waiting list
-        // Hence, return following:
+        //const placedInstitution = -1; 
+        // if there is no placed institution:
+        // show published application, -1 is for null check
         if (placedInstitution === -1) {
             return (
                 <Container className="applications">
