@@ -51,7 +51,7 @@ public class AuthService {
         List<Role> roles  = new ArrayList<>();
         roles.add(user.getRole());
 
-        String token = jwtProvider.createToken(user.getUsername(), roles);
+        String token = jwtProvider.createToken(user.getBilkentId().toString(), roles);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return token;
