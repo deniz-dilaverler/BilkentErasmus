@@ -5,6 +5,8 @@ import CoursesPage from "./Courses/CoursesPage";
 import InstitutionsPage from "./Institutions/InstitutionsPage";
 import ApplicationsPage from "./Applications/ApplicationsPage";
 import StudentApplicationsPage from "./StudentApplication/StudentApplicationsPage";
+import FormsPage from "./Forms/FormsPage";
+import MyFormsPage from "./MyForms/MyFormsPage";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
@@ -39,6 +41,9 @@ function App() {
             <Route path="/instutitions" element={<InstitutionsPage />} />
             <Route path="/applications" element={<StudentApplicationsPage />} />
             <Route path="/courses" element={<CoursesPage />} />
+            <Route path="/forms" element={<FormsPage />} />
+            <Route path="/myforms" element={<MyFormsPage />} />
+
           </Routes>
         </BrowserRouter>
       </div>
