@@ -31,4 +31,9 @@ export const SidebarData = [
     icon: <TableViewIcon />,
     link: "/forms",
   },
+  {
+    title: "MyForms",
+    icon: <TableViewIcon />,
+    link: "/myforms",
+  },
 ];
