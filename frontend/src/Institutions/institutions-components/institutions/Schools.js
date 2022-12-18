@@ -34,8 +34,7 @@ function Schools(props) {
                         country = {school.country}
                         language = {school.languageRequirement}
                         semester = {school.semester }
-                        quota = {school.programs[0].quota}
-                        department = {school.programs[0].department}
+                        programs = {school.programs}
                         programType = {school.isErasmus ? "erasmus" : "exchange"}
                         allowance = {school.allowance}
                     />
