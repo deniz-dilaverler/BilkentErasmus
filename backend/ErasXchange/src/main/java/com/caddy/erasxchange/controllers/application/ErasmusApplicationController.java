@@ -5,6 +5,7 @@ import com.caddy.erasxchange.DTOs.ErasmusApplicationDto;
 import com.caddy.erasxchange.models.Department;
 import com.caddy.erasxchange.models.application.AppStatus;
 import com.caddy.erasxchange.services.application.ErasmusApplicationService;
+import com.github.javafaker.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,5 +76,22 @@ public class ErasmusApplicationController {
         return new ResponseEntity<>(status, HttpStatus.OK);
     }
 
+    @GetMapping("/wrongsemester/{applicationId}")
+    public ResponseEntity<Boolean[]> getCorrectSemesters(@PathVariable Long applicationId) {
+        Boolean[] correctness = erasmusApplicationService.getSemesterCorrect(applicationId);
 
+        return new ResponseEntity<>(correctness, HttpStatus.OK);
+    }
+
+    @PutMapping("/change/semester/{appId}/{choiceNo}")
+    @ResponseStatus(HttpStatus.OK)
+    public void changeSemester(@PathVariable Long appId, @PathVariable Integer choiceNo) {
+        erasmusApplicationService.changeSemester(appId, choiceNo);
+    }
+
+    @GetMapping("/cancelChoice/semester/{appId}/{choiceNo}")
+    @ResponseStatus(HttpStatus.OK)
+    public void cancelChoice(@PathVariable Long appId, @PathVariable Integer choiceNo) {
+        erasmusApplicationService.cancelChoice(appId, choiceNo);
+    }
 }
