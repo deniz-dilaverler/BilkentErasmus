@@ -32,7 +32,6 @@ public class IsoController {
     }
 
     @PostMapping("/api/upload")
-    @PreAuthorize("hasRole('ISO')")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         String fileName = fileStorageService.storeFile(file);
 
@@ -46,7 +45,6 @@ public class IsoController {
     }
 
     @GetMapping("/api/download/{fileName:.+}")
-    @PreAuthorize("hasRole('ISO')")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) throws Exception {
         // Load file as Resource
         ByteArrayResource resource = fileStorageService.loadFileAsResource(fileName);

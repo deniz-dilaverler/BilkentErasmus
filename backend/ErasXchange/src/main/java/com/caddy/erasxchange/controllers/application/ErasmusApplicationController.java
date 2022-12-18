@@ -3,11 +3,15 @@ package com.caddy.erasxchange.controllers.application;
 
 import com.caddy.erasxchange.DTOs.ErasmusApplicationDto;
 import com.caddy.erasxchange.models.Department;
+import com.caddy.erasxchange.models.application.AppStatus;
 import com.caddy.erasxchange.services.application.ErasmusApplicationService;
+import com.github.javafaker.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/application/erasmus")
@@ -58,5 +62,54 @@ public class ErasmusApplicationController {
     }
 
 
+    @GetMapping("/all")
+    public ResponseEntity<List<ErasmusApplicationDto>> getApplications() {
+        List<ErasmusApplicationDto> apps = erasmusApplicationService.getAll();
+        return new ResponseEntity<>( apps, HttpStatus.OK) ;
+
+    }
+
+    @GetMapping("/status/{studentId}")
+    public ResponseEntity<AppStatus> getApplicationStatus(@PathVariable Long studentId) {
+        AppStatus status = erasmusApplicationService.getStudentAppStatus(studentId);
+        System.out.println(status);
+        return new ResponseEntity<>(status, HttpStatus.OK);
+    }
+
+    @GetMapping("/wrongsemester/{applicationId}")
+    public ResponseEntity<Boolean[]> getCorrectSemesters(@PathVariable Long applicationId) {
+        Boolean[] correctness = erasmusApplicationService.getSemesterCorrect(applicationId);
+
+        return new ResponseEntity<>(correctness, HttpStatus.OK);
+    }
+
+    @PutMapping("/change/semester/{appId}/{choiceNo}")
+    @ResponseStatus(HttpStatus.OK)
+    public void changeSemester(@PathVariable Long appId, @PathVariable Integer choiceNo) {
+        erasmusApplicationService.changeSemester(appId, choiceNo);
+    }
+
+    @PutMapping("/cancelChoice/semester/{appId}/{choiceNo}")
+    @ResponseStatus(HttpStatus.OK)
+    public void cancelChoice(@PathVariable Long appId, @PathVariable Integer choiceNo) {
+        erasmusApplicationService.cancelChoice(appId, choiceNo);
+    }
+
+    @PutMapping("/activate/{department}")
+    @ResponseStatus(HttpStatus.OK)
+    public void activate(Department department) {
+
+        erasmusApplicationService.checkApplications(department);
+
+    }
+
+
+    /*
+    @GetMapping("/checkallapss")
+    public ResponseEntity<Boolean> checkApplicationsReady(Department department) {
+        Boolean result = erasmusApplicationService.checkApplicationsAreCorrect(department);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    */
 
 }

@@ -11,6 +11,7 @@ function SchoolItem(props) {
 
   const [modalShow, setModalShow] = React.useState(false);
 
+
   return (
     <Container className="school-item">
       <Row>
@@ -28,10 +29,12 @@ function SchoolItem(props) {
           centered
         >
         <Modal.Body>
-          <h4>{props.name}</h4>
-          <p>
-            Quota:{props.quota}
-          </p>
+        <h4>{props.name}</h4>
+          <p>Program type: {props.programType}</p>
+          <p>Institution accepted semester: {props.semester}</p>
+          <p>Institution quota: {props.programs !== undefined? props.programs[0].quota: console.log("") }</p>
+          <p>Institution allowance: {props.allowance}</p>
+          <p>Institution accepted departments: {props.programs !== undefined? props.programs[0].department: console.log("")}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => setModalShow(false)}>Close</Button>
@@ -42,4 +45,4 @@ function SchoolItem(props) {
   );
 }
 
-export default SchoolItem;
+export default SchoolItem;   

@@ -7,28 +7,37 @@ import Container from 'react-bootstrap/Container';
 
 function Schools(props) {
 
-    const [filteredSchool, setFilteredSchool] = useState('');
+    const [filteredSchool, setFilteredSchool] = useState('All');
 
     const filterChangeHandler = selectedCountry => {
         console.log("Mirbaaaa");
         console.log(selectedCountry);
-        setFilteredSchool(filteredSchool);
+        setFilteredSchool(selectedCountry);
     };
 
     const filteredSchools = props.institutions.filter(school => {
-        return school.country === filteredSchool
+        if ( filteredSchool !== "All" ) {
+            return school.country === filteredSchool
+        }
+        else if ( filteredSchool === "All" ) {
+            console.log(school)
+            return school !== undefined
+        }
+        
     })
-
     return(
             <Container className="schools">
-                <div className="filter"><SchoolFilter onChangeFilter={filterChangeHandler} selected={filteredSchool}></SchoolFilter></div>
-                {props.institutions.map((school) => 
+                <div><SchoolFilter onChangeFilter={filterChangeHandler} selected={filteredSchool}></SchoolFilter></div>
+                {filteredSchools.map((school) => 
                     <SchoolItem
                         key = {school.id}
                         name = {school.name}
                         country = {school.country}
-                        language = {school.language}
-                        quota = {school.quota}
+                        language = {school.languageRequirement}
+                        semester = {school.semester }
+                        programs = {school.programs}
+                        programType = {school.isErasmus ? "erasmus" : "exchange"}
+                        allowance = {school.allowance}
                     />
                 )}
             </Container>

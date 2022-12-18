@@ -1,0 +1,8 @@
+.FormsPage{
+    width: 50rem;
+}
+.FormsPage .FormButtons{
+    display: flex;
+    padding: 6px;
+    border-bottom: 6px;
+}

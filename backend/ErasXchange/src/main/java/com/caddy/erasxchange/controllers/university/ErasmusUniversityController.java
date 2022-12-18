@@ -32,9 +32,9 @@ public class ErasmusUniversityController {
 
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity addUniversity(@RequestBody AddErasmusUniversityDto university) {
-
+        System.out.println(university);
         erasmusUniversityService.addUniversity(university);
 
         return new ResponseEntity(HttpStatus.OK);
@@ -43,9 +43,14 @@ public class ErasmusUniversityController {
     @GetMapping("/all")
     public ResponseEntity<List<ErasmusUniversityDto>> getUniversities() {
 
-        System.out.println("Cum");
+
         List<ErasmusUniversityDto> universities = erasmusUniversityService.getUniversities();
         System.out.println(universities);
+
+        for(ErasmusUniversityDto dto: universities) {
+            System.out.println(dto.getPrograms().size());
+        }
+        System.out.println("Abu");
         return new ResponseEntity<List<ErasmusUniversityDto>>(universities, HttpStatus.OK);
     }
 

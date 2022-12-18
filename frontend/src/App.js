@@ -5,7 +5,9 @@ import CoursesPage from "./Courses/CoursesPage";
 import InstitutionsPage from "./Institutions/InstitutionsPage";
 import ApplicationsPage from "./Applications/ApplicationsPage";
 import StudentApplicationsPage from "./StudentApplication/StudentApplicationsPage";
+
 import NonLoggedSidebar from "./Sidebar/NonLoggedSidebar";
+
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
@@ -15,11 +17,13 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
 
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const [role, setRole] = useState(null);
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -47,6 +51,7 @@ function App() {
       setError(err.message);
     }
   };
+
 
   return (
     <div className="App">
@@ -131,6 +136,7 @@ function App() {
       </BrowserRouter>
     </div>
   );
+
 }
 
 export default App;

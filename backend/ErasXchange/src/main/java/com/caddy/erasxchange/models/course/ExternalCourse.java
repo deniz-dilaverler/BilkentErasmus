@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -16,6 +17,7 @@ import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Accessors(chain = true)
 @Getter
 @Setter
 @Entity

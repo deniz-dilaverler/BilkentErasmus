@@ -1,16 +1,16 @@
 package com.caddy.erasxchange.services.user;
 
 import com.caddy.erasxchange.models.Department;
+import com.caddy.erasxchange.models.Semester;
 import com.caddy.erasxchange.models.application.AppStatus;
 import com.caddy.erasxchange.models.application.ErasmusApplication;
-import com.caddy.erasxchange.models.university.University;
-import com.caddy.erasxchange.models.users.Iso;
 import com.caddy.erasxchange.models.users.Role;
 import com.caddy.erasxchange.models.users.Student;
 import com.caddy.erasxchange.repositories.application.ErasmusApplicationRepository;
 import com.caddy.erasxchange.repositories.university.ErasmusUniversityRepository;
 import com.caddy.erasxchange.repositories.user.StudentRepository;
-import com.caddy.erasxchange.services.GenericService;
+import com.caddy.erasxchange.services.ApplicationStateService;
+import com.caddy.erasxchange.services.PlacementStatus;
 import com.caddy.erasxchange.services.StorageService;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -19,10 +19,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class IsoService  {
@@ -31,12 +29,14 @@ public class IsoService  {
     private ErasmusApplicationRepository applicationRepository;
     private ErasmusUniversityRepository universityRepository;
     private StorageService storageService;
+    private  final ApplicationStateService applicationStateService;
 
-    public IsoService(StudentRepository studentRepository, ErasmusApplicationRepository applicationRepository, ErasmusUniversityRepository universityRepository, StorageService storageService) {
+    public IsoService(StudentRepository studentRepository, ErasmusApplicationRepository applicationRepository, ErasmusUniversityRepository universityRepository, StorageService storageService, ApplicationStateService applicationStateService) {
         this.studentRepository = studentRepository;
         this.applicationRepository = applicationRepository;
         this.universityRepository = universityRepository;
         this.storageService = storageService;
+        this.applicationStateService = applicationStateService;
     }
 
     public List<Student> readExcel(String fileName) throws Exception {
@@ -80,7 +80,13 @@ public class IsoService  {
                     case ("Transcript Grade(4/4)") -> {
                         student.setGpa(Double.parseDouble(readCell(cell)));
                     }
-//                    case ("Duration Preferred") -> application.setSemester(Semester.valueOf(cell.getStringCellValue()));
+                    case ("Duration Preferred") -> {
+                        application.setSemester1(Semester.valueOf(cell.getStringCellValue()));
+                        application.setSemester2(Semester.valueOf(cell.getStringCellValue()));
+                        application.setSemester3(Semester.valueOf(cell.getStringCellValue()));
+                        application.setSemester4(Semester.valueOf(cell.getStringCellValue()));
+                        application.setSemester5(Semester.valueOf(cell.getStringCellValue()));
+                    }
                     case ("Preferred University #1") -> application.setChoice1(universityRepository.findByName(readCell(cell)));
                     case ("Preferred University #2") -> application.setChoice2(universityRepository.findByName(readCell(cell)));
                     case ("Preferred University #3") -> application.setChoice3(universityRepository.findByName(readCell(cell)));
@@ -99,6 +105,8 @@ public class IsoService  {
             studentRepository.save(student);
 
         }
+
+        applicationStateService.setErasmusAppState(Department.CS,PlacementStatus.APPS_CREATED);
         return studentRepository.findAll();
     }
 

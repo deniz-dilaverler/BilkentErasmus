@@ -32,19 +32,35 @@ public abstract class Application extends BaseEntity implements  Comparable<Appl
     @Enumerated(EnumType.STRING)
     private AppStatus status;
 
-    @Column(name = "semester")
+    @Column(name = "semester1")
     @Enumerated(EnumType.STRING)
-    private Semester semester;
+    private Semester semester1;
+
+    @Column(name = "semester2")
+    @Enumerated(EnumType.STRING)
+    private Semester semester2;
+
+    @Column(name = "semester3")
+    @Enumerated(EnumType.STRING)
+    private Semester semester3;
+
+    @Column(name = "semester4")
+    @Enumerated(EnumType.STRING)
+    private Semester semester4;
+
+    @Column(name = "semester5")
+    @Enumerated(EnumType.STRING)
+    private Semester semester5;
 
 
     @Override
     public int compareTo(Application app) {
         if (this.student.getExchangeScore() > app.getStudent().getExchangeScore()) return 1;
-        else if (this.student.getExchangeScore() == app.getStudent().getExchangeScore()) return 0;
+        else if (this.student.getExchangeScore().equals(app.getStudent().getExchangeScore())) return 0;
         else  return -1;
     }
 
-    public Department getDepaterment() {
+    public Department getDepartment() {
         return this.student.getDepartment();
     }
     public abstract void setPlacedSchoolToNull();

@@ -47,10 +47,12 @@ public class AuthService {
     public String login(LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsername(), loginDto.getPassword()));
-        SecurityUser user = securityUserRepository.findByUsername(loginDto.getUsername());
+        User user = userRepository.findByBilkentId(Integer.parseInt(loginDto.getUsername())).get();
         List<Role> roles  = new ArrayList<>();
         roles.add(user.getRole());
+
         String token = jwtProvider.createToken(user.getUsername(), roles);
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return token;
     }

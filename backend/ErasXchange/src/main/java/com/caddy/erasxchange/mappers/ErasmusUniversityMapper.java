@@ -13,9 +13,18 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring",
         uses = {ProgramMapper.class, CoordinatorService.class, ExternalCourseService.class})
 public interface ErasmusUniversityMapper {
+
+    ErasmusUniversity addToEntity(AddErasmusUniversityDto addErasmusUniversityDto);
+
+
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    ErasmusUniversity partialUpdate(AddErasmusUniversityDto addErasmusUniversityDto, @MappingTarget ErasmusUniversity erasmusUniversity);
+
     @Mapping(source = "courseIds", target = "courses")
     @Mapping(source = "coordinatorIds", target = "coordinators")
     ErasmusUniversity toEntity(ErasmusUniversityDto erasmusUniversityDto);
@@ -25,14 +34,11 @@ public interface ErasmusUniversityMapper {
     // @Mapping(target = "courseIds", expression = "java(coursesToCourseIds(erasmusUniversity.getCourses()))")
     @Mapping(source = "courses", target = "courseIds")
     @Mapping(source = "coordinators", target = "coordinatorIds")
+    @Mapping(constant = "true", target = "isErasmus")
     //@Mapping(expression = "java(coordinatorsToCoordinatorIds(erasmusUniversity.getCoordinators()))", target = "coordinatorIds")
     ErasmusUniversityDto toDto(ErasmusUniversity erasmusUniversity);
 
     List<ErasmusUniversityDto> toDtoList(List<ErasmusUniversity> erasmusUniversity);
-
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    ErasmusUniversity partialUpdate(ErasmusUniversityDto erasmusUniversityDto, @MappingTarget ErasmusUniversity erasmusUniversity);
-
 
 
 
@@ -44,12 +50,10 @@ public interface ErasmusUniversityMapper {
         return coordinators.stream().map(Coordinator::getId).collect(Collectors.toSet());
     }
 
-    @Mapping(source = "coordinatorIds", target = "coordinators")
-    ErasmusUniversity addToEntity(AddErasmusUniversityDto addErasmusUniversityDto);
 
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    ErasmusUniversity partialUpdate1(AddErasmusUniversityDto addErasmusUniversityDto, @MappingTarget ErasmusUniversity erasmusUniversity);
+
+
             /*
     default Set<Long> coordinatorsToCoordinatorIds(Set<Coordinator> coordinators) {
         return coordinators.stream().map(Coordinator::getId).collect(Collectors.toSet());

@@ -1,6 +1,6 @@
 import Schools from "./institutions-components/institutions/Schools";
 import NewSchool from "./institutions-components/new-institution/NewSchool";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import './InstitutionsPage.css';
 
 const initialInstitutions = [
@@ -56,11 +56,14 @@ const initialInstitutions = [
 ];
 
 
+
 function InstitutionsMainPage({loggedIn, setLoggedIn}) {
 
   setLoggedIn(true);
 
+
   const [institutions, setInstitutions] = useState(initialInstitutions);
+
   const addSchoolHandler = school => {
     setInstitutions(
       (prevInstitutions) => {
@@ -68,13 +71,18 @@ function InstitutionsMainPage({loggedIn, setLoggedIn}) {
       }
     );
   }
-  return (
-    <div>
-          <div className = "header"><h2>Partner Institutions</h2></div>
-          <NewSchool onAddSchool={addSchoolHandler} ></NewSchool>
-          <Schools institutions={institutions}></Schools>
-    </div>
-  );
+
+  if ( institutions != null )
+  {
+    return (
+      <div>
+            <div className = "header"><h2>Partner Institutions</h2></div>
+            <NewSchool onAddSchool={addSchoolHandler} ></NewSchool>
+            <Schools institutions={institutions}></Schools>
+      </div>
+    );
+  }
+  
 }
 
 export default InstitutionsMainPage;

@@ -26,14 +26,14 @@ public class SrsCourseFetch {
 
     private void initializeCourses() {
         BilkentCoursePostDto newCourse = new BilkentCoursePostDto();
-        newCourse.setCourseCode("CS315").setEcts(6.5).setNormalCredit(4.0)
+        newCourse.setCourseCode("CS319").setEcts(6.5).setNormalCredit(4.0)
                 .setDepartment(Department.CS).setName("Object Oriented Software Engineering")
                 .setCoordinatorMail("eray.tüzün@gmail.com").setCoordinatorName("Eray Tüzün");
         courses.add(newCourse);
         newCourse = null;
 
         newCourse = new BilkentCoursePostDto();
-        newCourse.setCourseCode("CS319").setEcts(5.0).setNormalCredit(3.0)
+        newCourse.setCourseCode("CS315").setEcts(5.0).setNormalCredit(3.0)
                 .setDepartment(Department.CS).setName("Programming Languages")
                 .setCoordinatorMail("altay.güvenir@gmail.com").setCoordinatorName("Altay Güvenir");
         courses.add(newCourse);
@@ -57,6 +57,28 @@ public class SrsCourseFetch {
         newCourse.setCourseCode("CS353").setEcts(5.0).setNormalCredit(3.0)
                 .setDepartment(Department.CS).setName("Database Systems")
                 .setCoordinatorMail("ozgur.ulusoy@gmail.com").setCoordinatorName("Özgür Ulusoy");
+        courses.add(newCourse);
+        newCourse = null;
+
+        newCourse = new BilkentCoursePostDto();
+        newCourse.setCourseCode("CS101").setEcts(6.5).setNormalCredit(4.0)
+                .setDepartment(Department.CS).setName("Algorithms and Programming I")
+                .setCoordinatorMail("david.davenport@gmail.com").setCoordinatorName("David Davenport");
+        courses.add(newCourse);
+        newCourse = null;
+
+        newCourse = new BilkentCoursePostDto();
+        newCourse.setCourseCode("CS473").setEcts(5.0).setNormalCredit(3.0)
+                .setDepartment(Department.CS).setName("Algorithms 1")
+                .setCoordinatorMail("ugur.dogrusoz@gmail.com").setCoordinatorName("Uğur Doğrusöz");
+        courses.add(newCourse);
+        newCourse = null;
+
+
+        newCourse = new BilkentCoursePostDto();
+        newCourse.setCourseCode("CS4xx").setEcts(5.0).setNormalCredit(3.0)
+                .setDepartment(Department.CS).setName("CS Technical Elective")
+                .setCoordinatorMail(null).setCoordinatorName(null);
         courses.add(newCourse);
         newCourse = null;
 

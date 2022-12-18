@@ -3,7 +3,8 @@ import './NewSchool.css';
 import SchoolForm from "./SchoolForm";
 
 const NewSchool = (props) => {
-    
+    const [error, setError] = useState("");
+
     const saveSchoolDataHandler = (enteredSchoolData) => {
         const schoolData = {
             ...enteredSchoolData,
@@ -25,6 +26,7 @@ const NewSchool = (props) => {
     const stopEditingHandler = () => {
         setIsEditing(false);
     }
+
     if ( isCoordinator() ) {
         return (<div className = "new-expense">
             {!isEditing && <button onClick={startEditingHandler}>Add New Institution</button>}

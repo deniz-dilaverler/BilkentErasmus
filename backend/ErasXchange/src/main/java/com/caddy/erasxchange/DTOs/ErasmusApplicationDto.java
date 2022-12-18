@@ -20,7 +20,11 @@ public class ErasmusApplicationDto implements Serializable {
     private Long id;
     private Long studentId;
     private AppStatus status;
-    private Semester semester;
+    private Semester semester1;
+    private Semester semester2;
+    private Semester semester3;
+    private Semester semester4;
+    private Semester semester5;
     private ErasmusUniversityDto choice1;
     private ErasmusUniversityDto choice2;
     private ErasmusUniversityDto choice3;

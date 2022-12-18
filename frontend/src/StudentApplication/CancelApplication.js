@@ -13,18 +13,22 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 function CancelApplication(props) {
 
+    // cancel all applications!
+
     const cancelAllApplicationHandler = () => {
-        //TODO Cancel application in database!!!
-        // tekrar yüklenmesi de lazım, yani isCancelled useState olmalı herhade
+        const statusData = "ALL"
+        props.cancelApplicationStatusData(statusData);
         console.log("Cancel all applications!")
         setOpen(false);
     }
 
     const cancelCurrentApplicationHandler = () => {
-        //TODO Cancel application in database!!!
-        // tekrar yüklenmesi de lazım sayfanın
-        console.log("Cancel current application!")
-        setOpenCur(false)
+        const statusData = {
+            statType: "CURRENT",
+            no: props.no }
+          props.cancelApplicationStatusData(statusData);
+          console.log("Cancel current application!")
+          setOpen(false);
     }
 
     // fetch application publish data:
@@ -167,7 +171,6 @@ function CancelApplication(props) {
             </Container>
         );
     }
-    
 }
 
 export default CancelApplication;

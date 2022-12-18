@@ -10,6 +10,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,7 +27,7 @@ public abstract class Form extends BaseEntity {
     private Instant timeSent;
 
     @Column(name = "status")
-    @Type(type = "org.hibernate.type.TextType")
+    @Enumerated(EnumType.STRING)
     private FormApprovalStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -39,5 +40,5 @@ public abstract class Form extends BaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "rows")
-    private List<FormItem> rows;
+    private List<FormItem> rows = new ArrayList<>();
 }

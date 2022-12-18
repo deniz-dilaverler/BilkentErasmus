@@ -1,14 +1,20 @@
 package com.caddy.erasxchange.services;
 
-import com.caddy.erasxchange.models.forms.CourseTransferForm;
-import com.caddy.erasxchange.models.forms.Form;
-import com.caddy.erasxchange.models.forms.FormApprovalStatus;
-import com.caddy.erasxchange.models.forms.PreApprovalForm;
+import com.caddy.erasxchange.DTOs.PreApprovePostDto;
+import com.caddy.erasxchange.models.course.ApprovalStatus;
+import com.caddy.erasxchange.models.course.BilkentCourse;
+import com.caddy.erasxchange.models.course.EquivalenceItem;
+import com.caddy.erasxchange.models.course.ExternalCourse;
+import com.caddy.erasxchange.models.forms.*;
 import com.caddy.erasxchange.models.users.Student;
 import com.caddy.erasxchange.models.users.User;
+import com.caddy.erasxchange.repositories.course.BilkentCourseRepository;
+import com.caddy.erasxchange.repositories.course.EquivalenceItemRepository;
+import com.caddy.erasxchange.repositories.course.ExternalCourseRepository;
 import com.caddy.erasxchange.repositories.form.CourseTransferFormRepository;
 import com.caddy.erasxchange.repositories.form.FormRepository;
 import com.caddy.erasxchange.repositories.form.PreApprovalFormRepository;
+import com.caddy.erasxchange.repositories.user.StudentRepository;
 import com.caddy.erasxchange.repositories.user.UserRepository;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
@@ -22,20 +28,34 @@ import java.io.FileOutputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
 public class FormService {
-    private PreApprovalFormRepository preApprovalFormRepository;
-    private CourseTransferFormRepository courseTransferFormRepository;
-    private UserRepository<User> userRepository;
+    private final PreApprovalFormRepository preApprovalFormRepository;
+    private final CourseTransferFormRepository courseTransferFormRepository;
+    private final UserRepository<User> userRepository;
+    private final EquivalenceItemRepository equivalenceItemRepository;
+    private final StudentRepository studentRepository;
+    private final ExternalCourseRepository externalCourseRepository;
+    private final BilkentCourseRepository bilkentCourseRepository;
 
-    public FormService(PreApprovalFormRepository preApprovalFormRepository, CourseTransferFormRepository courseTransferFormRepository, UserRepository<User> userRepository) {
+    public FormService(PreApprovalFormRepository preApprovalFormRepository, CourseTransferFormRepository courseTransferFormRepository, UserRepository<User> userRepository,
+                       EquivalenceItemRepository equivalenceItemRepository,
+                       StudentRepository studentRepository,
+                       ExternalCourseRepository externalCourseRepository,
+                       BilkentCourseRepository bilkentCourseRepository) {
         this.preApprovalFormRepository = preApprovalFormRepository;
         this.courseTransferFormRepository = courseTransferFormRepository;
         this.userRepository = userRepository;
+        this.equivalenceItemRepository = equivalenceItemRepository;
+        this.studentRepository = studentRepository;
+        this.externalCourseRepository = externalCourseRepository;
+        this.bilkentCourseRepository = bilkentCourseRepository;
     }
 
     public List<PreApprovalForm> getPreApprovalFormsBySender(String username) {
@@ -53,7 +73,40 @@ public class FormService {
         return courseTransferFormRepository.findBySender(user);
     }
 
-    public void generatePreAppPdf(PreApprovalForm form) throws Exception {
+    public void generatePreAppForm(PreApprovePostDto formDto) {
+        PreApprovalForm form = new PreApprovalForm();
+
+        formDto.getExtCourseCodes().forEach(code -> {
+
+            ExternalCourse externalCourse = externalCourseRepository.findCourseByCourseCode(code).get();
+            BilkentCourse bilkentCourse = bilkentCourseRepository.findCourseByCourseCode(formDto.getBilkentCourseCodes().get(formDto.getExtCourseCodes().indexOf(code))).get();
+            EquivalenceItem equivalenceItem = equivalenceItemRepository.findByExternalCourseAndBilkentCourse(externalCourse, bilkentCourse);
+
+            if (equivalenceItemRepository.findByExternalCourseAndBilkentCourse(externalCourse, bilkentCourse) != null) {
+                if (equivalenceItem.getApprovalStatus() == ApprovalStatus.ACCEPTED)
+                    form.getRows().add(new FormItem(externalCourse, bilkentCourse));
+                else if (equivalenceItem.getApprovalStatus() == ApprovalStatus.PENDING)
+                    form.getRows().add(new FormItem(externalCourse, bilkentCourse));
+                    //TODO: inform coordinator
+                else
+                    throw new EntityNotFoundException(externalCourse.getName() + " and " + bilkentCourse.getName() + " are not transferable");
+            }
+            else {
+                equivalenceItem = new EquivalenceItem(externalCourse, bilkentCourse, ApprovalStatus.PENDING);
+                equivalenceItemRepository.save(equivalenceItem);
+                //TODO: inform coordinator
+            }
+        });
+
+        form.setStatus(FormApprovalStatus.PENDING);
+        form.setTimeSent(Instant.now());
+        form.setSender(studentRepository.findByBilkentId(formDto.getSenderBilkentId()).get());
+        form.setReceiver(((Student)form.getSender()).getErasmusApplication().getPlacedSchool().getCoordinator(form.getSender().getDepartment()));
+        preApprovalFormRepository.save(form);
+
+    }
+
+    public void generatePreAppPdf(PreApprovalForm form) throws FileNotFoundException, DocumentException {
         Document document = new Document(PageSize.A4.rotate(),20,20,50,50);
 //        Path path = Paths.get(ClassLoader.getSystemResource("bilkent-logo.png").toURI());
         PdfWriter.getInstance(document, new FileOutputStream(form.getSender().getFirstName() + "_"
@@ -106,14 +159,16 @@ public class FormService {
         courseTable.addCell("Elective Requirement Exemptions\n" +
                 "only: Course code(s) of directly\n" +
                 "equivalent course(s), if any");
-        courseTable.addCell("1");
-        courseTable.addCell("");
-        courseTable.addCell("");
-        courseTable.addCell("");
-        courseTable.addCell("");
-        courseTable.addCell("");
-        courseTable.addCell("");
-        courseTable.addCell("");
+        for (int i = 0; i< form.getRows().size(); i++){
+            courseTable.addCell(String.valueOf(i+1));
+            courseTable.addCell(form.getRows().get(i).getExternalCourse().getCourseCode());
+            courseTable.addCell(form.getRows().get(i).getExternalCourse().getName());
+            courseTable.addCell(form.getRows().get(i).getExternalCourse().getEcts().toString());
+            courseTable.addCell(form.getRows().get(i).getEquivalentCourse().getCourseCode()
+                                + " " + form.getRows().get(i).getEquivalentCourse().getName());
+            courseTable.addCell(form.getRows().get(i).getEquivalentCourse().getEcts().toString());
+            courseTable.addCell("");
+        }
         courseTable.setSpacingBefore(10);
         courseTable.setSpacingAfter(10);
         courseTable.setWidthPercentage(98);
@@ -164,7 +219,7 @@ public class FormService {
         personalInfoTable.addCell("Department");
         personalInfoTable.addCell(form.getStudent().getDepartment().name());
         personalInfoTable.addCell("Semester");
-        personalInfoTable.addCell(form.getStudent().getErasmusApplication().getSemester().name());
+        personalInfoTable.addCell(form.getStudent().getErasmusApplication().getPlacedSchool().getSemester().name());
         personalInfoTable.setWidthPercentage(98);
         document.add(personalInfoTable);
 
@@ -181,6 +236,42 @@ public class FormService {
         detailTable.addCell("Name of previous department:");
         detailTable.setWidthPercentage(98);
         document.add(detailTable);
+
+        PdfPTable courseTable = new PdfPTable(8);
+        courseTable.setWidths(new int[] {1,4,15,4,4,15,4,15});
+        cell = new PdfPCell(new Phrase("Transferred Courses"));
+        cell.setColspan(5);
+        courseTable.addCell(cell);
+        cell = new PdfPCell(new Phrase("Course or requirement to be exempted if transferred course is completed with a passing grade"));
+        cell.setColspan(3);
+        courseTable.addCell(cell);
+        courseTable.addCell("");
+        courseTable.addCell("Course Code");
+        courseTable.addCell("Course Name");
+        courseTable.addCell("Credits");
+        courseTable.addCell("Grade");
+        courseTable.addCell("Course Code and Name for a Required Course,\n" +
+                "Elective Group Name for an Elective Requirement");
+        courseTable.addCell("Credits");
+        courseTable.addCell("Elective Requirement Exemptions\n" +
+                "only: Course code(s) of directly\n" +
+                "equivalent course(s), if any");
+        courseTable.addCell("1");
+        courseTable.addCell("");
+        courseTable.addCell("");
+        courseTable.addCell("");
+        courseTable.addCell("");
+        courseTable.addCell("");
+        courseTable.addCell("");
+        courseTable.addCell("");
+        courseTable.addCell("");
+        courseTable.setSpacingBefore(10);
+        courseTable.setSpacingAfter(10);
+        courseTable.setWidthPercentage(98);
+        document.add(courseTable);
+
+        PdfPTable signTable = new PdfPTable(4);
+
 
         document.close();
     }
