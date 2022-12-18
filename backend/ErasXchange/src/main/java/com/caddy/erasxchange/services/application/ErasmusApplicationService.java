@@ -7,6 +7,7 @@ import com.caddy.erasxchange.models.Semester;
 import com.caddy.erasxchange.models.application.AppStatus;
 import com.caddy.erasxchange.models.application.ErasmusApplication;
 import com.caddy.erasxchange.models.application.ErasmusApplicationCancel;
+import com.caddy.erasxchange.models.university.ErasmusUniversity;
 import com.caddy.erasxchange.models.university.Program;
 import com.caddy.erasxchange.models.users.Student;
 import com.caddy.erasxchange.repositories.application.ErasmusApplicationCancelRepository;
@@ -156,7 +157,11 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
 
     @Transactional
     public void startPlacements(Department department) {
+<<<<<<< Updated upstream
         if (stateService.getErasmusPlacementState(department) == PlacementStatus.PLACEMENT_PUBLISHED)
+=======
+        if (stateService.getErasmusPlacementState(department) == PlacementStatus.ERROR_FIXING)
+>>>>>>> Stashed changes
             throw new InvalidRequestStateException("Erasmus application for department :  " + department + " is already placed");
 
         List<ErasmusApplication> applications = new LinkedList<>();
@@ -227,7 +232,51 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
 
     }
 
-    
+    public void cancelChoice(Long appId, Integer choiceNo) {
+        if (choiceNo > 5 || choiceNo < 1)
+            throw new InvalidRequestStateException("choiceNo can only be 1 to 5");
+        ErasmusApplication app = super.findById(appId);
+
+        switch (choiceNo) {
+            case 1:
+                if (app.getChoice1() == null) {
+                    throw new EntityNotFoundException("No choice 1 for application with id " + appId);
+                }
+                app.setChoice1(null);
+                app.setSemester1(null);
+                break;
+            case 2:
+                if (app.getChoice2() == null) {
+                    throw new EntityNotFoundException("No choice 2 for application with id " + appId);
+                }
+                app.setChoice2(null);
+                app.setSemester2(null);
+                break;
+            case 3:
+                if (app.getChoice1() == null) {
+                    throw new EntityNotFoundException("No choice 3 for application with id " + appId);
+                }
+                app.setChoice3(null);
+                app.setSemester3(null);
+                break;
+            case 4:
+                if (app.getChoice1() == null) {
+                    throw new EntityNotFoundException("No choice 4 for application with id " + appId);
+                }
+                app.setChoice4(null);
+                app.setSemester4(null);
+                break;
+            case 5:
+                if (app.getChoice1() == null) {
+                    throw new EntityNotFoundException("No choice 5 for application with id " + appId);
+                }
+                app.setChoice5(null);
+                app.setSemester5(null);
+                break;
+        }
+        repository.save(app);
+
+    }
 
     private ErasmusApplication getHighestWaitingBin(Department department) {
         List<ErasmusApplication> waiting = repository.findByStatusAndStudentDepartment(AppStatus.WAITING_BIN, department);
@@ -241,5 +290,28 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
         return highest;
     }
 
+    public  Boolean[] getSemesterCorrect(Long appId) {
+        Boolean[] correctSemester = new Boolean[5];
 
+        ErasmusApplication app = super.findById(appId);
+
+        correctSemester[0] = checkSemester(app.getChoice1(), app.getSemester1());
+        correctSemester[1] = checkSemester(app.getChoice2(), app.getSemester2());
+        correctSemester[2] = checkSemester(app.getChoice3(), app.getSemester3());
+        correctSemester[3] = checkSemester(app.getChoice4(), app.getSemester4());
+        correctSemester[4] = checkSemester(app.getChoice5(), app.getSemester5());
+
+        return correctSemester;
+
+
+    }
+
+    private  Boolean checkSemester(ErasmusUniversity choice, Semester semester ) {
+        if(choice == null)
+            return null;
+        else if (choice.getSemester() == Semester.BOTH || choice.getSemester() == semester)
+            return  true;
+        else
+            return false;
+    }
 }
