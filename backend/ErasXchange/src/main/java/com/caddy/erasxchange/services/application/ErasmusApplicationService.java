@@ -134,9 +134,9 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
         checkApplications(application.getDepartment());
     }
 
-    public AppStatus getStudentAppStatus(Long studentId) {
-        Student student = studentService.findById(studentId);
-        return student.getErasmusApplication().getStatus();
+    public AppStatus getStudentAppStatus(Long appId) {
+        ErasmusApplication app = super.findById(appId);
+        return app.getStatus();
     }
 
     public void handleCancelation(Long cancelId, Boolean approveFromWaitingList) {
@@ -162,6 +162,9 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
 
         if (stateService.getErasmusPlacementState(department) == PlacementStatus.PUBLISHED)
             throw new InvalidRequestStateException("Erasmus application for department :  " + department + " is already placed");
+
+        if(stateService.getErasmusPlacementState(department ) != PlacementStatus.APPS_CORRECT)
+            throw  new InvalidRequestStateException("There are incorrect applications");
 
         List<ErasmusApplication> applications = repository.findByStatusAndStudentDepartment(AppStatus.PENDING, Department.CS);
 

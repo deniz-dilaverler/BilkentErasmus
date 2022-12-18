@@ -20,20 +20,18 @@ function CancelApplication(props) {
         props.cancelApplicationStatusData(statusData);
         console.log("Cancel all applications!")
         setOpen(false);
+        window.location.reload(false);
     }
 
     const cancelCurrentApplicationHandler = () => {
         const statusData = {
             statType: "CURRENT",
-            no: props.no }
-          props.cancelApplicationStatusData(statusData);
-          console.log("Cancel current application!")
-          setOpen(false);
-    }
-
-    // fetch application publish data:
-    const isPublished = () => {
-        return false;
+            no: props.no
+        }
+        props.cancelApplicationStatusData(statusData);
+        console.log("Cancel current application!")
+        setOpenCur(false);
+        window.location.reload(false);
     }
 
     const [open, setOpen] = useState(false);
@@ -41,136 +39,102 @@ function CancelApplication(props) {
 
     const handleAllClickOpen = () => {
         setOpen(true);
-      };
+    };
 
-      const handleClose = () => {
+    const handleClose = () => {
         setOpen(false);
-      };
+    };
 
-      const handleCurClose = () => {
+    const handleCurClose = () => {
         setOpenCur(false);
-      }
+    }
 
-      const handleCurClickOpen = () => {
+    const handleCurClickOpen = () => {
         setOpenCur(true);
-      }
+    }
 
 
-    // if publication is published
-    if ( isPublished() )
-    {
-        if ( props.placedInst === -1 )
-        {
-            return(
-                <Container className = "cancel">
+    // if publication is published and student is placed to an institution:
+    if (props.status === "PLACED") {
+        return (
+            <Container className="cancel">
                 <Row>
                     <Col></Col>
                     <Col>
-                    <button type="button" onClick={handleAllClickOpen}>Cancel All Applications</button>
-                    <Dialog open={open} onClose={handleClose}>
-                <DialogTitle >
-                    Cancel All Applications?
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Are you sure you want to cancel ALL applications?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Disagree</Button>
-                    <Button onClick={cancelAllApplicationHandler} autoFocus>
-                        Agree
-                    </Button>
-                 </DialogActions>
-                </Dialog>
+                        <button type="button" onClick={handleCurClickOpen}>Cancel Placed Application</button>
+                        <Dialog open={openCur} onClose={handleClose}>
+                            <DialogTitle >
+                                Cancel Current Application?
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    Are you sure you want to cancel THIS PLACED institution application?
+                                    Cancelling will put you in waiting list.
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleCurClose}>Disagree</Button>
+                                <Button onClick={cancelCurrentApplicationHandler} autoFocus>
+                                    Agree
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                    </Col>
+                    <Col>
+                        <button type="button" onClick={handleAllClickOpen}>Cancel All Applications</button>
+                        <Dialog open={open} onClose={handleClose}>
+                            <DialogTitle >
+                                Cancel All Applications?
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    Are you sure you want to cancel ALL applications?
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose}>Disagree</Button>
+                                <Button onClick={cancelAllApplicationHandler} autoFocus>
+                                    Agree
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </Col>
                     <Col></Col>
                 </Row>
-                </Container>
-            );
-        }
-        return(
-            <Container className = "cancel">
-            <Row>
-                <Col></Col>
-                <Col>
-                <button type="button" onClick={handleCurClickOpen}>Cancel Current Application</button>
-                <Dialog open={openCur} onClose={handleClose}>
-                <DialogTitle >
-                    Cancel Current Application?
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Are you sure you want to cancel ALL applications?
-                        Cancelling will put you in waiting list.
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCurClose}>Disagree</Button>
-                    <Button onClick={cancelCurrentApplicationHandler} autoFocus>
-                        Agree
-                    </Button>
-                 </DialogActions>
-                </Dialog>
-                </Col>
-                <Col>
-                <button type="button" onClick={handleAllClickOpen}>Cancel All Applications</button>
-                <Dialog open={open} onClose={handleClose}>
-                <DialogTitle >
-                    Cancel All Applications?
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Are you sure you want to cancel ALL applications?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Disagree</Button>
-                    <Button onClick={cancelAllApplicationHandler} autoFocus>
-                        Agree
-                    </Button>
-                 </DialogActions>
-                </Dialog>
-                </Col>
-                <Col></Col>
-            </Row>
             </Container>
         );
     }
-    // if publication is not published, user can only cancel all applications
-    else if ( !isPublished() )
-    {
-        return(
-            <Container className = "cancel">
-            <Row>
-                <Col></Col>
-                <Col>
-                <button type="button" onClick={handleAllClickOpen}>Cancel All Applications</button>
-                <Dialog
-                    open={open}
-                    onClose={handleClose}
-                >
-                <DialogTitle >
-                    Cancel All Applications?
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Are you sure you want to cancel ALL applications?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Disagree</Button>
-                    <Button onClick={cancelAllApplicationHandler} autoFocus>
-                        Agree
-                    </Button>
-                 </DialogActions>
-                </Dialog>
-                </Col>
-                <Col></Col>
-            </Row>
+    if (props.status !== "PLACED" || props.status !== "CANCELED") {
+        // user can only cancel all applications since user is not in an institution currently
+        return (
+            <Container className="cancel">
+                <Row>
+                    <Col></Col>
+                    <Col>
+                        <button type="button" onClick={handleAllClickOpen}>Cancel All Applications</button>
+                        <Dialog open={open} onClose={handleClose}>
+                            <DialogTitle >
+                                Cancel All Applications?
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    Are you sure you want to cancel ALL applications?
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose}>Disagree</Button>
+                                <Button onClick={cancelAllApplicationHandler} autoFocus>
+                                    Agree
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                    </Col>
+                    <Col></Col>
+                </Row>
             </Container>
         );
     }
+
 }
 
 export default CancelApplication;
