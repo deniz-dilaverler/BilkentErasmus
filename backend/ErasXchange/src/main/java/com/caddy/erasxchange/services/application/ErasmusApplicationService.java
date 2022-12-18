@@ -131,6 +131,7 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
 
 
         repository.save(application);
+        checkApplications(application.getDepartment());
     }
 
     public AppStatus getStudentAppStatus(Long studentId) {
@@ -163,7 +164,7 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
             throw new InvalidRequestStateException("Erasmus application for department :  " + department + " is already placed");
 
         List<ErasmusApplication> applications = repository.findByStatusAndStudentDepartment(AppStatus.PENDING, Department.CS);
-        
+
         applicationPlacer.startPlacements(applications, department);
 
 //        stateService.setErasmusAppsPlaced(department);
@@ -362,12 +363,12 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
                 }
 
             }
-            stateService.setErasmusAppState(department,PlacementStatus.ACTIVATED);
+
             if (wrongApps.size() == 0) {
 
                 stateService.setErasmusAppState(department, PlacementStatus.APPS_CORRECT);
             } else {
-                //TODO: send wrong apss to coord
+                stateService.setErasmusAppState(department,PlacementStatus.ACTIVATED);
 
             }
 
