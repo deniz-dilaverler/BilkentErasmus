@@ -320,18 +320,56 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
             return true;
         } else if (placementStatus == PlacementStatus.FILE_UPLOADED) {
             List<ErasmusApplication> wrongApps = new ArrayList<>();
-            List<ErasmusApplication> appsToCehck =  repository.findByStatusAndStudentDepartment(AppStatus.PENDING, department);
+            List<ErasmusApplication> appsToCheck =  repository.findByStatusAndStudentDepartment(AppStatus.PENDING, department);
 
-            for(ErasmusApplication app : appsToCehck) {
+            for(ErasmusApplication app : appsToCheck) {
                 boolean isCorrect = true;
 
+                Boolean check = checkSemester(app.getChoice1(),app.getSemester1() );
+                //check is not null and false
+                if (check != null && !check ) {
+                    isCorrect = false;
+                }
+
+                check = checkSemester(app.getChoice2(),app.getSemester2() );
+                //check is not null and false
+                if (check != null && !check ) {
+                    isCorrect = false;
+                }
 
 
+                check = checkSemester(app.getChoice3(),app.getSemester3() );
+                //check is not null and false
+                if (check != null && !check ) {
+                    isCorrect = false;
+                }
 
+                check = checkSemester(app.getChoice4(),app.getSemester4() );
+                //check is not null and false
+                if (check != null && !check ) {
+                    isCorrect = false;
+                }
 
+                check = checkSemester(app.getChoice5(),app.getSemester5() );
+                //check is not null and false
+                if (check != null && !check ) {
+                    isCorrect = false;
+                }
+
+                if(!isCorrect) {
+                    wrongApps.add(app);
+                }
 
             }
 
+            if (wrongApps.size() == 0) {
+
+                stateService.setErasmusAppState(department, PlacementStatus.APPS_CORRECT);
+                return true;
+            } else {
+                //TODO: send wrong apss to coord
+                return false;
+            }
 
         }
         return true;

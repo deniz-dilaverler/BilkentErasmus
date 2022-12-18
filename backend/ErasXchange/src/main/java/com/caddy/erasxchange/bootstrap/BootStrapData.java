@@ -97,8 +97,8 @@ public class BootStrapData {
 
 
         Coordinator coordinator2 = new Coordinator();
-        coordinator2.setFirstName("Ayşegul");
-        coordinator2.setLastName("Dundar");
+        coordinator2.setFirstName("Ayşegül");
+        coordinator2.setLastName("Dündar");
         coordinator2.setEmail("çiğdem.demir@gmail.com");
         coordinator2.setDepartment(Department.CS);
         //password:"pass"
@@ -293,18 +293,19 @@ public class BootStrapData {
         for(University university : coordinator.getResponsibleSchools()) {
             System.out.println(university);
         }
-
+        getEPFLCourses();
 
     }
 
 
-    Set<ExternalCourse> getEPFLCouses() {
+    void getEPFLCourses() {
         Set<ExternalCourse> courses = new HashSet<>();
 
         ExternalCourse course =  new ExternalCourse();
                 course.setSyllabusLink("https://edu.epfl.ch/coursebook/en/software-engineering-CS-305").setCourseCode("CS305")
-                .setEcts(4.0).setNormalCredit(4.0).setDepartment(Department.CS).setName("Software Engneering");
+                .setEcts(5.0).setNormalCredit(4.0).setDepartment(Department.CS).setName("Software Engineering");
                 course.setIsErasmus(true).setIsProject(false).setApprovalStatus(ApprovalStatus.ACCEPTED);
+        course.setUniversity(erasmusUniversityRepository.findByName("École Polytechnique Fédérale (EPF)"));
         EquivalenceItem equivalenceItem = new EquivalenceItem();
         BilkentCourse bilkentCourse = bilkentCourseRepository.findCourseByCourseCode("CS319").get();
         equivalenceItem.setApprovalStatus(ApprovalStatus.ACCEPTED);
@@ -312,14 +313,105 @@ public class BootStrapData {
         equivalenceItem.setExternalCourse(course);
         bilkentCourse.getExternalCourses().add(equivalenceItem);
         course.getEquivalentCourses().add(equivalenceItem);
-
         equivalenceItemRepository.save(equivalenceItem);
 
+        course =  new ExternalCourse();
+        course.setSyllabusLink("https://edu.epfl.ch/studyplan/en/bachelor/computer-science/coursebook/introduction-to-database-systems-CS-322").setCourseCode("CS322")
+                .setEcts(5.0).setNormalCredit(4.0).setDepartment(Department.CS).setName("Introduction to Database Systems");
+        course.setIsErasmus(true).setIsProject(false).setApprovalStatus(ApprovalStatus.ACCEPTED);
+        course.setUniversity(erasmusUniversityRepository.findByName("École Polytechnique Fédérale (EPF)"));
+        equivalenceItem = new EquivalenceItem();
+        bilkentCourse = bilkentCourseRepository.findCourseByCourseCode("CS353").get();
+        equivalenceItem.setApprovalStatus(ApprovalStatus.ACCEPTED);
+        equivalenceItem.setBilkentCourse(bilkentCourse);
+        equivalenceItem.setExternalCourse(course);
+        bilkentCourse.getExternalCourses().add(equivalenceItem);
+        course.getEquivalentCourses().add(equivalenceItem);
+        equivalenceItemRepository.save(equivalenceItem);
 
-        return null;
+        course =  new ExternalCourse();
+        course.setSyllabusLink("https://edu.epfl.ch/studyplan/en/bachelor/computer-science/coursebook/introduction-to-operating-systems-CS-323").setCourseCode("CS323")
+                .setEcts(5.0).setNormalCredit(4.0).setDepartment(Department.CS).setName("Introduction to operating systems");
+        course.setIsErasmus(true).setIsProject(false).setApprovalStatus(ApprovalStatus.ACCEPTED);
+        course.setUniversity(erasmusUniversityRepository.findByName("École Polytechnique Fédérale (EPF)"));
+        equivalenceItem = new EquivalenceItem();
+        bilkentCourse = bilkentCourseRepository.findCourseByCourseCode("CS342").get();
+        equivalenceItem.setApprovalStatus(ApprovalStatus.ACCEPTED);
+        equivalenceItem.setBilkentCourse(bilkentCourse);
+        equivalenceItem.setExternalCourse(course);
+        bilkentCourse.getExternalCourses().add(equivalenceItem);
+        course.getEquivalentCourses().add(equivalenceItem);
+        equivalenceItemRepository.save(equivalenceItem);
 
+        course =  new ExternalCourse();
+        course.setSyllabusLink("https://edu.epfl.ch/studyplan/en/bachelor/computer-science/coursebook/introduction-to-computer-graphics-CS-341").setCourseCode("CS341")
+                .setEcts(5.0).setNormalCredit(4.0).setDepartment(Department.CS).setName("Introduction to computer graphics");
+        course.setIsErasmus(true).setIsProject(false).setApprovalStatus(ApprovalStatus.ACCEPTED);
+        course.setUniversity(erasmusUniversityRepository.findByName("École Polytechnique Fédérale (EPF)"));
+        equivalenceItem = new EquivalenceItem();
+        bilkentCourse = bilkentCourseRepository.findCourseByCourseCode("CS4xx").get();
+        equivalenceItem.setApprovalStatus(ApprovalStatus.ACCEPTED);
+        equivalenceItem.setBilkentCourse(bilkentCourse);
+        equivalenceItem.setExternalCourse(course);
+        bilkentCourse.getExternalCourses().add(equivalenceItem);
+        course.getEquivalentCourses().add(equivalenceItem);
+        equivalenceItemRepository.save(equivalenceItem);
 
+        course =  new ExternalCourse();
+        course.setSyllabusLink("https://edu.epfl.ch/studyplan/en/bachelor/computer-science/coursebook/algorithms-CS-250").setCourseCode("CS250")
+                .setEcts(5.0).setNormalCredit(4.0).setDepartment(Department.CS).setName("Algorithms");
+        course.setIsErasmus(true).setIsProject(false).setApprovalStatus(ApprovalStatus.ACCEPTED);
+        course.setUniversity(erasmusUniversityRepository.findByName("École Polytechnique Fédérale (EPF)"));
+        equivalenceItem = new EquivalenceItem();
+        bilkentCourse = bilkentCourseRepository.findCourseByCourseCode("CS101").get();
+        equivalenceItem.setApprovalStatus(ApprovalStatus.ACCEPTED);
+        equivalenceItem.setBilkentCourse(bilkentCourse);
+        equivalenceItem.setExternalCourse(course);
+        bilkentCourse.getExternalCourses().add(equivalenceItem);
+        course.getEquivalentCourses().add(equivalenceItem);
+        equivalenceItemRepository.save(equivalenceItem);
 
+        course =  new ExternalCourse();
+        course.setSyllabusLink("https://edu.epfl.ch/studyplan/en/bachelor/computer-science/coursebook/quantum-computation-CS-308").setCourseCode("CS308")
+                .setEcts(5.0).setNormalCredit(4.0).setDepartment(Department.CS).setName("Quantum computation");
+        course.setIsErasmus(true).setIsProject(false).setApprovalStatus(ApprovalStatus.ACCEPTED);
+        course.setUniversity(erasmusUniversityRepository.findByName("École Polytechnique Fédérale (EPF)"));
+        equivalenceItem = new EquivalenceItem();
+        bilkentCourse = bilkentCourseRepository.findCourseByCourseCode("CS4xx").get();
+        equivalenceItem.setApprovalStatus(ApprovalStatus.ACCEPTED);
+        equivalenceItem.setBilkentCourse(bilkentCourse);
+        equivalenceItem.setExternalCourse(course);
+        bilkentCourse.getExternalCourses().add(equivalenceItem);
+        course.getEquivalentCourses().add(equivalenceItem);
+        equivalenceItemRepository.save(equivalenceItem);
+
+        course =  new ExternalCourse();
+        course.setSyllabusLink("https://edu.epfl.ch/studyplan/en/bachelor/mathematics/coursebook/principles-of-microeconomics-MGT-454").setCourseCode("MGT454")
+                .setEcts(5.0).setNormalCredit(4.0).setDepartment(Department.CS).setName("Principles of microeconomics");
+        course.setIsErasmus(true).setIsProject(false).setApprovalStatus(ApprovalStatus.ACCEPTED);
+        course.setUniversity(erasmusUniversityRepository.findByName("École Polytechnique Fédérale (EPF)"));
+        equivalenceItem = new EquivalenceItem();
+        bilkentCourse = bilkentCourseRepository.findCourseByCourseCode("CS4xx").get();
+        equivalenceItem.setApprovalStatus(ApprovalStatus.DENIED);
+        equivalenceItem.setBilkentCourse(bilkentCourse);
+        equivalenceItem.setExternalCourse(course);
+        bilkentCourse.getExternalCourses().add(equivalenceItem);
+        course.getEquivalentCourses().add(equivalenceItem);
+        equivalenceItemRepository.save(equivalenceItem);
+
+        course =  new ExternalCourse();
+        course.setSyllabusLink("https://edu.epfl.ch/studyplan/en/bachelor/computer-science/coursebook/computer-security-COM-301").setCourseCode("COM301")
+                .setEcts(5.0).setNormalCredit(4.0).setDepartment(Department.CS).setName("Computer security");
+        course.setIsErasmus(true).setIsProject(false).setApprovalStatus(ApprovalStatus.ACCEPTED);
+        course.setUniversity(erasmusUniversityRepository.findByName("École Polytechnique Fédérale (EPF)"));
+        equivalenceItem = new EquivalenceItem();
+        bilkentCourse = bilkentCourseRepository.findCourseByCourseCode("CS4xx").get();
+        equivalenceItem.setApprovalStatus(ApprovalStatus.PENDING);
+        equivalenceItem.setBilkentCourse(bilkentCourse);
+        equivalenceItem.setExternalCourse(course);
+        bilkentCourse.getExternalCourses().add(equivalenceItem);
+        course.getEquivalentCourses().add(equivalenceItem);
+        equivalenceItemRepository.save(equivalenceItem);
 
 
     }

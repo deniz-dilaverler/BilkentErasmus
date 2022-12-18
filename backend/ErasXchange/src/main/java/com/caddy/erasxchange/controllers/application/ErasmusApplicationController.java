@@ -94,4 +94,11 @@ public class ErasmusApplicationController {
     public void cancelChoice(@PathVariable Long appId, @PathVariable Integer choiceNo) {
         erasmusApplicationService.cancelChoice(appId, choiceNo);
     }
+
+
+    @GetMapping("/checkallapss")
+    public ResponseEntity<Boolean> checkApplicationsReady(Department department) {
+        Boolean result = erasmusApplicationService.checkApplicationsAreCorrect(department);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }
