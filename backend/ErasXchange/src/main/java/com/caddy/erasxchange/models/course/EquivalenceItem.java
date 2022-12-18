@@ -11,10 +11,7 @@ import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,7 +29,7 @@ public class EquivalenceItem extends BaseEntity {
     @JoinColumn(name = "bilkent_course_id")
     @LazyCollection(LazyCollectionOption.FALSE)
     BilkentCourse bilkentCourse;
-
+    @Enumerated(EnumType.STRING)
     ApprovalStatus approvalStatus;
 
 }
