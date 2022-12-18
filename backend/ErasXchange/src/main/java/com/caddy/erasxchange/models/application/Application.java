@@ -60,7 +60,7 @@ public abstract class Application extends BaseEntity implements  Comparable<Appl
         else  return -1;
     }
 
-    public Department getDepaterment() {
+    public Department getDepartment() {
         return this.student.getDepartment();
     }
     public abstract void setPlacedSchoolToNull();

@@ -16,7 +16,6 @@ import java.util.List;
 
 import com.caddy.erasxchange.repositories.user.StudentRepository;
 import com.caddy.erasxchange.services.ApplicationStateService;
-import com.caddy.erasxchange.services.PlacementState;
 import com.caddy.erasxchange.services.PlacementStatus;
 import com.caddy.erasxchange.services.application.applicationplacer.ErasmusApplicationPlacer;
 import com.caddy.erasxchange.services.university.ErasmusUniversityService;
@@ -157,7 +156,7 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
 
     @Transactional
     public void startPlacements(Department department) {
-        if (stateService.getErasmusPlacementState(department) == PlacementState.PLACEMENT_STARTED)
+        if (stateService.getErasmusPlacementState(department) == PlacementStatus.PLACEMENT_PUBLISHED)
             throw new InvalidRequestStateException("Erasmus application for department :  " + department + " is already placed");
 
         List<ErasmusApplication> applications = new LinkedList<>();

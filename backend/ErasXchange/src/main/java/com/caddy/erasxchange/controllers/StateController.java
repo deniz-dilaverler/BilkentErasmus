@@ -3,7 +3,7 @@ package com.caddy.erasxchange.controllers;
 
 import com.caddy.erasxchange.models.Department;
 import com.caddy.erasxchange.services.ApplicationStateService;
-import com.caddy.erasxchange.services.PlacementState;
+import com.caddy.erasxchange.services.PlacementStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ public class StateController {
     }
 
     @GetMapping("/placement/erasmus/{department}")
-    public ResponseEntity<PlacementState> getErasmusPlacementState(@PathVariable Department department) {
+    public ResponseEntity<PlacementStatus> getErasmusPlacementState(@PathVariable Department department) {
 
         return new ResponseEntity<>(stateService.getErasmusPlacementState(department), HttpStatus.OK);
     }
