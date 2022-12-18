@@ -33,7 +33,11 @@ const studentApplicationsMockData = [
 
 
 
-function StudentApplicationsPage() {
+
+
+function StudentApplicationsPage({loggedIn, setLoggedIn}) {
+  setLoggedIn(true);
+
 
       // student applications
       const [studentApplications, setStudentApplications] = useState();

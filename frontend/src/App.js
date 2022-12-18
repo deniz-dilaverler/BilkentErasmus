@@ -5,64 +5,138 @@ import CoursesPage from "./Courses/CoursesPage";
 import InstitutionsPage from "./Institutions/InstitutionsPage";
 import ApplicationsPage from "./Applications/ApplicationsPage";
 import StudentApplicationsPage from "./StudentApplication/StudentApplicationsPage";
-import FormsPage from "./Forms/FormsPage";
-import MyFormsPage from "./MyForms/MyFormsPage";
+
+import NonLoggedSidebar from "./Sidebar/NonLoggedSidebar";
+
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import jwt_decode from "jwt-decode";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
 
-  // Fetch the user's role from the back-end when the component mounts
-  /**useEffect(() => {
-    fetch("/user")
-      .then((response) => response.json())
-      .then((data) => {
-        setUser(data);
-        setLoading(false);
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const [role, setRole] = useState(null);
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch("http://localhost:8080/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
       });
-  }, []);
-*/
-  /**if (loading) {
-    return <p className = "spinner">Loading...</p>;
-  }
-  */
+      const data = await response.json();
+      if (response.ok) {
+        setLoggedIn(true);
+        const token = data.authToken;
+        const decodedToken = jwt_decode(token);
+        const role = decodedToken.roles;
+        setRole(role);
+        localStorage.setItem('role', JSON.stringify(role));
+        window.location.pathname = "/instutitions";
+      } else {
+        throw new Error(response.statusText);
+      }
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
-  var role = true;
 
-  if (role === true) {
-    return (
-      <div className="App">
-        <Sidebar />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<LoginForm />} />
-            <Route path="/instutitions" element={<InstitutionsPage />} />
-            <Route path="/applications" element={<StudentApplicationsPage />} />
-            <Route path="/courses" element={<CoursesPage />} />
-            <Route path="/forms" element={<FormsPage />} />
-            <Route path="/myforms" element={<MyFormsPage />} />
+  return (
+    <div className="App">
+      {loggedIn && <Sidebar />}
+      {!loggedIn && <NonLoggedSidebar />}
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <LoginForm
+                username={username}
+                setUsername={setUsername}
+                password={password}
+                setPassword={setPassword}
+                error={error}
+                setError={setError}
+                handleSubmit={handleSubmit}
+                role={role}
+              />
+            }
+          />
+          <Route
+            path="/instutitions"
+            element={
+              <InstitutionsPage
+                loggedIn={loggedIn}
+                setLoggedIn={setLoggedIn}
+                role={role}
+              />
+            }
+          />
+          <Route
+            path="/applications"
+            element={
+              (JSON.parse(localStorage.getItem('role'))[0].authority === "ROLE_STUDENT") ? (
+                <StudentApplicationsPage
+                  loggedIn={loggedIn}
+                  setLoggedIn={setLoggedIn}
+                  role={role}
+                />
+              ) : (
+                <ApplicationsPage
+                  loggedIn={loggedIn}
+                  setLoggedIn={setLoggedIn}
+                  role={role}
+                />
+              )
+            }
+          />
+          <Route
+            path="/courses"
+            element={
+              <CoursesPage
+                loggedIn={loggedIn}
+                setLoggedIn={setLoggedIn}
+                role={role}
+              />
+            }
+          />
+          <Route
+            path="/coursesNonLogged"
+            element={
+              <CoursesPage
+                loggedIn={loggedIn}
+                setLoggedIn={setLoggedIn}
+                role={role}
+              />
+            }
+          />
+          <Route
+            path="/instutitionsNonLogged"
+            element={
+              <InstitutionsPage
+                loggedIn={loggedIn}
+                setLoggedIn={setLoggedIn}
+                role={role}
+              />
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
 
-          </Routes>
-        </BrowserRouter>
-      </div>
-    );
-  } else if (role === false) {
-    return (
-      <div className="App">
-        <Sidebar />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<LoginForm />} />
-            <Route path="/instutitions" element={<InstitutionsPage />} />
-            <Route path="/applications" element={<ApplicationsPage />} />
-            <Route path="/courses" element={<CoursesPage />} />
-          </Routes>
-        </BrowserRouter>
-      </div>
-    );
-  }
 }
 
 export default App;

@@ -7,6 +7,8 @@ import com.caddy.erasxchange.models.users.User;
 import com.caddy.erasxchange.repositories.SecurityUserRepository;
 import com.caddy.erasxchange.repositories.user.UserRepository;
 import net.bytebuddy.utility.RandomString;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -42,13 +44,15 @@ public class AuthService {
         this.mailSender = mailSender;
     }
 
-    public Optional<String> login(LoginDto loginDto) {
+    public String login(LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsername(), loginDto.getPassword()));
         User user = userRepository.findByBilkentId(Integer.parseInt(loginDto.getUsername())).get();
         List<Role> roles  = new ArrayList<>();
         roles.add(user.getRole());
-        Optional<String> token = Optional.of(jwtProvider.createToken(user.getBilkentId().toString(), roles));
+
+        String token = jwtProvider.createToken(user.getUsername(), roles);
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return token;
     }
