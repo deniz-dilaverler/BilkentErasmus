@@ -13,6 +13,7 @@ import com.caddy.erasxchange.models.users.Student;
 import com.caddy.erasxchange.repositories.application.ErasmusApplicationCancelRepository;
 import com.caddy.erasxchange.repositories.application.ErasmusApplicationRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.caddy.erasxchange.repositories.user.StudentRepository;
@@ -157,11 +158,8 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
 
     @Transactional
     public void startPlacements(Department department) {
-<<<<<<< Updated upstream
+
         if (stateService.getErasmusPlacementState(department) == PlacementStatus.PLACEMENT_PUBLISHED)
-=======
-        if (stateService.getErasmusPlacementState(department) == PlacementStatus.ERROR_FIXING)
->>>>>>> Stashed changes
             throw new InvalidRequestStateException("Erasmus application for department :  " + department + " is already placed");
 
         List<ErasmusApplication> applications = new LinkedList<>();
@@ -313,5 +311,29 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
             return  true;
         else
             return false;
+    }
+
+    public boolean checkApplicationsAreCorrect(Department department) {
+        PlacementStatus placementStatus = stateService.getErasmusPlacementState(department);
+        if (placementStatus == PlacementStatus.APPS_CORRECT ||
+                placementStatus == PlacementStatus.PLACEMENT_PUBLISHED) {
+            return true;
+        } else if (placementStatus == PlacementStatus.FILE_UPLOADED) {
+            List<ErasmusApplication> wrongApps = new ArrayList<>();
+            List<ErasmusApplication> appsToCehck =  repository.findByStatusAndStudentDepartment(AppStatus.PENDING, department);
+
+            for(ErasmusApplication app : appsToCehck) {
+                boolean isCorrect = true;
+
+
+
+
+
+
+            }
+
+
+        }
+        return true;
     }
 }
