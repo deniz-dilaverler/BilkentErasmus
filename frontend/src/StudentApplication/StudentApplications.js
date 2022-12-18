@@ -13,6 +13,7 @@ function StudentApplications(props) {
     const [isPlacementStarted, setIsPlacementStarted] = useState();
 
     const choices = [];
+    const applicationID = props.applications.id;
     console.log("gir")
     console.log(choices)
     if (props.applications.semester1 !== undefined) {
@@ -94,7 +95,6 @@ function StudentApplications(props) {
     }
     // if student application is not started, just view all applications
     // also, student can cancel all applications
-    // +
     else if (status !== "CANCELED" && isPlacementStarted === "APPS_CREATED") {
         if (props.applications) {
             return (
@@ -110,7 +110,7 @@ function StudentApplications(props) {
                             />
                         )}
                     </div>
-                    <CancelApplication></CancelApplication>
+                    <CancelApplication applicationID={applicationID}></CancelApplication>
                 </Container>
             );
         }
