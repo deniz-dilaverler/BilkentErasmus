@@ -36,9 +36,9 @@ import java.util.Optional;
 
 @Service
 public class FormService {
-    private final PreApprovalFormRepository preApprovalFormRepository;
-    private final CourseTransferFormRepository courseTransferFormRepository;
-    private final UserRepository<User> userRepository;
+    private PreApprovalFormRepository preApprovalFormRepository;
+    private CourseTransferFormRepository courseTransferFormRepository;
+    private UserRepository<User> userRepository;
     private final EquivalenceItemRepository equivalenceItemRepository;
     private final StudentRepository studentRepository;
     private final ExternalCourseRepository externalCourseRepository;

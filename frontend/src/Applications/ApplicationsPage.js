@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Modal } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import "../Courses/Courses.css";
+import React, { useState, useEffect } from 'react';
+import { Modal } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import '../Courses/Courses.css';
 
 const ApplicationsPage = () => {
   const [applications, setApplications] = useState([]);
   const [selectedApplication, setselectedApplication] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8080/applications")
-      .then((response) => response.json())
-      .then((applications) => setApplications(applications));
+    fetch('http://localhost:8080/applications')
+      .then(response => response.json())
+      .then(applications => setApplications(applications));
   }, []);
 
   const openModal = (applications) => {
@@ -33,18 +33,13 @@ const ApplicationsPage = () => {
         </tr>
       </thead>
       <tbody>
-        {applications.map((application) => (
+        {applications.map(application => (
           <tr key={application.id}>
             <td>{application.name}</td>
             <td>{application.gpa}</td>
             <td>{application.schools}</td>
             <td>
-              <button
-                onClick={() => openModal(application)}
-                className="details__button"
-              >
-                Details
-              </button>
+              <button onClick={() => openModal(application)} className="details__button">Details</button>
             </td>
           </tr>
         ))}
