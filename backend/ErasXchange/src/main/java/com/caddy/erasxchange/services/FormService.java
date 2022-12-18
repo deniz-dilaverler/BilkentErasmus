@@ -73,10 +73,11 @@ public class FormService {
         return courseTransferFormRepository.findBySender(user);
     }
 
-    public PreApprovalForm generatePreAppForm(PreApprovePostDto formDto) {
+    public void generatePreAppForm(PreApprovePostDto formDto) {
         PreApprovalForm form = new PreApprovalForm();
 
         formDto.getExtCourseCodes().forEach(code -> {
+
             ExternalCourse externalCourse = externalCourseRepository.findCourseByCourseCode(code).get();
             BilkentCourse bilkentCourse = bilkentCourseRepository.findCourseByCourseCode(formDto.getBilkentCourseCodes().get(formDto.getExtCourseCodes().indexOf(code))).get();
             EquivalenceItem equivalenceItem = equivalenceItemRepository.findByExternalCourseAndBilkentCourse(externalCourse, bilkentCourse);
@@ -103,7 +104,6 @@ public class FormService {
         form.setReceiver(((Student)form.getSender()).getErasmusApplication().getPlacedSchool().getCoordinator(form.getSender().getDepartment()));
         preApprovalFormRepository.save(form);
 
-        return form;
     }
 
     public void generatePreAppPdf(PreApprovalForm form) throws FileNotFoundException, DocumentException {
@@ -159,14 +159,16 @@ public class FormService {
         courseTable.addCell("Elective Requirement Exemptions\n" +
                 "only: Course code(s) of directly\n" +
                 "equivalent course(s), if any");
-        courseTable.addCell("1");
-        courseTable.addCell("");
-        courseTable.addCell("");
-        courseTable.addCell("");
-        courseTable.addCell("");
-        courseTable.addCell("");
-        courseTable.addCell("");
-        courseTable.addCell("");
+        for (int i = 0; i< form.getRows().size(); i++){
+            courseTable.addCell(String.valueOf(i+1));
+            courseTable.addCell(form.getRows().get(i).getExternalCourse().getCourseCode());
+            courseTable.addCell(form.getRows().get(i).getExternalCourse().getName());
+            courseTable.addCell(form.getRows().get(i).getExternalCourse().getEcts().toString());
+            courseTable.addCell(form.getRows().get(i).getEquivalentCourse().getCourseCode()
+                                + " " + form.getRows().get(i).getEquivalentCourse().getName());
+            courseTable.addCell(form.getRows().get(i).getEquivalentCourse().getEcts().toString());
+            courseTable.addCell("");
+        }
         courseTable.setSpacingBefore(10);
         courseTable.setSpacingAfter(10);
         courseTable.setWidthPercentage(98);
