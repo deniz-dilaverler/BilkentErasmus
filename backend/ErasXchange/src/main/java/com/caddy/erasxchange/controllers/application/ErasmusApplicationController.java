@@ -72,7 +72,7 @@ public class ErasmusApplicationController {
     @GetMapping("/status/{studentId}")
     public ResponseEntity<AppStatus> getApplicationStatus(@PathVariable Long studentId) {
         AppStatus status = erasmusApplicationService.getStudentAppStatus(studentId);
-
+        System.out.println(status);
         return new ResponseEntity<>(status, HttpStatus.OK);
     }
 
