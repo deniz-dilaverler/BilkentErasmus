@@ -162,14 +162,8 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
         if (stateService.getErasmusPlacementState(department) == PlacementStatus.PUBLISHED)
             throw new InvalidRequestStateException("Erasmus application for department :  " + department + " is already placed");
 
-        List<ErasmusApplication> applications = new LinkedList<>();
-        List<Student> students = studentService.findStudentsByDepartment(department);
-        for (Student student : students) {
-            ErasmusApplication erasmusApplication = student.getErasmusApplication();
-            if (erasmusApplication != null) {
-                applications.add(erasmusApplication);
-            }
-        }
+        List<ErasmusApplication> applications = repository.findByStatusAndStudentDepartment(AppStatus.PENDING, Department.CS);
+        
         applicationPlacer.startPlacements(applications, department);
 
 //        stateService.setErasmusAppsPlaced(department);
