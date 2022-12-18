@@ -227,6 +227,7 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
                 break;
         }
         repository.save(app);
+        checkApplications(app.getStudent().getDepartment());
 
     }
 
@@ -273,6 +274,8 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
                 break;
         }
         repository.save(app);
+        checkApplications(app.getStudent().getDepartment());
+
 
     }
 
@@ -298,6 +301,7 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
         correctSemester[2] = checkSemester(app.getChoice3(), app.getSemester3());
         correctSemester[3] = checkSemester(app.getChoice4(), app.getSemester4());
         correctSemester[4] = checkSemester(app.getChoice5(), app.getSemester5());
+
 
         return correctSemester;
 

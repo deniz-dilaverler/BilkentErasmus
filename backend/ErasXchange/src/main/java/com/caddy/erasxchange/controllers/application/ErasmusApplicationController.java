@@ -95,6 +95,14 @@ public class ErasmusApplicationController {
         erasmusApplicationService.cancelChoice(appId, choiceNo);
     }
 
+    @PutMapping("/activate/{department}")
+    @ResponseStatus(HttpStatus.OK)
+    public void activate(Department department) {
+
+        erasmusApplicationService.checkApplications(department);
+
+    }
+
 
     /*
     @GetMapping("/checkallapss")
