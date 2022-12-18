@@ -23,24 +23,24 @@ public class ApplicationStateService {
 
     private void initState() {
 
-        ApplicationState applicationState = null;
-        if (repository.count() == 0) {
-            applicationState = new ApplicationState();
-        } else {
-            // there must be at least one state so no need for checking
-            applicationState = getState();
-
-        }
-
-        for (Department department : Department.values()) {
-            applicationState.getBilateralAppsPlaced().putIfAbsent(department, false);
-            applicationState.getErasmusAppsPlaced().putIfAbsent(department, false);
-
-        }
-        repository.saveAndFlush(applicationState);
-
-        ApplicationState state = getState();
-        System.out.println(state.getBilateralAppsPlaced().size());
+//        ApplicationState applicationState = null;
+//        if (repository.count() == 0) {
+//            applicationState = new ApplicationState();
+//        } else {
+//            // there must be at least one state so no need for checking
+//            applicationState = getState();
+//
+//        }
+//
+//        for (Department department : Department.values()) {
+//            applicationState.getBilateralAppsPlaced().putIfAbsent(department, false);
+//            applicationState.getErasmusAppsPlaced().putIfAbsent(department, false);
+//
+//        }
+//        repository.saveAndFlush(applicationState);
+//
+//        ApplicationState state = getState();
+//        System.out.println(state.getBilateralAppsPlaced().size());
 
     }
 

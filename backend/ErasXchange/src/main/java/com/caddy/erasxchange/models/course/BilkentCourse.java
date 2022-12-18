@@ -33,6 +33,6 @@ public class BilkentCourse extends Course{
 
     @OneToMany(mappedBy = "bilkentCourse")
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<EquivalenceItem> externalCourses;
+    private Set<EquivalenceItem> externalCourses = new HashSet<>();
 
 }

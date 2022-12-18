@@ -7,6 +7,8 @@ import com.caddy.erasxchange.services.university.ErasmusUniversityService;
 import com.caddy.erasxchange.services.user.StudentService;
 import org.mapstruct.*;
 
+import java.util.List;
+
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring",
         uses =
                 {ErasmusUniversityService.class, StudentService.class, ErasmusUniversityMapper.class,})
@@ -29,7 +31,7 @@ public interface ErasmusApplicationMapper {
     @Mapping(source = "studentId", target = "student.id")
     ErasmusApplication partialUpdate(ErasmusApplicationDto erasmusApplicationDto, @MappingTarget ErasmusApplication erasmusApplication);
 
-
+    List<ErasmusApplicationDto> toDtoList(List<ErasmusApplication> erasmusApplicationsList);
     /*
     @InheritConfiguration(name = "toEntity")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

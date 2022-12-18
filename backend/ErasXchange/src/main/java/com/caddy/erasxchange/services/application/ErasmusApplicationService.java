@@ -65,6 +65,10 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
         repository.save(application);
     }
 
+    public List<ErasmusApplicationDto> getAll() {
+        return erasmusMapper.toDtoList( repository.findAll());
+    }
+
     public boolean studentHasApplication(Long studentId) {
         Student student = studentService.findById(studentId);
         return student.getErasmusApplication() != null;
@@ -92,6 +96,7 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
                     .orElse(null);
 
             //TODO: SEND NOTİF TO THE COORDİNATOR FOR THE OPENİNG
+
             application.setPlacedSchoolToNull();
 
             try {
@@ -109,9 +114,6 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
 
         if (cancelFully) {
             //detach from student
-            Student student = application.getStudent();
-            student.setErasmusApplication(null);
-            application.setStudent(null);
             application.setStatus(AppStatus.CANCELED);
         } else {
             application.setStatus(AppStatus.WAITING_BIN);
@@ -166,7 +168,7 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
 
     private ErasmusApplication getHighestWaitingBin(Department department) {
         List<ErasmusApplication> waiting =  repository.findByStatusAndStudentDepartment(AppStatus.WAITING_BIN,department);
-        if (waiting.size() <= 0)
+        if (waiting.size() == 0)
             throw new EntityNotFoundException("There are no one in the waiting list for erasmus application department: " + department);
         ErasmusApplication highest = waiting.get(0);
         for(ErasmusApplication app : waiting) {

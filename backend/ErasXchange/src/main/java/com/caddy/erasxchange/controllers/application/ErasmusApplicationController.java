@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/application/erasmus")
 public class ErasmusApplicationController {
@@ -57,6 +59,13 @@ public class ErasmusApplicationController {
         return HttpStatus.OK;
     }
 
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ErasmusApplicationDto>> getApplications() {
+        List<ErasmusApplicationDto> apps = erasmusApplicationService.getAll();
+        return new ResponseEntity<>( apps, HttpStatus.OK) ;
+
+    }
 
 
 }

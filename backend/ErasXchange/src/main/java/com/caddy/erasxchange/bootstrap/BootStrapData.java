@@ -2,25 +2,27 @@ package com.caddy.erasxchange.bootstrap;
 
 import com.caddy.erasxchange.models.Department;
 import com.caddy.erasxchange.models.Semester;
+import com.caddy.erasxchange.models.course.ApprovalStatus;
+import com.caddy.erasxchange.models.course.BilkentCourse;
+import com.caddy.erasxchange.models.course.EquivalenceItem;
+import com.caddy.erasxchange.models.course.ExternalCourse;
 import com.caddy.erasxchange.models.university.ErasmusUniversity;
 import com.caddy.erasxchange.models.university.Program;
 import com.caddy.erasxchange.models.university.University;
 import com.caddy.erasxchange.models.users.Coordinator;
 import com.caddy.erasxchange.models.users.Role;
 import com.caddy.erasxchange.repositories.ProgramRepository;
+import com.caddy.erasxchange.repositories.course.BilkentCourseRepository;
+import com.caddy.erasxchange.repositories.course.EquivalenceItemRepository;
 import com.caddy.erasxchange.repositories.university.ErasmusUniversityRepository;
 import com.caddy.erasxchange.repositories.user.CoordinatorRepository;
+import com.caddy.erasxchange.services.courses.BilkentCourseService;
 import com.caddy.erasxchange.services.user.CoordinatorService;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import javax.transaction.Transactional;
-import javax.xml.bind.SchemaOutputResolver;
 import java.util.*;
 
 @Service
@@ -32,13 +34,19 @@ public class BootStrapData {
     private final CoordinatorRepository coordinatorRepository;
     private final ErasmusUniversityRepository erasmusUniversityRepository;
     private final CoordinatorService coordinatorService;
+    private final EquivalenceItemRepository equivalenceItemRepository;
+    private final BilkentCourseRepository bilkentCourseRepository;
+    private final BilkentCourseService bilkentCourseService;
 
     public BootStrapData(ProgramRepository programRepository, ErasmusUniversityRepository repository,
-                         CoordinatorRepository coordinatorRepository, ErasmusUniversityRepository erasmusUniversityRepository, CoordinatorService coordinatorService) {
+                         CoordinatorRepository coordinatorRepository, ErasmusUniversityRepository erasmusUniversityRepository, CoordinatorService coordinatorService, EquivalenceItemRepository equivalenceItemRepository, BilkentCourseRepository bilkentCourseRepository, BilkentCourseService bilkentCourseService) {
         this.programRepository = programRepository;
         this.coordinatorRepository = coordinatorRepository;
         this.erasmusUniversityRepository = erasmusUniversityRepository;
         this.coordinatorService = coordinatorService;
+        this.equivalenceItemRepository = equivalenceItemRepository;
+        this.bilkentCourseRepository = bilkentCourseRepository;
+        this.bilkentCourseService = bilkentCourseService;
     }
 
     @EventListener(ApplicationReadyEvent.class)
@@ -285,6 +293,33 @@ public class BootStrapData {
         for(University university : coordinator.getResponsibleSchools()) {
             System.out.println(university);
         }
+
+
+    }
+
+
+    Set<ExternalCourse> getEPFLCouses() {
+        Set<ExternalCourse> courses = new HashSet<>();
+
+        ExternalCourse course =  new ExternalCourse();
+                course.setSyllabusLink("https://edu.epfl.ch/coursebook/en/software-engineering-CS-305").setCourseCode("CS305")
+                .setEcts(4.0).setNormalCredit(4.0).setDepartment(Department.CS).setName("Software Engneering");
+                course.setIsErasmus(true).setIsProject(false).setApprovalStatus(ApprovalStatus.ACCEPTED);
+        EquivalenceItem equivalenceItem = new EquivalenceItem();
+        BilkentCourse bilkentCourse = bilkentCourseRepository.findCourseByCourseCode("CS319").get();
+        equivalenceItem.setApprovalStatus(ApprovalStatus.ACCEPTED);
+        equivalenceItem.setBilkentCourse(bilkentCourse);
+        equivalenceItem.setExternalCourse(course);
+        bilkentCourse.getExternalCourses().add(equivalenceItem);
+        course.getEquivalentCourses().add(equivalenceItem);
+
+        equivalenceItemRepository.save(equivalenceItem);
+
+
+        return null;
+
+
+
 
 
     }
