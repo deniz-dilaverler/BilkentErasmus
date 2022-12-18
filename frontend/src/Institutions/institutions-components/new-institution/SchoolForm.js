@@ -165,8 +165,6 @@ const SchoolForm = (props) => {
       // nullcheck
       if (enteredInstName !== "" && enteredInstCountry !== "" && enteredInstQuota !== "" && enteredProgramType !== "" && language.length >= 1 )
       {
-        // typecheck quota
-        if ( typeof enteredInstQuota === "number" ) {
           const schoolData = {
             name: enteredInstName,
             languageRequirement: language,
@@ -182,15 +180,10 @@ const SchoolForm = (props) => {
           setEnteredInstName('');
           setEnteredInstCountry('');
           setEnteredInstQuota('');
-        }
-        // alert user for input type (should be integer)
-        else {
-          setOpenInt(true)
-        }
       }
-      // if NULL, alert user
       else 
       {
+        // if NULL alert user
         setOpen(true);
       }
     }
