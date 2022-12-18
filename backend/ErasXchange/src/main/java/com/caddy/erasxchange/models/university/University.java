@@ -1,6 +1,7 @@
 package com.caddy.erasxchange.models.university;
 
 import com.caddy.erasxchange.models.BaseEntity;
+import com.caddy.erasxchange.models.Department;
 import com.caddy.erasxchange.models.Semester;
 import com.caddy.erasxchange.models.course.ExternalCourse;
 import com.caddy.erasxchange.models.users.Coordinator;
@@ -54,7 +55,14 @@ public  abstract class University extends BaseEntity {
     @OneToMany( cascade = CascadeType.PERSIST)
     private Set<ExternalCourse> courses;
 
+    public Coordinator getCoordinator(Department department) {
+        for (Coordinator coordinator: coordinators) {
+            if (coordinator.getDepartment() == department)
+                return coordinator;
+        }
 
+        return null;
+    }
 
 
 }

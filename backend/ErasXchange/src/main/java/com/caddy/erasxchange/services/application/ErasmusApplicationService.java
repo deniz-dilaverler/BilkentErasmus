@@ -159,8 +159,8 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
     @Transactional
     public void startPlacements(Department department) {
 
-        if (stateService.getErasmusPlacementState(department) == PlacementStatus.PLACEMENT_PUBLISHED)
-            throw new InvalidRequestStateException("Erasmus application for department :  " + department + " is already placed");
+//        if (stateService.getErasmusPlacementState(department) == PlacementStatus.PLACEMENT_PUBLISHED)
+//            throw new InvalidRequestStateException("Erasmus application for department :  " + department + " is already placed");
 
         List<ErasmusApplication> applications = new LinkedList<>();
         List<Student> students = studentService.findStudentsByDepartment(department);

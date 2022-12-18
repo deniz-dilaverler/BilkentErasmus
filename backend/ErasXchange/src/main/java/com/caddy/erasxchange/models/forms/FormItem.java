@@ -3,6 +3,8 @@ package com.caddy.erasxchange.models.forms;
 import com.caddy.erasxchange.models.BaseEntity;
 import com.caddy.erasxchange.models.course.BilkentCourse;
 import com.caddy.erasxchange.models.course.ExternalCourse;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -12,6 +14,8 @@ import javax.persistence.Table;
  *FormItem class abstracts every single row of the form classes
  */
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "form_item")
 public class FormItem extends BaseEntity {
     //Unidricetional mappings are implemented

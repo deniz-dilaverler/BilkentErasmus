@@ -1,5 +1,6 @@
 package com.caddy.erasxchange.controllers;
 
+import com.caddy.erasxchange.DTOs.PreApprovePostDto;
 import com.caddy.erasxchange.models.Department;
 import com.caddy.erasxchange.models.Semester;
 import com.caddy.erasxchange.models.application.ErasmusApplication;
@@ -10,9 +11,7 @@ import com.caddy.erasxchange.models.users.Student;
 import com.caddy.erasxchange.services.FormService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class FormController {
@@ -50,6 +49,10 @@ public class FormController {
         formService.generatePreAppPdf(form);
         formService.generateTransferPdf(form1);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PostMapping("/api/generate")
+    public PreApprovalForm generateForm(@RequestBody PreApprovePostDto formDto) {
+        return formService.generatePreAppForm(formDto);
     }
 
 //    public ResponseEntity<String> decideForm(@RequestParam boolean decision)

@@ -1,14 +1,20 @@
 package com.caddy.erasxchange.services;
 
-import com.caddy.erasxchange.models.forms.CourseTransferForm;
-import com.caddy.erasxchange.models.forms.Form;
-import com.caddy.erasxchange.models.forms.FormApprovalStatus;
-import com.caddy.erasxchange.models.forms.PreApprovalForm;
+import com.caddy.erasxchange.DTOs.PreApprovePostDto;
+import com.caddy.erasxchange.models.course.ApprovalStatus;
+import com.caddy.erasxchange.models.course.BilkentCourse;
+import com.caddy.erasxchange.models.course.EquivalenceItem;
+import com.caddy.erasxchange.models.course.ExternalCourse;
+import com.caddy.erasxchange.models.forms.*;
 import com.caddy.erasxchange.models.users.Student;
 import com.caddy.erasxchange.models.users.User;
+import com.caddy.erasxchange.repositories.course.BilkentCourseRepository;
+import com.caddy.erasxchange.repositories.course.EquivalenceItemRepository;
+import com.caddy.erasxchange.repositories.course.ExternalCourseRepository;
 import com.caddy.erasxchange.repositories.form.CourseTransferFormRepository;
 import com.caddy.erasxchange.repositories.form.FormRepository;
 import com.caddy.erasxchange.repositories.form.PreApprovalFormRepository;
+import com.caddy.erasxchange.repositories.user.StudentRepository;
 import com.caddy.erasxchange.repositories.user.UserRepository;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
@@ -22,8 +28,10 @@ import java.io.FileOutputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -31,11 +39,23 @@ public class FormService {
     private PreApprovalFormRepository preApprovalFormRepository;
     private CourseTransferFormRepository courseTransferFormRepository;
     private UserRepository<User> userRepository;
+    private final EquivalenceItemRepository equivalenceItemRepository;
+    private final StudentRepository studentRepository;
+    private final ExternalCourseRepository externalCourseRepository;
+    private final BilkentCourseRepository bilkentCourseRepository;
 
-    public FormService(PreApprovalFormRepository preApprovalFormRepository, CourseTransferFormRepository courseTransferFormRepository, UserRepository<User> userRepository) {
+    public FormService(PreApprovalFormRepository preApprovalFormRepository, CourseTransferFormRepository courseTransferFormRepository, UserRepository<User> userRepository,
+                       EquivalenceItemRepository equivalenceItemRepository,
+                       StudentRepository studentRepository,
+                       ExternalCourseRepository externalCourseRepository,
+                       BilkentCourseRepository bilkentCourseRepository) {
         this.preApprovalFormRepository = preApprovalFormRepository;
         this.courseTransferFormRepository = courseTransferFormRepository;
         this.userRepository = userRepository;
+        this.equivalenceItemRepository = equivalenceItemRepository;
+        this.studentRepository = studentRepository;
+        this.externalCourseRepository = externalCourseRepository;
+        this.bilkentCourseRepository = bilkentCourseRepository;
     }
 
     public List<PreApprovalForm> getPreApprovalFormsBySender(String username) {
@@ -51,6 +71,39 @@ public class FormService {
         if(optional.isEmpty()) throw new EntityNotFoundException("User with bilkent id :" + username + " doesn't exist");
         User user = optional.get();
         return courseTransferFormRepository.findBySender(user);
+    }
+
+    public PreApprovalForm generatePreAppForm(PreApprovePostDto formDto) {
+        PreApprovalForm form = new PreApprovalForm();
+
+        formDto.getExtCourseCodes().forEach(code -> {
+            ExternalCourse externalCourse = externalCourseRepository.findCourseByCourseCode(code).get();
+            BilkentCourse bilkentCourse = bilkentCourseRepository.findCourseByCourseCode(formDto.getBilkentCourseCodes().get(formDto.getExtCourseCodes().indexOf(code))).get();
+            EquivalenceItem equivalenceItem = equivalenceItemRepository.findByExternalCourseAndBilkentCourse(externalCourse, bilkentCourse);
+
+            if (equivalenceItemRepository.findByExternalCourseAndBilkentCourse(externalCourse, bilkentCourse) != null) {
+                if (equivalenceItem.getApprovalStatus() == ApprovalStatus.ACCEPTED)
+                    form.getRows().add(new FormItem(externalCourse, bilkentCourse));
+                else if (equivalenceItem.getApprovalStatus() == ApprovalStatus.PENDING)
+                    form.getRows().add(new FormItem(externalCourse, bilkentCourse));
+                    //TODO: inform coordinator
+                else
+                    throw new EntityNotFoundException(externalCourse.getName() + " and " + bilkentCourse.getName() + " are not transferable");
+            }
+            else {
+                equivalenceItem = new EquivalenceItem(externalCourse, bilkentCourse, ApprovalStatus.PENDING);
+                equivalenceItemRepository.save(equivalenceItem);
+                //TODO: inform coordinator
+            }
+        });
+
+        form.setStatus(FormApprovalStatus.PENDING);
+        form.setTimeSent(Instant.now());
+        form.setSender(studentRepository.findByBilkentId(formDto.getSenderBilkentId()).get());
+        form.setReceiver(((Student)form.getSender()).getErasmusApplication().getPlacedSchool().getCoordinator(form.getSender().getDepartment()));
+        preApprovalFormRepository.save(form);
+
+        return form;
     }
 
     public void generatePreAppPdf(PreApprovalForm form) throws FileNotFoundException, DocumentException {
