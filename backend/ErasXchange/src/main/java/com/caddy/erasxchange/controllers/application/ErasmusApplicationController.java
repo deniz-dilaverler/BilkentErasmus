@@ -89,16 +89,27 @@ public class ErasmusApplicationController {
         erasmusApplicationService.changeSemester(appId, choiceNo);
     }
 
-    @GetMapping("/cancelChoice/semester/{appId}/{choiceNo}")
+    @PutMapping("/cancelChoice/semester/{appId}/{choiceNo}")
     @ResponseStatus(HttpStatus.OK)
     public void cancelChoice(@PathVariable Long appId, @PathVariable Integer choiceNo) {
         erasmusApplicationService.cancelChoice(appId, choiceNo);
     }
 
+    @PutMapping("/activate/{department}")
+    @ResponseStatus(HttpStatus.OK)
+    public void activate(Department department) {
 
+        erasmusApplicationService.checkApplications(department);
+
+    }
+
+
+    /*
     @GetMapping("/checkallapss")
     public ResponseEntity<Boolean> checkApplicationsReady(Department department) {
         Boolean result = erasmusApplicationService.checkApplicationsAreCorrect(department);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+    */
+
 }

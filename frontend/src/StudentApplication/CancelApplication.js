@@ -13,10 +13,15 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 function CancelApplication(props) {
 
+    // cancel all applications!
+    const [cancelled, setCancelled] = useState();
     const cancelAllApplicationHandler = () => {
         //TODO Cancel application in database!!!
+        fetch('http://localhost:8080/application/erasmus/' + props.applicationID +'/true', { method: 'DELETE' })
+        .then((cancelled) => setCancelled(cancelled));
         // tekrar yüklenmesi de lazım, yani isCancelled useState olmalı herhade
         console.log("Cancel all applications!")
+        console.log(props.applicationID)
         setOpen(false);
     }
 
@@ -167,7 +172,6 @@ function CancelApplication(props) {
             </Container>
         );
     }
-    
 }
 
 export default CancelApplication;

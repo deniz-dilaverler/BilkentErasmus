@@ -32,9 +32,9 @@ function SchoolItem(props) {
         <h4>{props.name}</h4>
           <p>Program type: {props.programType}</p>
           <p>Institution accepted semester: {props.semester}</p>
-          <p>Institution quota: {props.programs[0].quota}</p>
+          <p>Institution quota: {props.programs !== undefined? props.programs[0].quota: console.log("") }</p>
           <p>Institution allowance: {props.allowance}</p>
-          <p>Institution accepted departments: {props.programs[0].department}</p>
+          <p>Institution accepted departments: {props.programs !== undefined? props.programs[0].department: console.log("")}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => setModalShow(false)}>Close</Button>

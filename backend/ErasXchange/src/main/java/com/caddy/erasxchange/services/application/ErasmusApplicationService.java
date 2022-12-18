@@ -131,6 +131,7 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
 
 
         repository.save(application);
+        checkApplications(application.getDepartment());
     }
 
     public AppStatus getStudentAppStatus(Long studentId) {
@@ -159,21 +160,15 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
     @Transactional
     public void startPlacements(Department department) {
 
-//        if (stateService.getErasmusPlacementState(department) == PlacementStatus.PLACEMENT_PUBLISHED)
-//            throw new InvalidRequestStateException("Erasmus application for department :  " + department + " is already placed");
+        if (stateService.getErasmusPlacementState(department) == PlacementStatus.PUBLISHED)
+            throw new InvalidRequestStateException("Erasmus application for department :  " + department + " is already placed");
 
-        List<ErasmusApplication> applications = new LinkedList<>();
-        List<Student> students = studentService.findStudentsByDepartment(department);
-        for (Student student : students) {
-            ErasmusApplication erasmusApplication = student.getErasmusApplication();
-            if (erasmusApplication != null) {
-                applications.add(erasmusApplication);
-            }
-        }
+        List<ErasmusApplication> applications = repository.findByStatusAndStudentDepartment(AppStatus.PENDING, Department.CS);
+
         applicationPlacer.startPlacements(applications, department);
 
 //        stateService.setErasmusAppsPlaced(department);
-        stateService.setErasmusAppState(department, PlacementStatus.PLACEMENT_PUBLISHED);
+        stateService.setErasmusAppState(department, PlacementStatus.PUBLISHED);
 
     }
 
@@ -227,6 +222,7 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
                 break;
         }
         repository.save(app);
+        checkApplications(app.getStudent().getDepartment());
 
     }
 
@@ -273,6 +269,8 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
                 break;
         }
         repository.save(app);
+        checkApplications(app.getStudent().getDepartment());
+
 
     }
 
@@ -299,6 +297,7 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
         correctSemester[3] = checkSemester(app.getChoice4(), app.getSemester4());
         correctSemester[4] = checkSemester(app.getChoice5(), app.getSemester5());
 
+
         return correctSemester;
 
 
@@ -313,12 +312,15 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
             return false;
     }
 
-    public boolean checkApplicationsAreCorrect(Department department) {
+
+    public void checkApplications(Department department) {
         PlacementStatus placementStatus = stateService.getErasmusPlacementState(department);
         if (placementStatus == PlacementStatus.APPS_CORRECT ||
-                placementStatus == PlacementStatus.PLACEMENT_PUBLISHED) {
-            return true;
-        } else if (placementStatus == PlacementStatus.FILE_UPLOADED) {
+                placementStatus == PlacementStatus.PUBLISHED) {
+            return;
+        } else if (placementStatus == PlacementStatus.APPS_CREATED ||
+                    placementStatus == PlacementStatus.ACTIVATED) {
+
             List<ErasmusApplication> wrongApps = new ArrayList<>();
             List<ErasmusApplication> appsToCheck =  repository.findByStatusAndStudentDepartment(AppStatus.PENDING, department);
 
@@ -365,13 +367,11 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
             if (wrongApps.size() == 0) {
 
                 stateService.setErasmusAppState(department, PlacementStatus.APPS_CORRECT);
-                return true;
             } else {
-                //TODO: send wrong apss to coord
-                return false;
+                stateService.setErasmusAppState(department,PlacementStatus.ACTIVATED);
+
             }
 
         }
-        return true;
     }
 }

@@ -27,7 +27,7 @@ public class ApplicationStateService {
     @Autowired
     public ApplicationStateService(ApplicationStateRepository repository) {
         this.repository = repository;
-        initState();
+       initState();
     }
 
     private void initState() {
@@ -70,28 +70,6 @@ public class ApplicationStateService {
     }
 
 
-    public boolean erasmusAppsPlaced(Department department) {
-        return getState().getErasmusAppsPlaced().get(department);
-    }
 
-    public boolean bilateralAppsPlaced(Department department) {
-        return getState().getBilateralAppsPlaced().get(department);
-    }
 
-    public void setErasmusAppsPlaced(Department department) {
-        ApplicationState state = getState();
-        state.getErasmusAppsPlaced().put(department, true);
-        repository.save(state);
-    }
-
-    public void setBilateralAppsPlaced(Department department) {
-        ApplicationState state = getState();
-        state.getBilateralAppsPlaced().put(department, true);
-        repository.save(state);
-    }
-
-    private ApplicationState getState() {
-        // there must be at least one state so no need for checking
-        return repository.findAll().get(0);
-    }
 }
