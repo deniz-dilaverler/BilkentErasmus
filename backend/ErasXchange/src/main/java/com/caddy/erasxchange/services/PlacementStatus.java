@@ -1,5 +1,5 @@
 package com.caddy.erasxchange.services;
 
 public enum PlacementStatus{
-    NO_FILE,FILE_UPLOADED,APPS_CORRECT,PLACEMENT_PUBLISHED
+    NO_FILE,FILE_UPLOADED, ACTIVATED ,APPS_CORRECT, PUBLISHED
 }

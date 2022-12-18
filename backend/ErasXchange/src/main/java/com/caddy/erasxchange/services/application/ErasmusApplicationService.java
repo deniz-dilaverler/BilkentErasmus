@@ -159,7 +159,7 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
     @Transactional
     public void startPlacements(Department department) {
 
-        if (stateService.getErasmusPlacementState(department) == PlacementStatus.PLACEMENT_PUBLISHED)
+        if (stateService.getErasmusPlacementState(department) == PlacementStatus.PUBLISHED)
             throw new InvalidRequestStateException("Erasmus application for department :  " + department + " is already placed");
 
         List<ErasmusApplication> applications = new LinkedList<>();
@@ -173,7 +173,7 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
         applicationPlacer.startPlacements(applications, department);
 
 //        stateService.setErasmusAppsPlaced(department);
-        stateService.setErasmusAppState(department, PlacementStatus.PLACEMENT_PUBLISHED);
+        stateService.setErasmusAppState(department, PlacementStatus.PUBLISHED);
 
     }
 
@@ -313,12 +313,15 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
             return false;
     }
 
-    public boolean checkApplicationsAreCorrect(Department department) {
+
+    public void checkApplications(Department department) {
         PlacementStatus placementStatus = stateService.getErasmusPlacementState(department);
         if (placementStatus == PlacementStatus.APPS_CORRECT ||
-                placementStatus == PlacementStatus.PLACEMENT_PUBLISHED) {
-            return true;
-        } else if (placementStatus == PlacementStatus.FILE_UPLOADED) {
+                placementStatus == PlacementStatus.PUBLISHED) {
+            return;
+        } else if (placementStatus == PlacementStatus.FILE_UPLOADED ||
+                    placementStatus == PlacementStatus.ACTIVATED) {
+
             List<ErasmusApplication> wrongApps = new ArrayList<>();
             List<ErasmusApplication> appsToCheck =  repository.findByStatusAndStudentDepartment(AppStatus.PENDING, department);
 
@@ -361,17 +364,15 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
                 }
 
             }
-
+            stateService.setErasmusAppState(department,PlacementStatus.ACTIVATED);
             if (wrongApps.size() == 0) {
 
                 stateService.setErasmusAppState(department, PlacementStatus.APPS_CORRECT);
-                return true;
             } else {
                 //TODO: send wrong apss to coord
-                return false;
+
             }
 
         }
-        return true;
     }
 }
