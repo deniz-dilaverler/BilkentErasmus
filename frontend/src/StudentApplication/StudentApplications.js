@@ -31,13 +31,11 @@ function StudentApplications(props) {
         console.log(statusData)
         if (statusData === "ALL") {
             console.log("It is canceled!")
-<<<<<<< HEAD
+
             fetch('http://localhost:8080/application/erasmus/' + applicationID +'/true', { method: 'DELETE' })
             .then((status) => setStatus("CANCELED"));
-=======
-            fetch('http://localhost:8080/application/erasmus/' + applicationID + '/true', { method: 'DELETE' })
-                .then((status) => setStatus("CANCELED"));
->>>>>>> parent of b728e99 (fix)
+
+
             setStatus("CANCELED")
         }
         else if (statusData.statType === "CURRENT" && status === "PLACED" ) {

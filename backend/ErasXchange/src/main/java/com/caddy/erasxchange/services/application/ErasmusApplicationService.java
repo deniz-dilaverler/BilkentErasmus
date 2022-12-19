@@ -149,7 +149,6 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
         checkApplications(application.getDepartment());
     }
 
-<<<<<<< HEAD
     /**
      * @param studentId
      * @return status of the erasmus application of given student
@@ -157,11 +156,6 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
     public AppStatus getStudentAppStatus(Long studentId) {
         Student student = studentService.findById(studentId);
         return student.getErasmusApplication().getStatus();
-=======
-    public AppStatus getStudentAppStatus(Long appId) {
-        ErasmusApplication app = super.findById(appId);
-        return app.getStatus();
->>>>>>> parent of b728e99 (fix)
     }
 
     /**
