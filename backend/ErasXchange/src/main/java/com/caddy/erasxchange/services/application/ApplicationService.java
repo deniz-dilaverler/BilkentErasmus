@@ -11,7 +11,7 @@ public abstract class ApplicationService<App extends Application, Repository ext
         GenericService<App, ApplicationRepository<App>> {
     final protected StudentService studentService;
     final protected ApplicationStateService stateService;
-    final protected ApplicationPlacementStrategy applicationPlacer;
+    final protected ApplicationPlacementStrategy<App> applicationPlacer;
     public ApplicationService(Repository repository, StudentService studentService, ApplicationStateService stateService, ApplicationPlacementStrategy applicationPlacer) {
         super(repository);
         this.studentService = studentService;

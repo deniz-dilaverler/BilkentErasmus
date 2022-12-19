@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * handles requests on bilateral Universities
+ */
 @Service
 public class BilateralUniversityService extends  UniversityService<BilateralUniversity, BilateralUniversityRepository> {
 
@@ -20,6 +23,10 @@ public class BilateralUniversityService extends  UniversityService<BilateralUniv
         this.bilateralUniversityMapper = bilateralUniversityMapper;
     }
 
+    /**
+     * adds university by mapping the given dto to an entity and persisting it
+     * @param bilateralUniversityDto
+     */
     public void addUniversity(BilateralUniversityDto bilateralUniversityDto) {
         BilateralUniversity bilateralUniversity = bilateralUniversityMapper.toEntity(bilateralUniversityDto);
         for(Coordinator coordinator : bilateralUniversity.getCoordinators()) {
@@ -28,11 +35,18 @@ public class BilateralUniversityService extends  UniversityService<BilateralUniv
         repository.save(bilateralUniversity);
     }
 
+    /**
+     * @return all bilateral universities in a list of dtos
+     */
     public List<BilateralUniversityDto> getUniversities() {
 
         return bilateralUniversityMapper.toDtoList(repository.findAll());
     }
 
+    /**
+     * @param id bilateral 's  database id
+     * @return university in dto form
+     */
     public BilateralUniversityDto getUniversity(Long id) {
         return bilateralUniversityMapper.toDto(findById(id));
     }

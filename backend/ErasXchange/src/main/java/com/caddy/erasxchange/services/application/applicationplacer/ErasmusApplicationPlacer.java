@@ -14,7 +14,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
-
+/**
+ * ErasmusApplicationPlaceer uses Strategy pattern and handles placements of erasmus applicaitons
+ */
 @Component
 public class ErasmusApplicationPlacer implements ApplicationPlacementStrategy<ErasmusApplication> {
     private final ErasmusApplicationRepository repository;
@@ -32,18 +34,27 @@ public class ErasmusApplicationPlacer implements ApplicationPlacementStrategy<Er
     }
 
 
-
+    /**
+     * places the erasmus applications of a given department in the system
+     * @param applicationsToPlace
+     * @param department
+     */
     @Override
     public void startPlacements(List<ErasmusApplication> applicationsToPlace, Department department) {
         applications = applicationsToPlace;
         initializeQuotas(department);
+        // sorted by application owner exchange score ( highest score first)
         sortApplications();
-
+        // go trough applications from highest scoring to lowest and place them in the order of their choice
         for(ErasmusApplication application : applications) {
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
             if(application.getStatus() == AppStatus.PLACED) continue;
             ErasmusUniversity placedUni = null;
 
+            // place the applicatio to the choice if the choice is not null and has enough quota
             if (application.getChoice1()!= null && quotas.get(application.getChoice1()) > 0) {
                 placedUni = application.getChoice1();
             } else if (application.getChoice2()!= null && quotas.get(application.getChoice2()) > 0) {
@@ -56,6 +67,9 @@ public class ErasmusApplicationPlacer implements ApplicationPlacementStrategy<Er
                 placedUni = application.getChoice5();
             }
 
+            // check if application is placed
+            // if not put app in waiting bin
+            // if placed, decrease the placed school's quota, and change status as placed
             if(placedUni == null)
                 application.setStatus(AppStatus.WAITING_BIN);
             else{
@@ -79,12 +93,18 @@ public class ErasmusApplicationPlacer implements ApplicationPlacementStrategy<Er
         quotas.clear();
     }
 
-
+    /**
+     * sort applications by their student's exchange score in reverse order (highest score first)
+     */
     private void sortApplications() {
         Collections.sort(applications);
         Collections.reverse(applications);
     }
 
+    /**
+     * initialize the quotas according to department
+     * @param department
+     */
     private void initializeQuotas(Department department) {
         List<ErasmusUniversity> universities = uniService.findAll();
 
@@ -101,8 +121,13 @@ public class ErasmusApplicationPlacer implements ApplicationPlacementStrategy<Er
     }
 
 
+    /**
+     * Unsupported implementation
+     * @param applications
+     * @throws UnsupportedOperationException
+     */
     @Override
-    public void startPlacements(List<ErasmusApplication> applications ) {
+    public void startPlacements(List<ErasmusApplication> applications ) throws UnsupportedOperationException {
         throw new UnsupportedOperationException("ErasmusApplicationPlacer doesn't implement this method");
     }
 }
