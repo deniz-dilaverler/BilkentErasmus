@@ -1,20 +1,20 @@
 import SchoolItem from "./SchoolItem";
 import './Schools.css';
-import InstitutionCard from "../UI/InstitutionCard";
 import SchoolFilter from "./SchoolFilter";
 import React, {useState} from "react";
 import Container from 'react-bootstrap/Container';
 
 function Schools(props) {
 
+    // state for filtering
     const [filteredSchool, setFilteredSchool] = useState('All');
 
+    // select filtered country
     const filterChangeHandler = selectedCountry => {
-        console.log("Mirbaaaa");
-        console.log(selectedCountry);
         setFilteredSchool(selectedCountry);
     };
 
+    // filter schools:
     const filteredSchools = props.institutions.filter(school => {
         if ( filteredSchool !== "All" ) {
             return school.country === filteredSchool
@@ -25,6 +25,7 @@ function Schools(props) {
         }
         
     })
+    // return 
     return(
             <Container className="schools">
                 <div><SchoolFilter onChangeFilter={filterChangeHandler} selected={filteredSchool}></SchoolFilter></div>

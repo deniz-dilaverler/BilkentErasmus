@@ -1,5 +1,4 @@
 import "./SchoolItem.css";
-import InstitutionCard from "../UI/InstitutionCard";
 import React, { useState } from "react";
 import { Modal } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
@@ -9,9 +8,11 @@ import Button from 'react-bootstrap/Button';
 
 function SchoolItem(props) {
 
+  // state for showing dialog:
   const [modalShow, setModalShow] = React.useState(false);
 
 
+  // return school item with institution information and details button
   return (
     <Container className="school-item">
       <Row>

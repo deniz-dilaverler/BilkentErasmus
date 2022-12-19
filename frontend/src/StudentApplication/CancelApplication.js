@@ -14,7 +14,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 function CancelApplication(props) {
 
     // cancel all applications!
-
     const cancelAllApplicationHandler = () => {
         const statusData = "ALL"
         props.cancelApplicationStatusData(statusData);
@@ -22,6 +21,7 @@ function CancelApplication(props) {
         setOpen(false);
     }
 
+    // cancel current application
     const cancelCurrentApplicationHandler = () => {
         const statusData = {
             statType: "CURRENT",
@@ -36,9 +36,11 @@ function CancelApplication(props) {
         return false;
     }
 
+    // states for opening dialogs
     const [open, setOpen] = useState(false);
     const [openCur, setOpenCur] = useState(false);
 
+    // handle open and close dialogs:
     const handleAllClickOpen = () => {
         setOpen(true);
       };

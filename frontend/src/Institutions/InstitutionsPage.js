@@ -3,6 +3,7 @@ import NewSchool from "./institutions-components/new-institution/NewSchool";
 import React, {useState, useEffect} from "react";
 import './InstitutionsPage.css';
 
+// mock data for backup
 const initialInstitutions = [
   {
     id: 1,
@@ -60,6 +61,7 @@ const initialInstitutions = [
 
 function InstitutionsMainPage() {
 
+  // fetch institutions data:
   useEffect(() => {
     fetch("http://localhost:8080/university/erasmus/all")
       .then((response) => response.json())
@@ -76,6 +78,7 @@ function InstitutionsMainPage() {
     );
   }
 
+  // NULLCHECK for institutions
   if ( institutions != null )
   {
     return (
