@@ -15,6 +15,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+/**
+ * Class to store files uploaded through the REST API
+ */
 @Service
 public class StorageService {
     private final Path fileStorageLocation;
@@ -29,6 +32,12 @@ public class StorageService {
         Files.createDirectories(this.fileStorageLocation);
     }
 
+    /**
+     * Method to store an uploaded file
+     * @param file multipart file uploaded through the HTTP request
+     * @return name of the stored file
+     * @throws IOException if the file has no name
+     */
     public String storeFile(MultipartFile file) throws IOException {
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -40,6 +49,12 @@ public class StorageService {
         return fileName;
     }
 
+    /**
+     * Method to load a previously stored file
+     * @param fileName file name
+     * @return the content of the file as resource
+     * @throws Exception several exceptions
+     */
     public ByteArrayResource loadFileAsResource(String fileName) throws Exception {
         try {
             Path filePath = fileStorageLocation.resolve(fileName).normalize().toAbsolutePath();
