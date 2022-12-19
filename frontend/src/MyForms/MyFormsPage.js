@@ -7,17 +7,18 @@ const MyFormsPage = () => {
     const [courses, setCourses] = useState([]);
     const [selectedCourse, setSelectedCourse] = useState(null);
     const [modalShow, setModalShow] = React.useState(false);
+    const [modalNewCourseShow, setModalNewCourseShow] = React.useState(false);
     const [modalDetailsShow, setModalDetailsShow] = useState();
-
+    var username= "";
     //addCoursetoPreApproval
     const [courseName, setCourseName] = useState("");
     const [courseCredit, setCourseCredit] = useState("");
     const [equivalentCourse, setEquivalentCourse] = useState("");
     const [equivalentCourseCredit, setEquivalentCourseCredit] = useState("");
 
-    //kullanma fronteddeki arrayden fecthle
+    //fetch existing courses from database
     useEffect(() => {
-        fetch("http://localhost:8080/course/bilkent/all")
+        fetch("http://localhost:8080/api/send-form-item")
             .then((response) => response.json())
             .then((courses) => setCourses(courses));
     }, []);
@@ -34,6 +35,37 @@ const MyFormsPage = () => {
     const setDetailsModalHandler = (course) => {
         setModalDetailsShow(true);
         setSelectedCourse(course);
+    }
+    //Saving the values in popup to database
+    const savePopup = async (event)=>{
+        event.preventDefault();
+        fetch("http://localhost:8080/api/sent-form-item",{
+            method: 'POST',
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type':'application/json'
+        },
+            body: JSON.stringify(
+                courseName,
+                courseCredit,
+                equivalentCourse,
+                equivalentCourseCredit,
+                username= "22001111"
+            )
+        })
+        .then(res =>res.json())
+        .then((result)=>{
+            alert(result);
+        },
+        (error) => {alert('Failed')
+        })
+            console.log(courseName, courseCredit,equivalentCourse,equivalentCourseCredit);
+       
+
+        setModalShow(false);
+       // document.getElementById('txtNmeComp').value = document.getElementById('course-credit').value;
+        //document.getElementById('txtNmeComp').value = document.getElementById('equivalent-course').value;
+        //document.getElementById('txtNmeComp').value = document.getElementById('equivalent-course-credit').value;
     }
 
     // Handles submitting the form to the Spring backend
@@ -72,7 +104,7 @@ const MyFormsPage = () => {
                         <th>Equivalent Course</th>
                         <th>Equivalent Course Credit</th>
                         <td>
-                            <button onClick={() => setModalShow(true)}>Add Course</button>
+                            <button onClick={() => setModalShow(true)}>Add Existing Course</button>
                             <Modal
                                 show={modalShow}
                                 size="lg"
@@ -88,10 +120,10 @@ const MyFormsPage = () => {
                                         value={courseName}
                                         onChange={(event) => setCourseName(event.target.value)}
                                     />
-                                    <label htmlFor="school-name">Course Credit:</label>
+                                     <label htmlFor="course-credit">Course Credit:</label>
                                     <input
                                         id="course-credit"
-                                        type="text"
+                                        type="number"
                                         value={courseCredit}
                                         onChange={(event) => setCourseCredit(event.target.value)}
                                     />
@@ -107,21 +139,18 @@ const MyFormsPage = () => {
                                         }
                                     />
                                     <label htmlFor="equivalent-course-credit">Equivalent Course Credit:</label>
-                                    <select
+                                    <input
                                         id="equivalent-course-credit"
+                                        type="number"
                                         value={equivalentCourseCredit}
                                         onChange={(event) =>
                                             setEquivalentCourseCredit(event.target.value)
                                         }
-                                    >
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                    </select>
+                                    />
                                 </form>
                             </Modal.Body>
                             <Modal.Footer>
-                                <Button type="submit" onClick={() => setModalShow(false)}>
+                                <Button type="submit" onClick={savePopup}>
                                     Save
                                 </Button>
                                 <Button onClick={() => setModalShow(false)}>Close</Button>
@@ -137,7 +166,7 @@ const MyFormsPage = () => {
                 {courses.map((course) => (
                     <tr key={course.id}>
                         <td>{course.courseCode}</td>
-                        <td>{course.courseCredit}</td>
+                        <td >{course.courseCredit}</td>
                         <td>{course.equivalentCourse}</td>
                         <td>{course.equivalentCourseCredit}</td>
                         <td>
