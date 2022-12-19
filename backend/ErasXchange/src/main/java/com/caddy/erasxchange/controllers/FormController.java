@@ -59,17 +59,18 @@ public class FormController {
 //        formService.generateTransferPdf(form1);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PostMapping("/api/generate-form")
+    @PostMapping("/api/generate-form/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public void generateForm(@RequestBody PreApprovePostDto formDto) {
-        formService.generatePreAppForm(formDto);
+    public void generateForm(@PathVariable String username) {
+        formService.generatePreAppForm(username);
     }
 
     @PostMapping("/api/send-form-item")
     @ResponseStatus(HttpStatus.OK)
-    public void sendFormItem(@RequestBody FormItemSendDto dto) {
+    public ResponseEntity<FormItemSendDto> sendFormItem(@RequestBody FormItemSendDto dto) {
         Student student = studentRepository.findByBilkentId(Integer.parseInt(dto.getUsername())).get();
         formService.newFormItem(student, dto);
+        return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
     }
 
 //    public ResponseEntity<String> decideForm(@RequestParam boolean decision)

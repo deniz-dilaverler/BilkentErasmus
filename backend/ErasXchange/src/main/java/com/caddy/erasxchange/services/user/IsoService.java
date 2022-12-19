@@ -4,6 +4,7 @@ import com.caddy.erasxchange.models.Department;
 import com.caddy.erasxchange.models.Semester;
 import com.caddy.erasxchange.models.application.AppStatus;
 import com.caddy.erasxchange.models.application.ErasmusApplication;
+import com.caddy.erasxchange.models.users.Coordinator;
 import com.caddy.erasxchange.models.users.Role;
 import com.caddy.erasxchange.models.users.Student;
 import com.caddy.erasxchange.models.users.User;
@@ -11,7 +12,10 @@ import com.caddy.erasxchange.repositories.university.ErasmusUniversityRepository
 import com.caddy.erasxchange.repositories.user.CoordinatorRepository;
 import com.caddy.erasxchange.repositories.user.StudentRepository;
 import com.caddy.erasxchange.repositories.user.UserRepository;
+<<<<<<< HEAD
 import com.caddy.erasxchange.security.AuthService;
+=======
+>>>>>>> parent of b728e99 (fix)
 import com.caddy.erasxchange.services.ApplicationStateService;
 import com.caddy.erasxchange.services.EventService;
 import com.caddy.erasxchange.services.PlacementStatus;
@@ -39,11 +43,18 @@ public class IsoService  {
     private final EventService eventService;
     private final CoordinatorRepository coordinatorRepository;
     private final UserRepository<User> userRepository;
+<<<<<<< HEAD
     private final AuthService authService;
 
     public IsoService(StudentRepository studentRepository, ErasmusUniversityRepository universityRepository, StorageService storageService, ApplicationStateService applicationStateService, PasswordEncoder passwordEncoder, EventService eventService,
                       CoordinatorRepository coordinatorRepository,
                       UserRepository<User> userRepository, AuthService authService) {
+=======
+
+    public IsoService(StudentRepository studentRepository, ErasmusUniversityRepository universityRepository, StorageService storageService, ApplicationStateService applicationStateService, PasswordEncoder passwordEncoder, EventService eventService,
+                      CoordinatorRepository coordinatorRepository,
+                      UserRepository<User> userRepository) {
+>>>>>>> parent of b728e99 (fix)
         this.studentRepository = studentRepository;
         this.universityRepository = universityRepository;
         this.storageService = storageService;
@@ -52,7 +63,10 @@ public class IsoService  {
         this.eventService = eventService;
         this.coordinatorRepository = coordinatorRepository;
         this.userRepository = userRepository;
+<<<<<<< HEAD
         this.authService = authService;
+=======
+>>>>>>> parent of b728e99 (fix)
     }
 
     public List<Student> readExcel(String fileName) throws Exception {
@@ -118,11 +132,14 @@ public class IsoService  {
             application.setStatus(AppStatus.PENDING);
             application.setStudent(student);
             student.setErasmusApplication(application);
+<<<<<<< HEAD
             if (student.getLastName().equals("Güzey")) {
                 student.setEmail("aliemirguzey@gmail.com");
                 authService.sendRegisterMail(student);
             }
 
+=======
+>>>>>>> parent of b728e99 (fix)
             eventService.sendEvent(student, "Update on your Erasmus application", "Your application is now pending");
 //            student.setErasmusApplication(applicationRepository.findByStudent(student));
             studentRepository.save(student);

@@ -1,5 +1,6 @@
 package com.caddy.erasxchange.controllers;
 
+import com.sun.jdi.request.InvalidRequestStateException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,7 @@ import javax.persistence.NoResultException;
 public class GloabalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NoResultException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleNoResultException(
             NoResultException exception
     ) {
@@ -29,6 +30,16 @@ public class GloabalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(EntityExistsException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleEntityExistsException(
+            NoResultException exception
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(InvalidRequestStateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleInvalidRequestStateException(
             NoResultException exception
     ) {
         return ResponseEntity

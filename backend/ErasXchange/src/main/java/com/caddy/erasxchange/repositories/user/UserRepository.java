@@ -18,6 +18,9 @@ public interface UserRepository<T extends User> extends JpaRepository<T, Long> {
     List<T> findByDepartment(Department department);
 
     List<T> findByDepartmentAndRole(Department department, Role role);
+<<<<<<< HEAD
 
     T findByVerificationCode(String code);
+=======
+>>>>>>> parent of b728e99 (fix)
 }

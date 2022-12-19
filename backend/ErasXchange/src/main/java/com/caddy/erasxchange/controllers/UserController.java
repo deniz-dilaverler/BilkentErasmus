@@ -8,7 +8,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+<<<<<<< HEAD
 import org.springframework.http.HttpStatus;
+=======
+>>>>>>> parent of b728e99 (fix)
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +29,7 @@ public class UserController {
     }
 
     @PostMapping()
+<<<<<<< HEAD
     public ResponseTransfer login(@RequestBody LoginDto loginDto) {
         return new ResponseTransfer(authService.login(loginDto)) ;
     }
@@ -34,6 +38,11 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public void setNewPassword(@RequestParam String code, @RequestParam String pwd) {
         authService.resetPassword(code, pwd);
+=======
+    @ResponseBody
+    public ResponseTransfer login(@RequestBody LoginDto loginDto) {
+        return new ResponseTransfer(authService.login(loginDto)) ;
+>>>>>>> parent of b728e99 (fix)
     }
 
     @GetMapping
