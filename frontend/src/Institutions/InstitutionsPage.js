@@ -3,6 +3,7 @@ import NewSchool from "./institutions-components/new-institution/NewSchool";
 import React, {useState, useEffect} from "react";
 import './InstitutionsPage.css';
 
+// mock data for backup
 const initialInstitutions = [
   {
     id: 1,
@@ -62,6 +63,14 @@ function InstitutionsMainPage({loggedIn, setLoggedIn}) {
   setLoggedIn(true);
 
 
+  // fetch institutions data:
+  useEffect(() => {
+    fetch("http://localhost:8080/university/erasmus/all")
+      .then((response) => response.json())
+      .then((institutions) => setInstitutions(institutions));
+  }, []);
+
+
   const [institutions, setInstitutions] = useState(initialInstitutions);
 
   const addSchoolHandler = school => {
@@ -72,6 +81,7 @@ function InstitutionsMainPage({loggedIn, setLoggedIn}) {
     );
   }
 
+  // NULLCHECK for institutions
   if ( institutions != null )
   {
     return (

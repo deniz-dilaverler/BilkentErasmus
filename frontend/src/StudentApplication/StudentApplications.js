@@ -12,21 +12,22 @@ function StudentApplications(props) {
     const [isPlacementStarted, setIsPlacementStarted] = useState();
     const [faultyData, setFaultyData] = useState();
 
-    console.log("denize götten giriyim")
-    console.log(isPlacementStarted)
+    // fetch application id:
     const applicationID = props.applications.id;
 
-    useEffect(() => {
-        fetch("http://localhost:8080/application/erasmus/wrongsemester/" + applicationID)
-            .then((response) => response.json())
-            .then((faultyData) => setFaultyData(faultyData));
-    }, []);
-    console.log("faulty data:")
-    console.log(faultyData)
+
+    // get data:
+        useEffect(() => {
+            fetch("http://localhost:8080/application/erasmus/wrongsemester/" + applicationID )
+                .then((response) => response.json())
+                .then((faultyData) => setFaultyData(faultyData));
+        }, []);
+        
+        // cancel status:
 
     const [cancelled, setCancelled] = useState(false);
-    console.log("odddddddddddddddffffffffff")
-    console.log(status)
+
+    // cancel application status handler:
     const cancelApplicationStatusHandler = (statusData) => {
         console.log(statusData)
         if (statusData === "ALL") {
@@ -56,9 +57,8 @@ function StudentApplications(props) {
         }
     };
 
+    // get student choices as an array:
     const choices = [];
-    console.log("gir")
-    console.log(choices)
     if (props.applications.semester1 !== undefined) {
         choices.push({
             semester: props.applications.semester1,
@@ -101,6 +101,7 @@ function StudentApplications(props) {
         )
     }
 
+    // create faulty datas, if there are any:
     let faultyDatas = [];
     if (faultyData !== undefined) {
         for (let i = 0; i < 5; i++) {
@@ -116,24 +117,21 @@ function StudentApplications(props) {
         }
     }
 
-    console.log(faultyDatas)
-    console.log("choices")
-    console.log(choices)
+    
+    // fetch status
 
     useEffect(() => {
-        fetch("http://localhost:8080/application/erasmus/status/3")
+        fetch("http://localhost:8080/application/erasmus/status/4")
             .then((response) => response.json())
             .then((status) => setStatus(status));
     }, []);
 
+ // fetch placement status
     useEffect(() => {
         fetch("http://localhost:8080/state/placement/erasmus/CS")
             .then((response) => response.json())
             .then((isPlacementStarted) => setIsPlacementStarted(isPlacementStarted));
     }, []);
-
-
-    console.log(isPlacementStarted)
 
     // get if application is published or not
     const isApplicationsPublished = () => {

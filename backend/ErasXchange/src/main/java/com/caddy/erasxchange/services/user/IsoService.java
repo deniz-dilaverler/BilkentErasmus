@@ -124,7 +124,9 @@ public class IsoService  {
 
             if (student.getLastName().equals("Güzey")) {
                 student.setEmail("aliemirguzey@gmail.com");
-                authService.sendRegisterMail(student);
+
+//                authService.sendRegisterMail(student);
+
             }
 
             eventService.sendEvent(student, "Update on your Erasmus application", "Your application is now pending");

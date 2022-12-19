@@ -4,7 +4,7 @@ import FormList from './FormList';
 import CancelTwoToneIcon from '@mui/icons-material/CancelTwoTone';
 import CheckCircleTwoToneIcon from '@mui/icons-material/CheckCircleTwoTone';
 import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
-import { Modal } from "react-bootstrap";
+import { Modal,Form } from "react-bootstrap";
 import { Page, Document, pdfjs, Outline } from "react-pdf";
 import axios from "axios";
 import './FormListContainer.css';
@@ -16,6 +16,7 @@ const FormsPage = () => {
     const [selectedForm, setSelectedForm] = useState(null);
     const [modalShow, setModalShow] = React.useState(false);
     const [modalDetailsShow, setModalDetailsShow] = useState();
+    const [feedback, setFeedback] = useState("");
     const pdfHandler = async (event) => {
         event.preventDefault();
     }
@@ -25,15 +26,15 @@ const FormsPage = () => {
     //</div>
     //modal açma eklenecek
 
-/*<form className="add-course-form" onSubmit={handleSubmit}>
-                                            <label htmlFor="course-name">Course Name:</label>
-                                            <input
-                                                id="course-name"
-                                                type="text"
-                                                value={courseName}
-                                                onChange={(event) => setCourseName(event.target.value)}
-                                            />
-                                        </form>*/
+    /*<form className="add-course-form" onSubmit={handleSubmit}>
+                                                <label htmlFor="course-name">Course Name:</label>
+                                                <input
+                                                    id="course-name"
+                                                    type="text"
+                                                    value={courseName}
+                                                    onChange={(event) => setCourseName(event.target.value)}
+                                                />
+                                            </form>*/
 
 
     //fetch all forms from the server
@@ -43,7 +44,30 @@ const FormsPage = () => {
             .then((forms) => setForms(forms));
     }, []);
 
+    //Save rejection feedback
+    const saveFeedback = async (event) => {
+        event.preventDefault();
+        fetch("http://localhost:8080/course/bilkent/all", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                feedback
+            )
+        })
+            .then(res => res.json())
+            .then((result) => {
+                alert(result);
+            },
+                (error) => {
+                    alert('Failed')
+                })
 
+    }
+
+    const handleChange = () => { }
     // download pdfs from the endpoint;
     const downloadpdf = () => {
         axios.get("http://localhost:8080/api/download/a_b_PreApproval.pdf", {
@@ -83,7 +107,7 @@ const FormsPage = () => {
         // Clear the form fields and close the form
         setCourseName("");
       }
-*/    
+*/
     const [filteredItems, setFilteredItems] = useState(forms);
 
     //render the component
@@ -91,7 +115,6 @@ const FormsPage = () => {
         <div>
             <Container className="FormsPage">
                 <Row>
-
                     <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
                         <ToggleButton id="tbg-radio-1" value={1}>
                             Forms
@@ -122,7 +145,19 @@ const FormsPage = () => {
                                     aria-labelledby="contained-modal-title-vcenter"
                                     centered>
                                     <Modal.Body>
-                                        
+                                        <Form>
+                                            <Form.Group
+                                                className="mb-3"
+                                                controlId="exampleForm.ControlTextarea1"
+                                            >
+                                                <Form.Label>Feedback: </Form.Label>
+                                                <Form.Control as="textarea" rows={4} type="text"
+                                                    onChange={(event) => setFeedback(event.target.value)}
+                                                    value={feedback}
+                                                    placeholder="Give feedback here" />
+                                            </Form.Group>
+                                        </Form>
+
                                     </Modal.Body>
                                     <Modal.Footer>
                                         <Button type="submit" onClick={() => setModalShow(false)}>
@@ -135,9 +170,6 @@ const FormsPage = () => {
 
                             </tr>
                         ))}</p>
-
-
-
                     </div>
                 </Row>
             </Container>
