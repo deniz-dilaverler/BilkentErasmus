@@ -1,11 +1,8 @@
 package com.caddy.erasxchange.services;
 
 import com.caddy.erasxchange.DTOs.FormItemSendDto;
-import com.caddy.erasxchange.DTOs.PreApprovePostDto;
 import com.caddy.erasxchange.models.course.ApprovalStatus;
-import com.caddy.erasxchange.models.course.BilkentCourse;
 import com.caddy.erasxchange.models.course.EquivalenceItem;
-import com.caddy.erasxchange.models.course.ExternalCourse;
 import com.caddy.erasxchange.models.forms.*;
 import com.caddy.erasxchange.models.users.Student;
 import com.caddy.erasxchange.models.users.User;
@@ -13,66 +10,41 @@ import com.caddy.erasxchange.repositories.course.BilkentCourseRepository;
 import com.caddy.erasxchange.repositories.course.EquivalenceItemRepository;
 import com.caddy.erasxchange.repositories.course.ExternalCourseRepository;
 import com.caddy.erasxchange.repositories.form.CourseTransferFormRepository;
-import com.caddy.erasxchange.repositories.form.FormRepository;
 import com.caddy.erasxchange.repositories.form.PreApprovalFormRepository;
 import com.caddy.erasxchange.repositories.user.StudentRepository;
 import com.caddy.erasxchange.repositories.user.UserRepository;
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.*;
-import org.apache.poi.ss.usermodel.Cell;
-import org.springframework.http.ResponseEntity;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class FormService {
     private final PreApprovalFormRepository preApprovalFormRepository;
-    private final CourseTransferFormRepository courseTransferFormRepository;
-    private final UserRepository<User> userRepository;
     private final EquivalenceItemRepository equivalenceItemRepository;
     private final StudentRepository studentRepository;
     private final ExternalCourseRepository externalCourseRepository;
     private final BilkentCourseRepository bilkentCourseRepository;
 
-    public FormService(PreApprovalFormRepository preApprovalFormRepository, CourseTransferFormRepository courseTransferFormRepository, UserRepository<User> userRepository,
+    public FormService(PreApprovalFormRepository preApprovalFormRepository,
                        EquivalenceItemRepository equivalenceItemRepository,
                        StudentRepository studentRepository,
                        ExternalCourseRepository externalCourseRepository,
                        BilkentCourseRepository bilkentCourseRepository) {
         this.preApprovalFormRepository = preApprovalFormRepository;
-        this.courseTransferFormRepository = courseTransferFormRepository;
-        this.userRepository = userRepository;
         this.equivalenceItemRepository = equivalenceItemRepository;
         this.studentRepository = studentRepository;
         this.externalCourseRepository = externalCourseRepository;
         this.bilkentCourseRepository = bilkentCourseRepository;
     }
 
-//    public List<PreApprovalForm> getPreApprovalFormsBySender(String username) {
-//        Optional<User> optional =  userRepository.findByBilkentId(Integer.parseInt(username));
-//        if(optional.isEmpty()) throw new EntityNotFoundException("User with bilkent id :" + username + " doesn't exist");
-//        User user = optional.get();
-//
-//        return preApprovalFormRepository.findBySender(user);
-//    }
-//
-//    public List<CourseTransferForm> getCourseTransferFormsBySender(String username) {
-//        Optional<User> optional =  userRepository.findByBilkentId(Integer.parseInt(username));
-//        if(optional.isEmpty()) throw new EntityNotFoundException("User with bilkent id :" + username + " doesn't exist");
-//        User user = optional.get();
-//        return courseTransferFormRepository.findBySender(user);
-//    }
 
     public void generatePreAppForm(String username) {
         Student student = studentRepository.findByBilkentId(Integer.parseInt(username)).get();
@@ -108,7 +80,6 @@ public class FormService {
 
     public void generatePreAppPdf(PreApprovalForm form) throws FileNotFoundException, DocumentException {
         Document document = new Document(PageSize.A4.rotate(),20,20,50,50);
-//        Path path = Paths.get(ClassLoader.getSystemResource("bilkent-logo.png").toURI());
         PdfWriter.getInstance(document, new FileOutputStream(form.getSender().getFirstName() + "_"
                                                             + form.getSender().getLastName()
                                                             + "_PreApproval.pdf"));
