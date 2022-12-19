@@ -1,7 +1,8 @@
 package com.caddy.erasxchange.security;
 
 import com.caddy.erasxchange.models.users.Role;
-import com.caddy.erasxchange.repositories.user.UserRepository;
+import com.caddy.erasxchange.models.users.SecurityUser;
+import com.caddy.erasxchange.repositories.SecurityUserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -19,22 +20,24 @@ import java.util.stream.Collectors;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserRepository<com.caddy.erasxchange.models.users.User> userRepository;
+    private final SecurityUserRepository userRepository;
 
     JwtProvider jwtProvider;
 
-    public CustomUserDetailsService(UserRepository<com.caddy.erasxchange.models.users.User> userRepository, JwtProvider jwtProvider) {
+    public CustomUserDetailsService(SecurityUserRepository userRepository, JwtProvider jwtProvider) {
         this.userRepository = userRepository;
         this.jwtProvider = jwtProvider;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        com.caddy.erasxchange.models.users.User user = userRepository.findByBilkentId(Integer.parseInt(username)).get();
-
+        SecurityUser user = this.userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("username " + username + " is not found");
+        }
         List<Role> roles = new ArrayList<>();
         roles.add(user.getRole());
-        return new User(user.getBilkentId().toString(), user.getPassword(), mapRolesToAuthorities(roles));
+        return new User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(roles));
     }
 
     public Optional<UserDetails> loadUserByJwtToken(String jwtToken) {

@@ -57,10 +57,14 @@ const initialInstitutions = [
 
 
 
-function InstitutionsMainPage({loggedIn, setLoggedIn}) {
 
-  setLoggedIn(true);
+function InstitutionsMainPage() {
 
+  useEffect(() => {
+    fetch("http://localhost:8080/university/erasmus/all")
+      .then((response) => response.json())
+      .then((institutions) => setInstitutions(institutions));
+  }, []);
 
   const [institutions, setInstitutions] = useState(initialInstitutions);
 

@@ -25,16 +25,13 @@ function StudentApplications(props) {
         console.log(faultyData)
         
     const [cancelled, setCancelled] = useState(false);
-    console.log("odddddddddddddddffffffffff")
-    console.log(status)
     const cancelApplicationStatusHandler = (statusData) => {
         console.log(statusData)
         if (statusData === "ALL")
         {
             console.log("It is canceled!")
             fetch('http://localhost:8080/application/erasmus/' + applicationID +'/true', { method: 'DELETE' })
-            .then((status) => setStatus("CANCELED"));
-            setStatus("CANCELED")
+            .then((cancelled) => setStatus("CANCELED"));
         }
         else if ( statusData.statType === "CURRENT" ) {
             fetch('http://localhost:8080/application/erasmus/cancelChoice/semester/' + applicationID +'/' + statusData.no, { method: 'PUT' })
