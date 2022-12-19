@@ -14,9 +14,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 function ModifyFaultyData(props) {
 
+  // set states for modals
   const [open, setOpen] = useState(false);
   const [openSemester, setOpenSemester] = useState(false);
 
+  // handle dialog (modal) open and closings:
     const handleAllClickOpen = () => {
         setOpen(true);
       };
@@ -33,6 +35,8 @@ function ModifyFaultyData(props) {
         setOpenSemester(false);
       };
 
+      // cancel current application handler:
+      // send to main:
   const cancelCurrentApplicationHandler = () => {
         const statusData = {
           statType: "CURRENT",
@@ -43,6 +47,8 @@ function ModifyFaultyData(props) {
         window.location.reload(false);
   }
 
+  // change semester handler:
+  // send to main:
   const changeSemesterHandler = () => {
     const statusData = {
       statType: "SEMESTER_CHANGE",
@@ -53,6 +59,7 @@ function ModifyFaultyData(props) {
     window.location.reload(false);
   }
 
+  // return buttons and dialogs:
     return (
         <Container className='modify'>
           <Row>

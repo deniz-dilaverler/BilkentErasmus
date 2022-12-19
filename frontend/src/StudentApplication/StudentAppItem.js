@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import './StudentAppItem.css';
 function StudentAppItem(props) {
 
-
+  // return school item
     return (
       <Container className="application-item" fluid>
         <Row>

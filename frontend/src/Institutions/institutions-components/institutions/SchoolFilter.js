@@ -3,7 +3,7 @@ import React from 'react';
 import './SchoolFilter.css';
 
 const SchoolFilter = (props) => {
-
+  // filter for country:
     const filterChangeHandler = (event) => {
         console.log(event.target.value);
         props.onChangeFilter(event.target.value);
