@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * handles request for ErasmusUniversity operations
+ */
 @Service
 public class ErasmusUniversityService extends com.caddy.erasxchange.services.GenericService<ErasmusUniversity, ErasmusUniversityRepository> {
 
@@ -35,12 +38,16 @@ public class ErasmusUniversityService extends com.caddy.erasxchange.services.Gen
         this.coordinatorService = coordinatorService;
     }
 
+    /**
+     * adds the ErasmusUniversity by mapping the given university to an entity
+     * @param addDto given by the request
+     */
     public void addUniversity(AddErasmusUniversityDto addDto) {
         System.out.println(addDto);
         ErasmusUniversity erasmusUniversity = erasmusUniversityMapper.addToEntity(addDto);
         ErasmusUniversity erasUni = repository.findByName(erasmusUniversity.getName());
         Coordinator coordinator = coordinatorService.findById(addDto.getCoordinatorId());
-
+        // create program with the coordinator's department
         Program program = new Program().setDepartment(coordinator.getDepartment()).setQuota(addDto.getQuota());
         if (erasUni != null)
             erasmusUniversity = erasUni;
@@ -55,6 +62,10 @@ public class ErasmusUniversityService extends com.caddy.erasxchange.services.Gen
         repository.save(erasmusUniversity);
     }
 
+    /**
+     * adds the given program to the university
+     * @param programDto
+     */
     public void addProgram(ProgramDto programDto) {
         ErasmusUniversity university = findById(programDto.getUniversityId());
         Program program = programMapper.toEntity(programDto);
@@ -65,10 +76,17 @@ public class ErasmusUniversityService extends com.caddy.erasxchange.services.Gen
 
     }
 
+    /**
+     * @return list of Erasmus Universities in dto form
+     */
     public List<ErasmusUniversityDto> getUniversities() {
         return erasmusUniversityMapper.toDtoList(repository.findAll());
     }
 
+    /**
+     * @param id university 's  database id
+     * @return university in dto form
+     */
     public ErasmusUniversityDto getUniversity(Long id) {
         return erasmusUniversityMapper.toDto(findById(id));
     }

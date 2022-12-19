@@ -26,6 +26,7 @@ public class BilkentCourseService extends CourseService<BilkentCourse, BilkentCo
         super(repository);
         this.srsCourseFetch = srsCourseFetch;
         this.courseMapper = courseMapper;
+        // update the courses from srs
         setCoursesFromSrs();
     }
 
@@ -48,6 +49,12 @@ public class BilkentCourseService extends CourseService<BilkentCourse, BilkentCo
     public void updateSrsCourses() {
         setCoursesFromSrs();
     }
+
+    /**
+     * fetches bilkent courses from the srs system (currently simulated internal system)
+     * if a course with the same course code exists in the database, updates the contents of the course entity
+     * if there is no course adds it to the database
+     */
     private void setCoursesFromSrs() {
         log.info("Fetching bilkentCourse data from srs");
 

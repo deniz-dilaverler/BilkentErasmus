@@ -1,5 +1,6 @@
 package com.caddy.erasxchange.services;
 
+import com.caddy.erasxchange.DTOs.FormItemSendDto;
 import com.caddy.erasxchange.DTOs.PreApprovePostDto;
 import com.caddy.erasxchange.models.course.ApprovalStatus;
 import com.caddy.erasxchange.models.course.BilkentCourse;
@@ -58,41 +59,41 @@ public class FormService {
         this.bilkentCourseRepository = bilkentCourseRepository;
     }
 
-    public List<PreApprovalForm> getPreApprovalFormsBySender(String username) {
-        Optional<User> optional =  userRepository.findByBilkentId(Integer.parseInt(username));
-        if(optional.isEmpty()) throw new EntityNotFoundException("User with bilkent id :" + username + " doesn't exist");
-        User user = optional.get();
+//    public List<PreApprovalForm> getPreApprovalFormsBySender(String username) {
+//        Optional<User> optional =  userRepository.findByBilkentId(Integer.parseInt(username));
+//        if(optional.isEmpty()) throw new EntityNotFoundException("User with bilkent id :" + username + " doesn't exist");
+//        User user = optional.get();
+//
+//        return preApprovalFormRepository.findBySender(user);
+//    }
+//
+//    public List<CourseTransferForm> getCourseTransferFormsBySender(String username) {
+//        Optional<User> optional =  userRepository.findByBilkentId(Integer.parseInt(username));
+//        if(optional.isEmpty()) throw new EntityNotFoundException("User with bilkent id :" + username + " doesn't exist");
+//        User user = optional.get();
+//        return courseTransferFormRepository.findBySender(user);
+//    }
 
-        return preApprovalFormRepository.findBySender(user);
-    }
+    public void generatePreAppForm(String username) {
+        Student student = studentRepository.findByBilkentId(Integer.parseInt(username)).get();
+        PreApprovalForm form = preApprovalFormRepository.findBySender(student);
 
-    public List<CourseTransferForm> getCourseTransferFormsBySender(String username) {
-        Optional<User> optional =  userRepository.findByBilkentId(Integer.parseInt(username));
-        if(optional.isEmpty()) throw new EntityNotFoundException("User with bilkent id :" + username + " doesn't exist");
-        User user = optional.get();
-        return courseTransferFormRepository.findBySender(user);
-    }
 
-    public void generatePreAppForm(PreApprovePostDto formDto) {
-        PreApprovalForm form = new PreApprovalForm();
+        form.getRows().forEach(item -> {
 
-        formDto.getExtCourseCodes().forEach(code -> {
+            EquivalenceItem equivalenceItem = equivalenceItemRepository.findByExternalCourseAndBilkentCourse(item.getExternalCourse(), item.getEquivalentCourse());
 
-            ExternalCourse externalCourse = externalCourseRepository.findCourseByCourseCode(code).get();
-            BilkentCourse bilkentCourse = bilkentCourseRepository.findCourseByCourseCode(formDto.getBilkentCourseCodes().get(formDto.getExtCourseCodes().indexOf(code))).get();
-            EquivalenceItem equivalenceItem = equivalenceItemRepository.findByExternalCourseAndBilkentCourse(externalCourse, bilkentCourse);
-
-            if (equivalenceItemRepository.findByExternalCourseAndBilkentCourse(externalCourse, bilkentCourse) != null) {
+            if (equivalenceItem != null) {
                 if (equivalenceItem.getApprovalStatus() == ApprovalStatus.ACCEPTED)
-                    form.getRows().add(new FormItem(externalCourse, bilkentCourse));
+                    form.getRows().add(new FormItem(item.getExternalCourse(), item.getEquivalentCourse()));
                 else if (equivalenceItem.getApprovalStatus() == ApprovalStatus.PENDING)
-                    form.getRows().add(new FormItem(externalCourse, bilkentCourse));
+                    form.getRows().add(new FormItem(item.getExternalCourse(), item.getEquivalentCourse()));
                     //TODO: inform coordinator
                 else
-                    throw new EntityNotFoundException(externalCourse.getName() + " and " + bilkentCourse.getName() + " are not transferable");
+                    throw new EntityNotFoundException(item.getExternalCourse().getName() + " and " + item.getEquivalentCourse().getName() + " are not transferable");
             }
             else {
-                equivalenceItem = new EquivalenceItem(externalCourse, bilkentCourse, ApprovalStatus.PENDING);
+                equivalenceItem = new EquivalenceItem(item.getExternalCourse(), item.getEquivalentCourse(), ApprovalStatus.PENDING);
                 equivalenceItemRepository.save(equivalenceItem);
                 //TODO: inform coordinator
             }
@@ -100,8 +101,7 @@ public class FormService {
 
         form.setStatus(FormApprovalStatus.PENDING);
         form.setTimeSent(Instant.now());
-        form.setSender(studentRepository.findByBilkentId(formDto.getSenderBilkentId()).get());
-        form.setReceiver(((Student)form.getSender()).getErasmusApplication().getPlacedSchool().getCoordinator(form.getSender().getDepartment()));
+        form.setReceiver(student.getErasmusApplication().getPlacedSchool().getCoordinator(form.getSender().getDepartment()));
         preApprovalFormRepository.save(form);
 
     }
@@ -280,5 +280,22 @@ public class FormService {
             form.setStatus(FormApprovalStatus.APPROVED);
         else
             form.setStatus(FormApprovalStatus.REJECTED);
+    }
+
+    public void newFormItem(Student student, FormItemSendDto dto) {
+        PreApprovalForm form;
+        if(preApprovalFormRepository.findBySender(student) != null) {
+            form = preApprovalFormRepository.findBySender(student);
+        }
+        else {
+            form = new PreApprovalForm();
+            form.setSender(student);
+        }
+        FormItem formItem = new FormItem();
+        formItem.setExternalCourse(externalCourseRepository.findCourseByCourseCode(dto.getCourseCode()).get());
+        formItem.setEquivalentCourse(bilkentCourseRepository.findCourseByCourseCode(dto.getEqivalentCourseCode()).get());
+        form.getRows().add(formItem);
+        preApprovalFormRepository.save(form);
+
     }
 }

@@ -7,6 +7,8 @@ import com.caddy.erasxchange.models.users.User;
 import com.caddy.erasxchange.repositories.SecurityUserRepository;
 import com.caddy.erasxchange.repositories.user.UserRepository;
 import net.bytebuddy.utility.RandomString;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,95 +27,77 @@ import java.util.Optional;
 
 @Service
 public class AuthService {
-
     private final UserRepository<User> userRepository;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
-    private final SecurityUserRepository securityUserRepository;
     private final JavaMailSender mailSender;
 
-    public AuthService(UserRepository<User> userRepository, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, JwtProvider jwtProvider, SecurityUserRepository securityUserRepository, JavaMailSender mailSender) {
+    public AuthService(UserRepository<User> userRepository, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, JwtProvider jwtProvider, JavaMailSender mailSender) {
         this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.jwtProvider = jwtProvider;
-        this.securityUserRepository = securityUserRepository;
         this.mailSender = mailSender;
     }
 
-    public Optional<String> login(LoginDto loginDto) {
+    public String login(LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsername(), loginDto.getPassword()));
         User user = userRepository.findByBilkentId(Integer.parseInt(loginDto.getUsername())).get();
         List<Role> roles  = new ArrayList<>();
         roles.add(user.getRole());
-        Optional<String> token = Optional.of(jwtProvider.createToken(user.getBilkentId().toString(), roles));
+
+        String token = jwtProvider.createToken(user.getBilkentId().toString(), roles);
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return token;
     }
 
-    public void register(User user, String siteURL)
-            throws UnsupportedEncodingException, MessagingException {
-        //TODO
-//        String encodedPassword = passwordEncoder.encode(user.getPassword());
-//        user.setPassword(encodedPassword);
-//
-//        String randomCode = RandomString.make(64);
-//        user.setVerificationCode(randomCode);
-//        user.setEnabled(false);
-//
-//        repo.save(user);
-//
-//        sendVerificationEmail(user, siteURL);
+    public void resetPassword(String code, String pwd) {
+        User user = userRepository.findByVerificationCode(code);
+        if (!user.getVerificationCode().equals("registered"))
+            user.setPassword(passwordEncoder.encode(pwd));
+        else
+            throw new IllegalArgumentException("User already registered.");
+        user.setVerificationCode("registered");
+        userRepository.save(user);
     }
 
-    private void sendVerificationEmail(User user, String siteURL)
+    public void sendRegisterMail(User user)
             throws MessagingException, UnsupportedEncodingException {
-        //TODO
-//        String toAddress = user.getEmail();
-//        String fromAddress = "aliemirguzey@gmail.com";
-//        String senderName = "ErasXchange";
-//        String subject = "Please verify your registration";
-//        String content = "Dear [[name]],<br>"
-//                + "Please click the link below to verify your registration:<br>"
-//                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
-//                + "Thank you,<br>"
-//                + "Your company name.";
-//
-//        MimeMessage message = mailSender.createMimeMessage();
-//        MimeMessageHelper helper = new MimeMessageHelper(message);
-//
-//        helper.setFrom(fromAddress, senderName);
-//        helper.setTo(toAddress);
-//        helper.setSubject(subject);
-//
-//        content = content.replace("[[name]]", user.getFullName());
-//        String verifyURL = siteURL + "/verify?code=" + user.getVerificationCode();
-//
-//        content = content.replace("[[URL]]", verifyURL);
-//
-//        helper.setText(content, true);
-//
-//        mailSender.send(message);
+
+        user.setVerificationCode(RandomString.make(64));
+
+        String toAddress = user.getEmail();
+        String fromAddress = "emir.guzey@ug.bilkent.edu.tr";
+        String senderName = "ErasXchange";
+        String subject = "Please reset your password";
+        String content = "Dear [[name]],<br>"
+                + "Please click the link below to verify your registration:<br>"
+                + "<h3><a href=\"[[URL]]\" target=\"_self\">REGISTER</a></h3>"
+                + "Thank you,<br>"
+                + "ErasXchange.";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+
+        content = content.replace("[[name]]", user.getFirstName() + " " + user.getLastName());
+        String verifyURL =  "http://localhost:3000/register?code=" + user.getVerificationCode();
+        userRepository.save(user);
+
+        content = content.replace("[[URL]]", verifyURL);
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
 
     }
 
-    public boolean verify(String verificationCode) {
-        //TODO
-//        User user = repo.findByVerificationCode(verificationCode);
-//
-//        if (user == null || user.isEnabled()) {
-//            return false;
-//        } else {
-//            user.setVerificationCode(null);
-//            user.setEnabled(true);
-//            repo.save(user);
-//
-//            return true;
-//        }
-        return false;
-    }
     public List<User> getAll() {
         return userRepository.findAll();
     }

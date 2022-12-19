@@ -30,6 +30,11 @@ import java.util.*;
 
 @Service
 @Transactional
+/**
+ * Runs at application start
+ * this class initializes and persists  course, university and coordinator data, this class
+ * is for testing and demo purposes
+ */
 public class BootStrapData {
 
     private static final Department[] departments =Department.values();
@@ -58,34 +63,6 @@ public class BootStrapData {
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void  startUp() {
-        /*
-        System.out.println("Adding random data");
-        Faker faker = new Faker();
-
-        List<ErasmusUniversity> erasmusUniversities = new LinkedList<>();
-
-        for(int i = 0; i < 8; i++) {
-            ErasmusUniversity erasmusUni = new ErasmusUniversity();
-            Set<Program> programs = new HashSet<>();
-            for (int j = 0; j < 3; j++ ) {
-                Program program = new Program();
-                program.setDepartment(departments[(i + j) % departments.length]);
-                program.setQuota((int) (Math.floor(Math.random() * 5) + 1));
-                program.setUniversity(erasmusUni);
-                programs.add(program);
-            }
-            erasmusUni.setPrograms(programs);
-            erasmusUni.setAllowence((int) (Math.floor(Math.random() * 400) + 200));
-            erasmusUni.setCountry(String.valueOf(faker.country()));
-            erasmusUni.setLanguageRequirement("English B2");
-            erasmusUni.setName("uni");
-            erasmusUni.setSemester(Semester.BOTH);
-            erasmusUniversities.add(erasmusUni);
-        }
-
-        erasmusUniversityRepository.saveAll(erasmusUniversities);
-
-        */
 
         List<Coordinator> coordinatorList = new ArrayList<>();
         Coordinator coordinator1 = new Coordinator();
@@ -154,8 +131,6 @@ public class BootStrapData {
 //        coordinator2.getResponsibleSchools().add(erasmusUniversity2);
 //
 //        programRepository.save(program);
-
-
 
         ErasmusUniversity erasmusUniversity3 = new ErasmusUniversity();
         erasmusUniversity3.setAllowance(250).setSemester(Semester.BOTH).setName("ESIEE Paris").setLanguageRequirement("France B2")

@@ -1,5 +1,6 @@
 package com.caddy.erasxchange.controllers;
 
+import com.caddy.erasxchange.DTOs.FormItemSendDto;
 import com.caddy.erasxchange.DTOs.PreApprovePostDto;
 import com.caddy.erasxchange.models.Department;
 import com.caddy.erasxchange.models.Semester;
@@ -54,14 +55,22 @@ public class FormController {
 //        ((Student)form1.getStudent()).getErasmusApplication().setSemester3(Semester.SPRING);
 //        ((Student)form1.getStudent()).getErasmusApplication().setSemester4(Semester.SPRING);
 //        ((Student)form1.getStudent()).getErasmusApplication().setSemester5(Semester.SPRING);
-        formService.generatePreAppPdf(preApprovalFormRepository.findBySender(studentRepository.findByBilkentId(bilkentId).get()).get(0));
+        formService.generatePreAppPdf(preApprovalFormRepository.findBySender(studentRepository.findByBilkentId(bilkentId).get()));
 //        formService.generateTransferPdf(form1);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PostMapping("/api/generate")
+    @PostMapping("/api/generate-form/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public void generateForm(@RequestBody PreApprovePostDto formDto) {
-        formService.generatePreAppForm(formDto);
+    public void generateForm(@PathVariable String username) {
+        formService.generatePreAppForm(username);
+    }
+
+    @PostMapping("/api/send-form-item")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<FormItemSendDto> sendFormItem(@RequestBody FormItemSendDto dto) {
+        Student student = studentRepository.findByBilkentId(Integer.parseInt(dto.getUsername())).get();
+        formService.newFormItem(student, dto);
+        return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
     }
 
 //    public ResponseEntity<String> decideForm(@RequestParam boolean decision)

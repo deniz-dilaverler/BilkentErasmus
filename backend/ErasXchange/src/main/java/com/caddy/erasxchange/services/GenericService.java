@@ -9,6 +9,12 @@ import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * generic service is an abstract service that implements basic requests for other services to inherit
+ * @param <T> is the base entity that the service will operate on
+ * @param <Repository> class of the repository is also passed along to the parent (this class) to ensure
+ * that the child classes can also use their specific repository class with special methods
+ */
 public abstract class GenericService<T extends BaseEntity, Repository extends JpaRepository<T, Long> > {
     protected  Repository repository;
 
@@ -42,6 +48,9 @@ public abstract class GenericService<T extends BaseEntity, Repository extends Jp
         else return optional.get();
     }
 
-    //this is needed by the findById() method to throw errors with relevant naming
+    /**
+     * this is needed by the findById() method to throw errors with relevant naming
+     * @return the name of the entity the service works on
+     */
     protected abstract String getClassName();
 }

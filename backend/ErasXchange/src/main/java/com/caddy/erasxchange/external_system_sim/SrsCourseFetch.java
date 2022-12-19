@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is simply a simulator for fetching course data from the SRS servers
+ * This class is simply a simulator for fetching bilkent course data from the SRS servers
  */
 @Service
 public class SrsCourseFetch {
