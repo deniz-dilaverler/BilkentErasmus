@@ -47,10 +47,7 @@ public class ErasmusApplicationPlacer implements ApplicationPlacementStrategy<Er
         sortApplications();
         // go trough applications from highest scoring to lowest and place them in the order of their choice
         for(ErasmusApplication application : applications) {
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
             if(application.getStatus() == AppStatus.PLACED) continue;
             ErasmusUniversity placedUni = null;
 
