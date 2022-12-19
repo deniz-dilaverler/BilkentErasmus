@@ -35,6 +35,10 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+/**
+ * ErasmusApplicationService handles all requests about erasmus applications
+ * extends ApplicationService for general requests on applications, which extends GenericService for
+ */
 public class ErasmusApplicationService extends ApplicationService<ErasmusApplication, ErasmusApplicationRepository> {
 
     private final ErasmusApplicationMapper erasmusMapper;
@@ -58,45 +62,54 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
         return ErasmusApplication.class.getName();
     }
 
-//    public void addApplication(ErasmusApplicationPostDto erasmusApplicationPostDto) {
-//        if (!studentService.existsById(erasmusApplicationPostDto.getStudentId()))
-//            throw new EntityNotFoundException("Student with id doesn't");
-//        if (studentHasApplication(erasmusApplicationPostDto.getStudentId()))
-//            throw new EntityExistsException("Student with id -> " + erasmusApplicationPostDto.getStudentId() + " already has an Erasmus application");
-//
-//        ErasmusApplication application = erasmusMapper.postToEntity(erasmusApplicationPostDto);
-//
-//        application.getStudent().setErasmusApplication(application);
-//
-//        repository.save(application);
-//    }
-
+    /**
+     * @return list of all applications in the system
+     */
     public List<ErasmusApplicationDto> getAll() {
         return erasmusMapper.toDtoList(repository.findAll());
     }
 
+    /**
+     * @param studentId
+     * @return whether the student has an erasmusApplication
+     */
     public boolean studentHasApplication(Long studentId) {
         Student student = studentService.findById(studentId);
         return student.getErasmusApplication() != null;
     }
 
+    /**
+     * @param id : id of the application in the database
+     * @return the application in DTO form
+     */
     public ErasmusApplicationDto getApplication(Long id) {
         return erasmusMapper.toDto(super.findById(id));
     }
 
+    /**
+     * @param bilkentId of the studemt
+     * @return returns application in dto form
+     */
     public ErasmusApplicationDto getApplicationByBilkentId(Integer bilkentId) {
         return erasmusMapper.toDto(studentService.findByBilkentId(bilkentId).getErasmusApplication());
     }
 
 
-    //cancelFully flag deletes application if true, puts the application into waiting list if false
+
+    /**
+     * cancels application from the given id
+     * @param id
+     * @param cancelFully flag application puts app into canceled state if true, puts the application into waiting_bin stae
+     *                   if false
+     */
     public void cancelApplication(Long id, Boolean cancelFully) {
         ErasmusApplication application = findById(id);
+        // don't cancel twice
         if (application.getStatus() == AppStatus.CANCELED)
             throw new UnsupportedOperationException("Can't cancel a canceled application");
 
         if ((application.getStatus() == AppStatus.PLACED)) {
-            // find program in school matching to the applying students department
+            // find program in application's placed school whose department is  matching  the applying student's department
             Program openedProgram = application.getPlacedSchool().getPrograms().stream()
                     .filter(program -> program.getDepartment() == application.getStudent().getDepartment())
                     .findFirst()
@@ -105,7 +118,9 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
             //TODO: SEND NOTİF TO THE COORDİNATOR FOR THE OPENİNG
 
             application.setPlacedSchoolToNull();
-
+            // generate application cancel object, this will be handled by the coordinator with another request,
+            // this object stores the proposed application, canceled application and the proposed program that the previous
+            // applicant canceled
             try {
                 ErasmusApplicationCancel cancel = new ErasmusApplicationCancel();
                 cancel.setCanceledApplication(application);
@@ -113,7 +128,7 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
                 cancel.setProposedApplication(getHighestWaitingBin(openedProgram.getDepartment()));
                 cancelRepository.save(cancel);
             } catch (EntityNotFoundException e) {
-                log.warn("ErasmusApplicationCancel object couldn't be formed since there are no reasmus applications in the waiting bin for the {} department"
+                log.warn("ErasmusApplicationCancel object couldn't be formed since there are no erasmus applications in the waiting bin for the {} department"
                         , openedProgram.getDepartment());
             }
 
@@ -134,11 +149,21 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
         checkApplications(application.getDepartment());
     }
 
+    /**
+     * @param studentId
+     * @return status of the erasmus application of given student
+     */
     public AppStatus getStudentAppStatus(Long studentId) {
         Student student = studentService.findById(studentId);
         return student.getErasmusApplication().getStatus();
     }
 
+    /**
+     * handles the ErasmusApplicationCancel object, coordinator chooses whether to place the student to whether
+     * place the proposed application to  the proposed program or don't place anyone
+     * @param cancelId id of the ErasmusApplicationCancel entity
+     * @param approveFromWaitingList flag for if the proposed applications should be placed to the program or not
+     */
     public void handleCancelation(Long cancelId, Boolean approveFromWaitingList) {
         Optional<ErasmusApplicationCancel> applicationCancel = cancelRepository.findById(cancelId);
         if (applicationCancel.isEmpty())
@@ -156,7 +181,10 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
         cancelRepository.delete(cancel);
     }
 
-
+    /**
+     * starts application placement of a given department
+     * @param department
+     */
     @Transactional
     public void startPlacements(Department department) {
 
@@ -167,18 +195,23 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
 
         applicationPlacer.startPlacements(applications, department);
 
-//        stateService.setErasmusAppsPlaced(department);
+        // adjust placement state for department
         stateService.setErasmusAppState(department, PlacementStatus.PUBLISHED);
 
     }
 
 
+    /**
+     * change semester of a single university choice of an application
+     * changes it to the Universities supported semester
+     * @param appId id of application
+     * @param choiceNo which choice is the request proposing to change (must be in [1,5])
+     */
     public void changeSemester(Long appId, Integer choiceNo) {
         if (choiceNo > 5 || choiceNo < 1)
             throw new InvalidRequestStateException("choices can only be 1 to 5");
 
         ErasmusApplication app = super.findById(appId);
-
         switch (choiceNo) {
             case 1:
                 if (app.getChoice1() == null) {
@@ -226,6 +259,11 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
 
     }
 
+    /**
+     * cancels  a single choice university  choice of an application
+     * nullifies the canceled choice and the semester of the said choice
+     * @param appId id of application
+     * @param choiceNo which choice is the request proposing to change (must be in [1,5])     */
     public void cancelChoice(Long appId, Integer choiceNo) {
         if (choiceNo > 5 || choiceNo < 1)
             throw new InvalidRequestStateException("choiceNo can only be 1 to 5");
@@ -274,6 +312,10 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
 
     }
 
+    /**
+     * @param department
+     * @return application whose owner has the highest exchange score and in the waiting bin
+     */
     private ErasmusApplication getHighestWaitingBin(Department department) {
         List<ErasmusApplication> waiting = repository.findByStatusAndStudentDepartment(AppStatus.WAITING_BIN, department);
         if (waiting.size() == 0)
@@ -286,6 +328,11 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
         return highest;
     }
 
+    /**
+     * @param appId id of application
+     * @return an array of Booleans. If choice's semester is correct the field is true, if the choice's semester is not applicable
+     *          to the proposed school field is false, if there is no choice in that index, field is null
+     */
     public  Boolean[] getSemesterCorrect(Long appId) {
         Boolean[] correctSemester = new Boolean[5];
 
@@ -303,6 +350,13 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
 
     }
 
+    /**
+     * @param choice the school whose applicability to the given semester will be checked
+     * @param semester proposed semester
+     * @return if choice's semester is correct true, if the choice's semester is not applicable
+     *               to the proposed school return  false, if there is no choice  in the passed field return null
+     *
+     */
     private  Boolean checkSemester(ErasmusUniversity choice, Semester semester ) {
         if(choice == null)
             return null;
@@ -313,6 +367,12 @@ public class ErasmusApplicationService extends ApplicationService<ErasmusApplica
     }
 
 
+    /**
+     * checks if applications of a given department are correct, if all of them are correct, (semester applicability wise)
+     * department goes to Placement.APPS_CORRECT state, if there is at least a single problematic application remain at or go to
+     * Placement.ACTIVATED state
+     * @param department
+     */
     public void checkApplications(Department department) {
         PlacementStatus placementStatus = stateService.getErasmusPlacementState(department);
         if (placementStatus == PlacementStatus.APPS_CORRECT ||

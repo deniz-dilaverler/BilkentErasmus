@@ -30,6 +30,10 @@ public class ApplicationStateService {
        initState();
     }
 
+
+    /*
+    * Initializes the erasmusApplication placement state for all departments registered in the system
+    * */
     private void initState() {
 
         erasmusAppState = new HashMap<>();
@@ -37,34 +41,22 @@ public class ApplicationStateService {
             erasmusAppState.put(department, PlacementStatus.NO_FILE);
         }
 
-
-
-
-//        ApplicationState applicationState = null;
-//        if (repository.count() == 0) {
-//            applicationState = new ApplicationState();
-//        } else {
-//            // there must be at least one state so no need for checking
-//            applicationState = getState();
-//
-//        }
-//
-//        for (Department department : Department.values()) {
-//            applicationState.getBilateralAppsPlaced().putIfAbsent(department, false);
-//            applicationState.getErasmusAppsPlaced().putIfAbsent(department, false);
-//
-//        }
-//        repository.saveAndFlush(applicationState);
-//
-//        ApplicationState state = getState();
-//        System.out.println(state.getBilateralAppsPlaced().size());
-
     }
 
+    /**
+     * returns the erasmus application placement state for erasmus application of a given
+     * @param department of the status you want to get
+     * @return the placement state of the given department
+     */
     public PlacementStatus getErasmusPlacementState(Department department) {
         return erasmusAppState.get(department);
     }
 
+    /**
+     * sets the  placement state for the erasmus application with the givent department, sets it to the passeds tate
+     * @param department
+     * @param state
+     */
     public void setErasmusAppState(Department department, PlacementStatus state) {
         erasmusAppState.put(department, state);
     }
