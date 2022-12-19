@@ -15,6 +15,7 @@ function StudentApplications(props) {
     // fetch application id:
     const applicationID = props.applications.id;
 
+
     // get data:
         useEffect(() => {
             fetch("http://localhost:8080/application/erasmus/wrongsemester/" + applicationID )
@@ -23,27 +24,35 @@ function StudentApplications(props) {
         }, []);
         
         // cancel status:
+
     const [cancelled, setCancelled] = useState(false);
 
     // cancel application status handler:
     const cancelApplicationStatusHandler = (statusData) => {
         console.log(statusData)
-        if (statusData === "ALL")
-        {
+        if (statusData === "ALL") {
             console.log("It is canceled!")
+
             fetch('http://localhost:8080/application/erasmus/' + applicationID +'/true', { method: 'DELETE' })
             .then((status) => setStatus("CANCELED"));
+
+
             setStatus("CANCELED")
         }
-        else if ( statusData.statType === "CURRENT" ) {
-            fetch('http://localhost:8080/application/erasmus/cancelChoice/semester/' + applicationID +'/' + statusData.no, { method: 'PUT' })
-            .then((isPlacementStarted) => setIsPlacementStarted("ACTIVATED"));
+        else if (statusData.statType === "CURRENT" && status === "PLACED" ) {
+            fetch('http://localhost:8080/application/erasmus/' + applicationID + '/false', { method: 'DELETE' })
+                .then((cancelled) => setCancelled(false));
             console.log("Şey ben current cancellıycam uwu")
         }
-        else if ( statusData.statType === "SEMESTER_CHANGE" ) {
-            fetch('http://localhost:8080/application/erasmus/change/semester/' + applicationID +'/' + statusData.no, { method: 'PUT' })
-            .then((isPlacementStarted) => setIsPlacementStarted("ACTIVATED"));
-            
+        else if (statusData.statType === "CURRENT") {
+            fetch('http://localhost:8080/application/erasmus/cancelChoice/semester/' + applicationID + '/' + statusData.no, { method: 'PUT' })
+                .then((cancelled) => setCancelled(false));
+            console.log("Şey ben current cancellıycam uwu")
+        }
+        else if (statusData.statType === "SEMESTER_CHANGE") {
+            fetch('http://localhost:8080/application/erasmus/change/semester/' + applicationID + '/' + statusData.no, { method: 'PUT' })
+                .then((cancelled) => setCancelled(false));
+
             console.log("Şey ben SEMESTER DEYİŞCEMM uwu")
         }
     };
@@ -57,57 +66,60 @@ function StudentApplications(props) {
             choiceName: props.applications.choice1.name,
         })
     }
-    if ( props.applications.semester2 !== undefined ) {
+    if (props.applications.semester2 !== undefined) {
         choices.push(
-        {
-            semester: props.applications.semester2,
-            choiceNo: 2,
-            choiceName: props.applications.choice2.name,
-        })
+            {
+                semester: props.applications.semester2,
+                choiceNo: 2,
+                choiceName: props.applications.choice2.name,
+            })
     }
-    if ( props.applications.semester3 !== undefined ) {
+    if (props.applications.semester3 !== undefined) {
         choices.push(
-        {semester: props.applications.semester3,
-            choiceNo: 3,
+            {
+                semester: props.applications.semester3,
+                choiceNo: 3,
                 choiceName: props.applications.choice3.name,
-        })
+            })
     }
-    if ( props.applications.semester4 !== undefined ) {
+    if (props.applications.semester4 !== undefined) {
         choices.push(
             {
                 semester: props.applications.semester4,
-                    choiceNo: 4,
-                    choiceName: props.applications.choice4.name,
-                },
+                choiceNo: 4,
+                choiceName: props.applications.choice4.name,
+            },
         )
     }
-    if ( props.applications.semester5 !== undefined ) {
+    if (props.applications.semester5 !== undefined) {
         choices.push(
             {
                 semester: props.applications.semester5,
-                    choiceNo: 5,
-                        choiceName: props.applications.choice5.name,
-                },
+                choiceNo: 5,
+                choiceName: props.applications.choice5.name,
+            },
         )
     }
 
     // create faulty datas, if there are any:
     let faultyDatas = [];
-    if ( faultyData !== undefined ) {
-        for ( let i = 0; i < 5; i++ ) {
-            if ( faultyData[i] === false ) {
+    if (faultyData !== undefined) {
+        for (let i = 0; i < 5; i++) {
+            if (faultyData[i] === false) {
                 faultyDatas.push(
                     {
-                        no: i+1,
+                        no: i + 1,
                         semester: choices[i].semester,
                         name: choices[i].choiceName,
                     }
                 );
             }
-        } 
+        }
     }
+
     
     // fetch status
+
     useEffect(() => {
         fetch("http://localhost:8080/application/erasmus/status/4")
             .then((response) => response.json())
@@ -141,7 +153,7 @@ function StudentApplications(props) {
     }
     // if student application is not started, just view all applications
     // also, student can cancel all applications
-    else if ( ( status !== "CANCELED" && isPlacementStarted === "APPS_CREATED" ) || (status !== "CANCELED" && isPlacementStarted === "APPS_CORRECT" ) ) {
+    else if ((status !== "CANCELED" && isPlacementStarted === "APPS_CREATED") || (status !== "CANCELED" && isPlacementStarted === "APPS_CORRECT")) {
         if (props.applications) {
             return (
                 <Container className="applications">
@@ -166,83 +178,72 @@ function StudentApplications(props) {
     else if (status !== "CANCELED" && isPlacementStarted === "ACTIVATED") {
         // fetch faulty data -> ask for a change
         // can cancel all applications, too
-        if ( faultyDatas !== undefined ) {
-            if ( faultyDatas.length >= 1 ) {
+        if (faultyDatas !== undefined) {
+            if (faultyDatas.length >= 1) {
                 return (
                     <Container className="applications">
-                            <div>
-                                <h4>You have some applications you need to modify:</h4>
-                                {faultyDatas.map((app) =>
-                                    <ModifyFaultyData
-                                        key={app.no}
-                                        no={app.no}
-                                        school={app.name}
-                                        semester={app.semester}
-                                        cancelApplicationStatusData={cancelApplicationStatusHandler}
-                                    />
-                                )}
-                                <CancelApplication cancelApplicationStatusData={cancelApplicationStatusHandler}></CancelApplication>
-                            </div>
-                        </Container>
+                        <div>
+                            <h4>You have some applications you need to modify:</h4>
+                            {faultyDatas.map((app) =>
+                                <ModifyFaultyData
+                                    key={app.no}
+                                    no={app.no}
+                                    school={app.name}
+                                    semester={app.semester}
+                                    cancelApplicationStatusData={cancelApplicationStatusHandler}
+                                />
+                            )}
+                            <CancelApplication cancelApplicationStatusData={cancelApplicationStatusHandler} isPublished={status}></CancelApplication>
+                        </div>
+                    </Container>
                 );
             }
             else {
                 return (
                     <Container className="applications">
-                    <div><h4>Wait for your coordinator to start application placements</h4></div>
-                    <div>
-                        {choices.map((application) =>
-                            <StudentAppItem
-                                key={application.choiceNo}
-                                no={application.choiceNo}
-                                school={application.choiceName}
-                                semester={application.semester}
-                            />
-                        )}
-                    </div>
-                    <CancelApplication cancelApplicationStatusData={cancelApplicationStatusHandler}></CancelApplication>
-                </Container>
+                        <div><h4>Wait for your coordinator to start application placements</h4></div>
+                        <div>
+                            {choices.map((application) =>
+                                <StudentAppItem
+                                    key={application.choiceNo}
+                                    no={application.choiceNo}
+                                    school={application.choiceName}
+                                    semester={application.semester}
+                                />
+                            )}
+                        </div>
+                        <CancelApplication cancelApplicationStatusData={cancelApplicationStatusHandler} isPublished={status}></CancelApplication>
+                    </Container>
                 );
             }
         }
     }
     // if applications are published and stated person is placed: show placement results!
-    else if (status !== "CANCELED" && isPlacementStarted === "") {
-        // placed institution, databaseden çek, şimdilik mock data:
-
-        const placedInstitution =
-        {
-            no: 1,
-            school: 'Bamberg University',
-            semester: 'Spring',
-        };
-
-
-        // if placed institution is null, it means that user is in waiting list
-        // Hence, return following:
-        if (placedInstitution === -1) {
+    else if (status === "PLACED") {
+        if (props.applications.placedSchool !== undefined) {
             return (
                 <Container className="applications">
                     <div><h3>Placed Institution:</h3></div>
-                    <div><h4>You are currently in waiting list.</h4></div>
-                    <CancelApplication placedInst={placedInstitution}></CancelApplication>
+                    <StudentAppItem country={props.applications.placedSchool.country}
+                        school={props.applications.placedSchool.name}
+                        semester={props.applications.placedSchool.languageRequirement}
+                    >
+                    </StudentAppItem>
+                    <CancelApplication cancelApplicationStatusData={cancelApplicationStatusHandler} status={status}></CancelApplication>
                 </Container>
-            )
+            );
         }
-        else {
-            if (true) // database'den alınca buraya nullcheck yap!
-                return (
-                    <Container className="applications">
-                        <div><h3>Placed Institution:</h3></div>
-                        <StudentAppItem no={placedInstitution.no}
-                            school={placedInstitution.school}
-                            semester={placedInstitution.semester}
-                        >
-                        </StudentAppItem>
-                        <CancelApplication></CancelApplication>
-                    </Container>
-                );
-        }
+    }
+    else if (status === "WAITING_BIN") {
+        // if placed institution is null, it means that user is in waiting list
+        // Hence, return following:
+        return (
+            <Container className="applications">
+                <div><h3>Placed Institution:</h3></div>
+                <div><h4>You are currently in waiting list.</h4></div>
+                <CancelApplication cancelApplicationStatusData={cancelApplicationStatusHandler} isPublished={status}></CancelApplication>
+            </Container>
+        )
     }
 
 }

@@ -1,14 +1,12 @@
 import React from "react";
 import "./Sidebar.css";
-import { SidebarData } from "./SidebarData";
+import { NonLoggedSidebarData } from "./NonLoggedSidebarData";
 import { useState, useEffect } from "react";
-import LogoutButton from "../Login/LogoutButton";
-
-function Sidebar() {
+function NonLoggedSidebar() {
   return (
     <div className="Sidebar">
       <ul className="SidebarList">
-        {SidebarData.map((val, key) => {
+        {NonLoggedSidebarData.map((val, key) => {
           return (
             <li
               key={key}
@@ -23,10 +21,9 @@ function Sidebar() {
             </li>
           );
         })}
-        <LogoutButton />
       </ul>
     </div>
   );
 }
 
-export default Sidebar;
+export default NonLoggedSidebar;

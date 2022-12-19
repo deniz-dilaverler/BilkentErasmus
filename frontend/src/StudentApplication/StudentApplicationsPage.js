@@ -31,8 +31,10 @@ const studentApplicationsMockData = [
   }
 ];
 
+
 // student applications page, fetch data:
 function StudentApplicationsPage() {
+
 
   // student applications
   const [studentApplications, setStudentApplications] = useState();

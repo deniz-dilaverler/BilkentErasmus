@@ -5,30 +5,15 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import TableViewIcon from '@mui/icons-material/TableView';
 
-export const SidebarData = [
-  {
-    title: "Dashboard",
-    icon: <HomeIcon />,
-    link: "/dashboard",
-  },
+export const NonLoggedSidebarData = [
   {
     title: "Instutitions",
     icon: <SchoolIcon />,
-    link: "/instutitions",
-  },
-  {
-    title: "Applications",
-    icon: <BorderColorIcon />,
-    link: "/applications",
+    link: "/instutitionsNonLogged",
   },
   {
     title: "Courses ",
     icon: <HistoryEduIcon />,
-    link: "/courses",
-  },
-  {
-    title: "Forms",
-    icon: <TableViewIcon />,
-    link: "/forms",
+    link: "/coursesNonLogged",
   },
 ];

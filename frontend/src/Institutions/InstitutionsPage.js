@@ -58,8 +58,10 @@ const initialInstitutions = [
 
 
 
+function InstitutionsMainPage({loggedIn, setLoggedIn}) {
 
-function InstitutionsMainPage() {
+  setLoggedIn(true);
+
 
   // fetch institutions data:
   useEffect(() => {
@@ -67,6 +69,7 @@ function InstitutionsMainPage() {
       .then((response) => response.json())
       .then((institutions) => setInstitutions(institutions));
   }, []);
+
 
   const [institutions, setInstitutions] = useState(initialInstitutions);
 
