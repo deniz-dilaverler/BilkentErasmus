@@ -20,7 +20,6 @@ public class StorageService {
     private final Path fileStorageLocation;
     private final ApplicationStateService applicationStateService;
 
-
     @Autowired
     public StorageService(FileStorageProperties fileStorageProperties, ApplicationStateService applicationStateService) throws IOException {
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())

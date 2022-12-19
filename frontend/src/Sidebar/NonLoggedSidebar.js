@@ -2,8 +2,7 @@ import React from "react";
 import "./Sidebar.css";
 import { NonLoggedSidebarData } from "./NonLoggedSidebarData";
 import { useState, useEffect } from "react";
-function NonLoggedSidebar({loggedIn, setLoggedIn}) {
-  setLoggedIn(false);
+function NonLoggedSidebar() {
   return (
     <div className="Sidebar">
       <ul className="SidebarList">

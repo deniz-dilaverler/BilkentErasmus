@@ -7,6 +7,7 @@ import com.caddy.erasxchange.models.university.ErasmusUniversity;
 import com.caddy.erasxchange.models.university.Program;
 import com.caddy.erasxchange.models.university.University;
 import com.caddy.erasxchange.repositories.application.ErasmusApplicationRepository;
+import com.caddy.erasxchange.services.EventService;
 import com.caddy.erasxchange.services.university.ErasmusUniversityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,11 +21,13 @@ public class ErasmusApplicationPlacer implements ApplicationPlacementStrategy<Er
     private final ErasmusUniversityService uniService;
     private List<ErasmusApplication> applications;
     private Map<University, Integer> quotas;
+    private final EventService eventService;
 
     @Autowired
-    public ErasmusApplicationPlacer(ErasmusApplicationRepository repository, ErasmusUniversityService uniService) {
+    public ErasmusApplicationPlacer(ErasmusApplicationRepository repository, ErasmusUniversityService uniService, EventService eventService) {
         this.repository = repository;
         this.uniService = uniService;
+        this.eventService = eventService;
         quotas = new HashMap<University,Integer>();
     }
 
@@ -37,76 +40,7 @@ public class ErasmusApplicationPlacer implements ApplicationPlacementStrategy<Er
         sortApplications();
 
         for(ErasmusApplication application : applications) {
-//            ErasmusUniversity choice = null;
-//
-//
-//            choice = application.getChoice1();
-//            if(choice == null ) {
-//                application.setStatus(AppStatus.WAITING_BIN);
-//                continue;
-//            }
-//
-//            if(quotas.get(application.getChoice1()) > 0) {
-//                application.setStatus(AppStatus.PLACED);
-//                application.setPlacedSchool(application.getChoice1());
-//                //decreemt quota
-//                quotas.put(choice, quotas.get(choice) - 1);
-//                continue;
-//            }
-//
-//            choice = application.getChoice2();
-//            if(choice == null ) {
-//                application.setStatus(AppStatus.WAITING_BIN);
-//                continue;
-//            }
-//            if(quotas.get(application.getChoice2()) > 0) {
-//                application.setStatus(AppStatus.PLACED);
-//                application.setPlacedSchool(application.getChoice2());
-//                //decreemt quota
-//                quotas.put(choice, quotas.get(choice) - 1);
-//                continue;
-//            }
-//
-//            choice = application.getChoice3();
-//            if(choice == null ) {
-//                application.setStatus(AppStatus.WAITING_BIN);
-//                continue;
-//            }
-//            if(quotas.get(application.getChoice3()) > 0) {
-//                application.setStatus(AppStatus.PLACED);
-//                application.setPlacedSchool(application.getChoice3());
-//                //decreemt quota
-//                quotas.put(choice, quotas.get(choice) - 1);
-//                continue;
-//            }
-//
-//            choice = application.getChoice4();
-//            if(choice == null ) {
-//                application.setStatus(AppStatus.WAITING_BIN);
-//                continue;
-//            }
-//            if(quotas.get(application.getChoice4()) > 0) {
-//                application.setStatus(AppStatus.PLACED);
-//                application.setPlacedSchool(application.getChoice4());
-//                //decreemt quota
-//                quotas.put(choice, quotas.get(choice) - 1);
-//                continue;
-//            }
-//
-//            choice = application.getChoice5();
-//            if(choice == null ) {
-//                application.setStatus(AppStatus.WAITING_BIN);
-//                continue;
-//            }
-//            if(quotas.get(application.getChoice5()) > 0) {
-//                application.setStatus(AppStatus.PLACED);
-//                application.setPlacedSchool(application.getChoice5());
-//                //decreemt quota
-//                quotas.put(choice, quotas.get(choice) - 1);
-//                continue;
-//            }
-//
-//            application.setStatus(AppStatus.WAITING_BIN);
+
             if(application.getStatus() == AppStatus.PLACED) continue;
             ErasmusUniversity placedUni = null;
 
@@ -130,6 +64,8 @@ public class ErasmusApplicationPlacer implements ApplicationPlacementStrategy<Er
                 //Decrement quota
                 quotas.put(placedUni, quotas.get(placedUni) - 1);
             }
+
+            eventService.sendEvent(application.getStudent(), "Update on your Erasmus application", "Your application is now " + application.getStatus().name().toLowerCase(Locale.US));
 
         }
 

@@ -8,9 +8,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -52,16 +54,17 @@ public class User extends BaseEntity {
             joinColumns = { @JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "event_id")}
     )
-    private List<Event> events; //list as the order of events are relevant
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<Event> events = new ArrayList<>(); //list as the order of events are relevant
 
 
     //forms that the user is sending
     @OneToMany(mappedBy = "sender")
-    private List<Form> senderForms;
+    private List<Form> senderForms = new ArrayList<>();
 
     //forms that the user is reciving
     @OneToMany(mappedBy = "receiver")
-    private List<Form> receiverForms;
+    private List<Form> receiverForms = new ArrayList<>();
 
     @Column
     @Enumerated(EnumType.STRING)

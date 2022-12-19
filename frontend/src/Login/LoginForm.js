@@ -1,40 +1,9 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import "./Login.css";
+import jwt_decode from 'jwt-decode';
 
-function LoginForm() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
-      const data = await response.json();
-
-      if (data.error) {
-        setError(data.error);
-      } else {
-        // store authentication information in the client's session
-        sessionStorage.setItem("authToken", data.authToken);
-        sessionStorage.setItem("username", data.username);
-        setError("");
-        window.location.pathname = "/dashboard";
-      }
-    } catch (error) {
-      setError("An unexpected error occurred.");
-    }
-  };
+function LoginForm({username, setUsername, password, setPassword, error, handleSubmit}) {
 
   return (
     <form onSubmit={handleSubmit} className="login-form">
