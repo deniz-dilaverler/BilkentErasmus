@@ -1,5 +1,6 @@
 package com.caddy.erasxchange.services;
 
+import com.caddy.erasxchange.DTOs.FormItemSendDto;
 import com.caddy.erasxchange.DTOs.PreApprovePostDto;
 import com.caddy.erasxchange.models.course.ApprovalStatus;
 import com.caddy.erasxchange.models.course.BilkentCourse;
@@ -58,20 +59,20 @@ public class FormService {
         this.bilkentCourseRepository = bilkentCourseRepository;
     }
 
-    public List<PreApprovalForm> getPreApprovalFormsBySender(String username) {
-        Optional<User> optional =  userRepository.findByBilkentId(Integer.parseInt(username));
-        if(optional.isEmpty()) throw new EntityNotFoundException("User with bilkent id :" + username + " doesn't exist");
-        User user = optional.get();
-
-        return preApprovalFormRepository.findBySender(user);
-    }
-
-    public List<CourseTransferForm> getCourseTransferFormsBySender(String username) {
-        Optional<User> optional =  userRepository.findByBilkentId(Integer.parseInt(username));
-        if(optional.isEmpty()) throw new EntityNotFoundException("User with bilkent id :" + username + " doesn't exist");
-        User user = optional.get();
-        return courseTransferFormRepository.findBySender(user);
-    }
+//    public List<PreApprovalForm> getPreApprovalFormsBySender(String username) {
+//        Optional<User> optional =  userRepository.findByBilkentId(Integer.parseInt(username));
+//        if(optional.isEmpty()) throw new EntityNotFoundException("User with bilkent id :" + username + " doesn't exist");
+//        User user = optional.get();
+//
+//        return preApprovalFormRepository.findBySender(user);
+//    }
+//
+//    public List<CourseTransferForm> getCourseTransferFormsBySender(String username) {
+//        Optional<User> optional =  userRepository.findByBilkentId(Integer.parseInt(username));
+//        if(optional.isEmpty()) throw new EntityNotFoundException("User with bilkent id :" + username + " doesn't exist");
+//        User user = optional.get();
+//        return courseTransferFormRepository.findBySender(user);
+//    }
 
     public void generatePreAppForm(PreApprovePostDto formDto) {
         PreApprovalForm form = new PreApprovalForm();
@@ -280,5 +281,22 @@ public class FormService {
             form.setStatus(FormApprovalStatus.APPROVED);
         else
             form.setStatus(FormApprovalStatus.REJECTED);
+    }
+
+    public void newFormItem(Student student, FormItemSendDto dto) {
+        PreApprovalForm form;
+        if(preApprovalFormRepository.findBySender(student) != null) {
+            form = preApprovalFormRepository.findBySender(student);
+        }
+        else {
+            form = new PreApprovalForm();
+            form.setSender(student);
+        }
+        FormItem formItem = new FormItem();
+        formItem.setExternalCourse(externalCourseRepository.findCourseByCourseCode(dto.getCourseCode()).get());
+        formItem.setEquivalentCourse(bilkentCourseRepository.findCourseByCourseCode(dto.getEqivalentCourseCode()).get());
+        form.getRows().add(formItem);
+        preApprovalFormRepository.save(form);
+
     }
 }
